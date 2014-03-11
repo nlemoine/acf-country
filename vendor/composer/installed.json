@@ -51,18 +51,18 @@
     },
     {
         "name": "symfony/intl",
-        "version": "v2.4.0",
-        "version_normalized": "2.4.0.0",
+        "version": "v2.4.2",
+        "version_normalized": "2.4.2.0",
         "target-dir": "Symfony/Component/Intl",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Intl.git",
-            "reference": "34cce16e362ffff2fbe7b41a1ae3830c85be73bf"
+            "reference": "ab12f91c6b4a073007db3c478707ace276738a13"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/Intl/zipball/34cce16e362ffff2fbe7b41a1ae3830c85be73bf",
-            "reference": "34cce16e362ffff2fbe7b41a1ae3830c85be73bf",
+            "url": "https://api.github.com/repos/symfony/Intl/zipball/ab12f91c6b4a073007db3c478707ace276738a13",
+            "reference": "ab12f91c6b4a073007db3c478707ace276738a13",
             "shasum": ""
         },
         "require": {
@@ -75,7 +75,7 @@
         "suggest": {
             "ext-intl": "to use the component with locales other than \"en\""
         },
-        "time": "2013-11-23 21:17:02",
+        "time": "2014-02-11 13:52:09",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -127,55 +127,5 @@
             "l10n",
             "localization"
         ]
-    },
-    {
-        "name": "symfony/locale",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "target-dir": "Symfony/Component/Locale",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/Locale.git",
-            "reference": "d26ebc51fb399701dfb36b29681a41573dd5e8e7"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/Locale/zipball/d26ebc51fb399701dfb36b29681a41573dd5e8e7",
-            "reference": "d26ebc51fb399701dfb36b29681a41573dd5e8e7",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "symfony/intl": ">=2.3"
-        },
-        "time": "2013-12-27 16:00:18",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.5-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "Symfony\\Component\\Locale\\": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "http://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony Locale Component",
-        "homepage": "http://symfony.com"
     }
 ]

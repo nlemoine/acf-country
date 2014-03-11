@@ -23,7 +23,7 @@ class acf_field_country extends acf_field
 		$this->label = __('Country');
 		$this->category = __("Content",'acf'); // Basic, Content, Choice, etc
 		$this->defaults = array(
-			'return_format'		=>	'object'
+			'return_format'		=>	'name'
 		);
 
 
@@ -120,7 +120,7 @@ class acf_field_country extends acf_field
 				'class' 		=> 'acf-country',
 				'name' 			=> $field['name'],
 				'allow_null'	=> true,
-				'choices'   	=> Symfony\Component\Locale\Locale::getDisplayCountries(get_locale()),
+				'choices'   	=> \Symfony\Component\Intl\Intl::getRegionBundle()->getCountryNames(get_locale()),
 				'placeholder' 	=> 'Choose a country...'
 			));
 			?>
@@ -325,15 +325,13 @@ class acf_field_country extends acf_field
 
 	function format_value_for_api($value, $post_id, $field)
 	{
-		// defaults?
-		/*
+
 		$field = array_merge($this->defaults, $field);
-		*/
 
-		// perhaps use $field['preview_size'] to alter the $value?
-
-
-		// Note: This function can be removed if not used
+		if( $field['return_format'] === 'name' )
+			return \Symfony\Component\Intl\Intl::getRegionBundle()->getCountryName($value, get_locale());
+		elseif( $field['return_format'] === 'code' )
+			return $value;
 		return $value;
 	}
 
