@@ -12,8 +12,9 @@ Display a localized list of all countries.
 
 This add-on will work with:
 
-* PHP 5.3 and up
-* version 4 and up
+* ACF version 4 or higher
+* PHP 5.3 or higher
+* ICU library 4.4 or higher
 
 ### Installation
 
