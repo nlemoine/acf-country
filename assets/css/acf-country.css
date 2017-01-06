@@ -1,0 +1,14 @@
+.acf-country-flag-name,
+.acf-country-flag-icon {
+	display: inline-block;
+	vertical-align: middle;
+}
+.acf-country-flag-icon {
+	margin-right: 3px;
+}
+.acf-country-flag-name {
+	margin-top: -1px;
+}
+.select2-container.acf-country {
+	width: 100%;
+}

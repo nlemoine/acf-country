@@ -1,0 +1,14 @@
+{
+  "name": "acf-country",
+  "authors": [
+    "dev@helloni.co"
+  ],
+  "description": "ACF country field",
+  "main": "",
+  "license": "GPLv2",
+  "homepage": "https://github.com/nlemoine/acf-country",
+  "dependencies": {
+    "select2": "^3.5",
+    "famfamfam-flags": "^1.0.0"
+  }
+}

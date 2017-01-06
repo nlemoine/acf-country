@@ -1,77 +1,92 @@
 <?php
+
 /*
-Plugin Name: Advanced Custom Fields: Country
-Plugin URI: {{git_url}}
-Description: {{short_description}}
+Plugin Name: Advanced Custom Fields: ACF Country
+Plugin URI: https://github.com/nlemoine/acf-country
+Description: SHORT_DESCRIPTION
 Version: 1.0.0
 Author: Nicolas Lemoine
-Author URI: {{website}}
+Author URI: https://github.com/nlemoine
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
-require __DIR__ . '/vendor/autoload.php';
+// exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit;
 
-class acf_field_country_plugin
-{
+// check if class already exists
+if( !class_exists('acf_country') ) :
+
+class acf_country {
+
 	/*
-	*  Construct
+	*  __construct
 	*
-	*  @description:
-	*  @since: 3.6
-	*  @created: 1/04/13
+	*  This function will setup the class functionality
+	*
+	*  @type	function
+	*  @date	17/02/2016
+	*  @since	1.0.0
+	*
+	*  @param	n/a
+	*  @return	n/a
 	*/
 
-	function __construct()
-	{
+	function __construct() {
+
+		// vars
+		$this->settings = array(
+			'version'	=> '1.0.0',
+			'url'		=> plugin_dir_url( __FILE__ ),
+			'path'		=> plugin_dir_path( __FILE__ )
+		);
+
+
 		// set text domain
-		/*
-		$domain = 'acf-country';
-		$mofile = trailingslashit(dirname(__File__)) . 'lang/' . $domain . '-' . get_locale() . '.mo';
-		load_textdomain( $domain, $mofile );
-		*/
+		// https://codex.wordpress.org/Function_Reference/load_plugin_textdomain
+		// load_plugin_textdomain( 'acf-country', false, plugin_basename( dirname( __FILE__ ) ) . '/lang' );
 
 
-		// version 4+
-		add_action('acf/register_fields', array($this, 'register_fields'));
+		// include field
+		add_action('acf/include_field_types', 	array($this, 'include_field_types')); // v5
+		add_action('acf/register_fields', 		array($this, 'include_field_types')); // v4
 
-
-		// version 3-
-		add_action('init', array( $this, 'init' ), 5);
 	}
 
 
 	/*
-	*  Init
+	*  include_field_types
 	*
-	*  @description:
-	*  @since: 3.6
-	*  @created: 1/04/13
+	*  This function will include the field type class
+	*
+	*  @type	function
+	*  @date	17/02/2016
+	*  @since	1.0.0
+	*
+	*  @param	$version (int) major ACF version. Defaults to false
+	*  @return	n/a
 	*/
 
-	function init()
-	{
-		if(function_exists('register_field'))
-		{
-			register_field('acf_field_country', dirname(__File__) . '/country-v3.php');
-		}
-	}
+	function include_field_types( $version = false ) {
 
-	/*
-	*  register_fields
-	*
-	*  @description:
-	*  @since: 3.6
-	*  @created: 1/04/13
-	*/
+		// support empty $version
+		if( !$version ) $version = 4;
 
-	function register_fields()
-	{
-		include_once('country-v4.php');
+
+		// include
+		include_once('fields/acf-countries.php');
+		include_once('fields/acf-country-v' . $version . '.php');
+
 	}
 
 }
 
-new acf_field_country_plugin();
+
+// initialize
+new acf_country();
+
+
+// class_exists check
+endif;
 
 ?>
