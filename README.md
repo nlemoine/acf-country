@@ -14,7 +14,6 @@ This add-on will work with:
 
 * ACF version 4 or higher
 * PHP 5.3 or higher
-* ICU library 4.4 or higher
 
 ### Installation
 
