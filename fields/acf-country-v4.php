@@ -27,10 +27,10 @@ class acf_field_country extends acf_field {
 	function __construct( $settings )
 	{
 		// vars
-		$this->name = 'country';
-		$this->label = __('Country', 'acf-country');
+		$this->name     = 'country';
+		$this->label    = __('Country', 'acf-country');
 		$this->category = __('Choice', 'acf');
-		$this->defaults = acf_countries::get_defaults();
+		$this->defaults = acf_country_helpers::get_defaults();
 
 		// do not delete!
     	parent::__construct();
@@ -159,7 +159,7 @@ class acf_field_country extends acf_field {
 		// defaults
 		$field = array_merge($this->defaults, $field);
 
-		acf_countries::render_field( $field );
+		acf_country_helpers::render_field( $field );
 
 	}
 
@@ -190,7 +190,7 @@ class acf_field_country extends acf_field {
 		// defaults
 		$field = array_merge($this->defaults, $field);
 
-		return acf_countries::format_country($value, $field);
+		return acf_country_helpers::format_country($value, $field);
 	}
 
 	/*

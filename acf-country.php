@@ -74,7 +74,7 @@ class acf_country {
 
 
 		// include
-		include_once('fields/acf-countries.php');
+		include_once('fields/acf-country-helpers.php');
 		include_once('fields/acf-country-v' . $version . '.php');
 
 	}

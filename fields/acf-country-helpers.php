@@ -1,6 +1,6 @@
 <?php
 
-class acf_countries {
+class acf_country_helpers {
 
 	/**
 	 * Get field defaults

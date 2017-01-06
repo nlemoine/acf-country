@@ -50,15 +50,7 @@ class acf_field_country extends acf_field {
 		*  defaults (array) Array of default settings which are merged into the field object. These are used later in settings
 		*/
 
-		$this->defaults = array(
-			'multiple' 		=> 0,
-			'allow_null' 	=> 0,
-			'choices'		=> array(),
-			'default_value'	=> strtoupper(substr(get_locale(), 3, 2)),
-			'ui'			=> 1,
-			'placeholder'	=> __('Select a country', 'acf-country'),
-			'return_format'	=> 'array',
-		);
+		$this->defaults = acf_country_helpers::get_defaults();
 
 
 		/*
@@ -147,7 +139,7 @@ class acf_field_country extends acf_field {
 
 	function render_field( $field ) {
 
-		acf_countries::render_field( $field );
+		acf_country_helpers::render_field( $field );
 
 		// acf()->fields->types['select']->render_field($field);
 
@@ -283,7 +275,7 @@ class acf_field_country extends acf_field {
 			return $value;
 		}
 
-		return acf_countries::format_country($value, $field);
+		return acf_country_helpers::format_country($value, $field);
 	}
 
 	/*
@@ -310,7 +302,7 @@ class acf_field_country extends acf_field {
 		// 	return $valid = __('You must select a country', 'acf-country');
 		// }
 
-		// $countries = acf_countries::get_countries();
+		// $countries = acf_country_helpers::get_countries();
 		// if( !empty($value) ) {
 		// 	if( is_array($value) && count(array_intersect($value, array_keys($countries))) !== count($value) ) {
 		// 		$valid = __('One or more countries selected are not valid','acf-country');
