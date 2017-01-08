@@ -1,4 +1,4 @@
-# ACF { Country Field
+# ACF Country field
 
 Adds a 'Country' field type for the [Advanced Custom Fields](http://wordpress.org/extend/plugins/advanced-custom-fields/) WordPress plugin.
 

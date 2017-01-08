@@ -1,10 +1,9 @@
 <?php
-
 /*
 Plugin Name: Advanced Custom Fields: ACF Country
 Plugin URI: https://github.com/nlemoine/acf-country
 Description: SHORT_DESCRIPTION
-Version: 1.0.0
+Version: 1.1.0
 Author: Nicolas Lemoine
 Author URI: https://github.com/nlemoine
 License: GPLv2 or later
@@ -36,7 +35,7 @@ class acf_country {
 
 		// vars
 		$this->settings = array(
-			'version'	=> '1.0.0',
+			'version'	=> '1.1.0',
 			'url'		=> plugin_dir_url( __FILE__ ),
 			'path'		=> plugin_dir_path( __FILE__ )
 		);
@@ -70,8 +69,9 @@ class acf_country {
 	function include_field_types( $version = false ) {
 
 		// support empty $version
-		if( !$version ) $version = 4;
-
+		if( !$version ) {
+			$version = 4;
+		}
 
 		// include
 		include_once('fields/acf-country-helpers.php');

@@ -1,47 +1,44 @@
-=== Advanced Custom Fields: Country Field ===
-Contributors: {{wp_user_name}}
-Tags:
-Requires at least: 3.4
-Tested up to: 3.3.1
-Stable tag: trunk
-License: GPLv2 or later
+=== Advanced Custom Fields: ACF Country Field ===
+Contributors: Nicolas Lemoine
+Tags: acf, advanced custom fields, country, world
+Requires at least: 4.5
+Tested up to: 4.7
+Stable tag: 1.1
+License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-{{short_description}}
+Add a country field to ACF (Advanced Custom Fields)
 
 == Description ==
 
-{{description}}
+ACF country is a select field for Advanced Custom Fields, it displays a list of all countries in your langage.
+
+= Development =
+
+Plugin is hosted on [Github](https://github.com/nlemoine/acf-country).
 
 = Compatibility =
 
-This add-on will work with:
-
-* version 4 and up
-* version 3 and bellow
+This ACF field type is compatible with:
+* ACF 5 (pro)
+* ACF 4
 
 == Installation ==
 
-This add-on can be treated as both a WP plugin and a theme include.
-
-= Plugin =
-1. Copy the 'acf-country' folder into your plugins folder
-2. Activate the plugin via the Plugins admin page
-
-= Include =
-1.	Copy the 'acf-country' folder into your theme folder (can use sub folders). You can place the folder anywhere inside the 'wp-content' directory
-2.	Edit your functions.php file and add the code below (Make sure the path is correct to include the acf-country.php file)
-
-`
-add_action('acf/register_fields', 'my_register_fields');
-
-function my_register_fields()
-{
-	include_once('acf-country/acf-country.php');
-}
-`
+1. Copy the `acf-country` folder into your `wp-content/plugins` folder
+2. Activate the ACF Country plugin via the plugins admin page
+3. Create a new field via ACF and select the `country` type
+4. Please refer to the description for more info regarding the field type settings
 
 == Changelog ==
 
-= 0.0.1 =
+= 1.1.0 =
+* Switched from symfony/intl to umpirsky/country-list to avoid ICU dependency
+* Allow multiple values
+* Support for ACF v5/Pro
+* Added flags
+* Added options
+* Improved UI
+
+= 1.0.0 =
 * Initial Release.
