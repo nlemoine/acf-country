@@ -20,7 +20,8 @@ Or multiple ones:
 
 This add-on will work with:
 
-* ACF version 4 or higher
+* ACF version 4
+* ACF version 5 (pro)
 * PHP 5.3 or higher
 
 ### Field options
