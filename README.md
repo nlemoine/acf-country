@@ -6,9 +6,9 @@ Adds a 'Country' field type for the [Advanced Custom Fields](http://wordpress.or
 
 ### Overview
 
-Display a select list of all countries.
+Display a select list of all countries in your language.
 
-Country names are available in every language ([see available list](https://github.com/umpirsky/country-list/tree/master/data)). By default, country names are localized with current WordPress locale.
+Country names are available in every language ([see available list](https://github.com/umpirsky/country-list/tree/master/data)). By default, country names are localized in your current WordPress language.
 
 Select a single value:
 
@@ -30,23 +30,21 @@ This add-on will work with:
 
 * Allow null: enable/disable null value
 * Allow multiple: enable/disable multiple countries selection
-* Stylised UI: enable/disable enhanced select field
-* Return format: country code, country name or both (as an array: `array('fr' => 'France')`)
+* Stylised UI: enable/disable enhanced select field (thanks to [Select2](https://select2.github.io/))
+* Return format: country code, country name or both (as an array: `array('FR' => 'France')`)
 
 ### Installation
 
-This add-on can be treated as both a WP plugin and a theme include.
+#### WordPress admin
 
-**Install as Plugin**
+In plugins/add section, search for "acf country" and click "install".
 
-1. Copy the 'acf-country' folder into your plugins folder
-2. Activate the plugin via the Plugins admin page
+#### Zip
 
-**Include within theme**
+[Download](https://github.com/nlemoine/acf-country/archive/master.zip) the plugin and extract the plugin to your plugins folder.
 
-1.	Copy the 'acf-country' folder into your theme folder (can use sub folders). You can place the folder anywhere inside the 'wp-content' directory
-2.	Edit your functions.php file and add the code below (Make sure the path is correct to include the acf-country.php file)
+#### Composer
 
-```php
-include_once('acf-country/acf-country.php');
+```bash
+composer require hellonico/acf-country
 ```
