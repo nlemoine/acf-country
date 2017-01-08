@@ -28,10 +28,19 @@ This add-on will work with:
 
 ### Field options
 
-* Allow null: enable/disable null value
-* Allow multiple: enable/disable multiple countries selection
-* Stylised UI: enable/disable enhanced select field (thanks to [Select2](https://select2.github.io/))
-* Return format: country code, country name or both (as an array: `array('FR' => 'France')`)
+* Allow null: enable/disable null value (disabled by default)
+* Allow multiple: enable/disable multiple countries selection (disabled by default)
+* Stylised UI: enable/disable enhanced select field thanks to [Select2](https://select2.github.io/) (enabled by default)
+* Return format: 
+	* country code:
+		* single: `FR`
+		* multiple: `array('FR', 'DE', 'ES')`
+	* country name:
+		* single: `France`
+		* multiple: `array('France', 'Allemagne', 'Espagne')`
+	* country code and country name (default):
+		* single: `array('FR' => 'France')`
+		* multiple: `array('FR' => 'France', 'DE' => 'Allemagne')`
 
 ### Installation
 
