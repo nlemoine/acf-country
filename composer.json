@@ -1,5 +1,5 @@
 {
-    "name": "nlemoine/acf-country",
+    "name": "hellonico/acf-country",
     "type": "wordpress-plugin",
     "license": "MIT",
     "description": "Add a country field to ACF (Advanced Custom Fields)",
