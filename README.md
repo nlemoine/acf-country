@@ -6,7 +6,13 @@ Adds a 'Country' field type for the [Advanced Custom Fields](http://wordpress.or
 
 ### Overview
 
-Display a localized list of all countries.
+Display a select list of all countries.
+
+Select a single value:
+![ACF Country field](https://dl.dropboxusercontent.com/u/54390968/dev/acf-country_single.png)
+
+Or multiple ones:
+![ACF Country field](https://dl.dropboxusercontent.com/u/54390968/dev/acf-country_multiple.png)
 
 ### Compatibility
 
@@ -14,6 +20,13 @@ This add-on will work with:
 
 * ACF version 4 or higher
 * PHP 5.3 or higher
+
+### Field options
+
+* Allow null: enable/disable null value
+* Allow multiple: enable/disable multiple countries selection
+* Stylised UI: enable/disable enhanced select field
+* Return format: country code, country name or both (as an array: `array('fr' => 'France')`)
 
 ### Installation
 
@@ -32,7 +45,3 @@ This add-on can be treated as both a WP plugin and a theme include.
 ```php
 include_once('acf-country/acf-country.php');
 ```
-
-### More Information
-
-Please read the readme.txt file for more information

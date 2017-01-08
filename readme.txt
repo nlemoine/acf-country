@@ -13,6 +13,13 @@ Add a country field to ACF (Advanced Custom Fields)
 
 ACF country is a select field for Advanced Custom Fields, it displays a list of all countries in your langage.
 
+= Field options =
+
+* Allow null: enable/disable null value
+* Allow multiple: enable/disable multiple countries selection
+* Stylised UI: enable/disable enhanced select field
+* Return format: country code, country name or both (as an array `array('fr' => 'France')`)
+
 = Development =
 
 Plugin is hosted on [Github](https://github.com/nlemoine/acf-country).
