@@ -8,6 +8,8 @@ Adds a 'Country' field type for the [Advanced Custom Fields](http://wordpress.or
 
 Display a select list of all countries.
 
+Country names are available in every language ([see available list](https://github.com/umpirsky/country-list/tree/master/data)). By default, country names are localized with current WordPress locale.
+
 Select a single value:
 
 ![ACF Country field](https://dl.dropboxusercontent.com/u/54390968/dev/acf-country_single.png)
