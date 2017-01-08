@@ -34,13 +34,13 @@ This add-on will work with:
 * Return format:
 	* country code and country name (default):
 		* single: `array('FR' => 'France')`
-		* multiple: `array('FR' => 'France', 'DE' => 'Allemagne')`
+		* multiple: `array('FR' => 'France', 'DE' => 'Germany')`
 	* country code:
 		* single: `FR`
 		* multiple: `array('FR', 'DE', 'ES')`
 	* country name:
 		* single: `France`
-		* multiple: `array('France', 'Allemagne', 'Espagne')`
+		* multiple: `array('France', 'Germany', 'Spain')`
 
 ### Installation
 
