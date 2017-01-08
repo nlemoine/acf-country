@@ -9,9 +9,11 @@ Adds a 'Country' field type for the [Advanced Custom Fields](http://wordpress.or
 Display a select list of all countries.
 
 Select a single value:
+
 ![ACF Country field](https://dl.dropboxusercontent.com/u/54390968/dev/acf-country_single.png)
 
 Or multiple ones:
+
 ![ACF Country field](https://dl.dropboxusercontent.com/u/54390968/dev/acf-country_multiple.png)
 
 ### Compatibility
