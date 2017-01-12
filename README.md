@@ -44,10 +44,6 @@ This add-on will work with:
 
 ### Installation
 
-#### WordPress admin
-
-In plugins/add section, search for "acf country" and click "install".
-
 #### Zip
 
 [Download](https://github.com/nlemoine/acf-country/archive/master.zip) the plugin and extract the plugin to your plugins folder.
