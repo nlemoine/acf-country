@@ -2,7 +2,7 @@
 /*
 Plugin Name: Advanced Custom Fields: ACF Country
 Plugin URI: https://github.com/nlemoine/acf-country
-Description: SHORT_DESCRIPTION
+Description: Display a select field of all countries, in any language.
 Version: 1.1.0
 Author: Nicolas Lemoine
 Author URI: https://github.com/nlemoine
