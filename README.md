@@ -12,11 +12,11 @@ Country names are available in every language ([see available list](https://gith
 
 Select a single value:
 
-![ACF Country field](https://dl.dropboxusercontent.com/u/54390968/dev/acf-country_single.png)
+![ACF Country field](https://cloud.githubusercontent.com/assets/2526939/24555414/5c045c7c-1631-11e7-815a-35b6b6903e36.png)
 
 Or multiple ones:
 
-![ACF Country field](https://dl.dropboxusercontent.com/u/54390968/dev/acf-country_multiple.png)
+![ACF Country field](https://cloud.githubusercontent.com/assets/2526939/24555413/5bf05402-1631-11e7-8d7e-74d425a3eae4.png)
 
 ### Compatibility
 
