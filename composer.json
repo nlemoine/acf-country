@@ -23,7 +23,9 @@
     "prefer-stable": true,
     "require": {
         "composer/installers": "^1.0",
-        "umpirsky/country-list": "^2.0",
         "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "umpirsky/country-list": "^2.0"
     }
 }
