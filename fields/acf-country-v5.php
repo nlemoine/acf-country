@@ -60,9 +60,10 @@ class acf_field_country extends acf_field {
 		$this->settings = $settings;
 
 		// do not delete!
-    	parent::__construct();
+		parent::__construct();
 
 	}
+
 
 	/*
 	*  render_field_settings()
@@ -78,6 +79,18 @@ class acf_field_country extends acf_field {
 	*/
 
 	function render_field_settings( $field ) {
+
+		// choices
+		$countries = acf_country_helpers::get_countries();
+		acf_render_field_setting( $field, array(
+			'label'			=> __('Choices','acf'),
+			'name'			=> 'choices',
+			'type'			=> 'textarea',
+			'wrapper' => array(
+				'class' => 'hidden',
+			),
+			'value' => acf_encode_choices($countries),
+		));
 
 		// allow_null
 		acf_render_field_setting( $field, array(
@@ -110,7 +123,7 @@ class acf_field_country extends acf_field {
 		acf_render_field_setting( $field, array(
 			'label'			=> __('Return Format','acf'),
 			'instructions'	=> __('Specify the value returned','acf'),
-			'type'			=> 'select',
+			'type'			=> 'radio',
 			'name'			=> 'return_format',
 			'choices'		=> array(
 				'array'	=> __('Country code and name (as array)', 'acf-country'),
@@ -191,6 +204,31 @@ class acf_field_country extends acf_field {
 	}
 
 	/*
+	*  field_group_admin_enqueue_scripts()
+	*
+	*  This action is called in the admin_enqueue_scripts action on the edit screen where your field is edited.
+	*  Use this action to add CSS + JavaScript to assist your render_field_options() action.
+	*
+	*  @type	action (admin_enqueue_scripts)
+	*  @since	3.6
+	*  @date	23/01/13
+	*
+	*  @param	n/a
+	*  @return	n/a
+	*/
+
+	function field_group_admin_enqueue_scripts() {
+		// vars
+		$url     = $this->settings['url'];
+		$path    = $this->settings['path'];
+		$version = $this->settings['version'];
+
+		// register & include JS
+		wp_register_script( 'acf-country-group', "{$url}assets/js/acf-country-group.js", array('acf-field-group'), $version );
+		wp_enqueue_script('acf-country-group');
+	}
+
+	/*
 	*  load_value()
 	*
 	*  This filter is applied to the $value after it is loaded from the db
@@ -216,7 +254,6 @@ class acf_field_country extends acf_field {
 		return $value;
 
 	}
-
 
 	/*
 	*  update_value()

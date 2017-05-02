@@ -41,7 +41,6 @@
 		*  @return	n/a
 		*/
 
-
 		acf.add_action('ready append', function( $el ){
 
 			// search $el for fields of type 'acf_country'
@@ -53,6 +52,45 @@
 
 		});
 
+		// Extend conditional logic to allow country type
+		acf.conditional_logic.extend({
+			calculate : function( rule, $trigger, $target ){
+
+				// bail early if $trigger could not be found
+				if( !$trigger || !$target ) return false;
+
+				// debug
+				//console.log( 'calculate(%o, %o, %o)', rule, $trigger, $target);
+
+				// vars
+				var match = false,
+					type = $trigger.data('type');
+
+
+				// input with :checked
+				if( type == 'true_false' || type == 'checkbox' || type == 'radio' ) {
+
+					match = this.calculate_checkbox( rule, $trigger );
+
+
+				} else if( type == 'select' || type == 'country' ) {
+
+					match = this.calculate_select( rule, $trigger );
+
+				}
+
+				// reverse if 'not equal to'
+				if( rule.operator === "!=" ) {
+
+					match = !match;
+
+				}
+
+				// return
+				return match;
+
+			}
+		});
 
 	} else {
 
