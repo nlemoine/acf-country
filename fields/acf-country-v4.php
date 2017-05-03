@@ -58,7 +58,27 @@ class acf_field_country extends acf_field {
 	function create_options( $field )
 	{
 		$key = $field['name'];
+		$countries = acf_country_helpers::get_countries();
+		array_walk($countries, function(&$value, $key) {
+			$value = $key . ' : ' . $value;
+		});
+		$choices = implode("\n", $countries);
 		?>
+<tr class="field_option field_option_<?php echo $this->name; ?> hidden">
+	<td class="label">
+		<label for=""><?php _e("Choices",'acf'); ?></label>
+	</td>
+	<td>
+		<?php
+		do_action('acf/create_field', array(
+			'type'	=>	'textarea',
+			'class' => 	'textarea field_option-choices',
+			'name'	=>	'fields['.$key.'][choices]',
+			'value'	=>	$choices,
+		));
+		?>
+	</td>
+</tr>
 <tr class="field_option field_option_<?php echo $this->name; ?>">
 	<td class="label">
 		<label><?php _e('Allow Null?', 'acf'); ?></label>
@@ -233,6 +253,29 @@ class acf_field_country extends acf_field {
 		wp_register_style( 'acf-country', sprintf('%sassets/css/acf-country.css', $url), array('acf-input', 'select2-v3.5.4', 'famfamfam-flags'), $version );
 		wp_enqueue_style('acf-country');
 
+	}
+
+	/*
+	*  field_group_admin_enqueue_scripts()
+	*
+	*  This action is called in the admin_enqueue_scripts action on the edit screen where your field is edited.
+	*  Use this action to add CSS + JavaScript to assist your create_field_options() action.
+	*
+	*  $info	http://codex.wordpress.org/Plugin_API/Action_Reference/admin_enqueue_scripts
+	*  @type	action
+	*  @since	3.6
+	*  @date	23/01/13
+	*/
+	function field_group_admin_enqueue_scripts()
+	{
+
+		// vars
+		$url     = $this->settings['url'];
+		$path    = $this->settings['path'];
+		$version = $this->settings['version'];
+
+		wp_register_script( 'acf-country-group', "{$url}assets/js/acf-country-group.js", array('acf-field-group'), $version );
+		wp_enqueue_script('acf-country-group');
 	}
 
 }
