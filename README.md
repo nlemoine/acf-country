@@ -1,7 +1,7 @@
 # ACF Country field
 
 [![GitHub issues](https://img.shields.io/github/issues/nlemoine/acf-country.svg?style=flat-square)](https://github.com/nlemoine/acf-country/issues)
-[![Packagist](https://img.shields.io/packagist/dt/hellonico/acf-country.svg)](https://packagist.org/packages/hellonico/acf-country)
+[![Packagist](https://img.shields.io/packagist/dt/hellonico/acf-country.svg?style=flat-square)](https://packagist.org/packages/hellonico/acf-country)
 
 Adds a 'Country' field type for the [Advanced Custom Fields](http://wordpress.org/extend/plugins/advanced-custom-fields/) WordPress plugin.
 
