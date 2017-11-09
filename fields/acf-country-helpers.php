@@ -12,7 +12,7 @@ class acf_country_helpers {
 			'multiple'      =>	0,
 			'allow_null'    =>	0,
 			'choices'       =>	array(),
-			'default_value' => strtoupper(substr(get_locale(), 3, 2)),
+			'default_value' => '',
 			'ui'            => 1,
 			'return_format' => 'array',
 			'placeholder'   => __('Select a country', 'acf-country'),
