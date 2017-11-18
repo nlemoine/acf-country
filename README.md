@@ -47,7 +47,7 @@ This add-on will work with:
 
 #### Zip
 
-[Download](https://github.com/nlemoine/acf-country/archive/master.zip) the plugin and extract the plugin to your plugins folder.
+[Download the plugin](https://github.com/nlemoine/acf-country/releases/latest) and extract the archive to your plugins folder.
 
 #### Composer
 
