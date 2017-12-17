@@ -86,7 +86,14 @@ class acf_country_helpers {
 			return false;
 		}
 
-		return include $file;
+		$countries = include $file;
+
+		if ( $countries ) {
+			$null_country = array( '' => '' );
+			$countries = array_merge($null_country, $countries);
+		}
+
+		return $countries;
 	}
 
 	/**
