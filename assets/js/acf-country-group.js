@@ -10,15 +10,17 @@
 				var self = this;
 
 				// vars
-				var key			= $field.attr('data-key'),
-					$ancestors	= $field.parents('.acf-field-list'),
-					$tr			= $field.find('.acf-field[data-name="conditional_logic"]:last');
+				var key = $field.attr('data-key');
+				var $lists = $field.parents('.acf-field-list');
+				var $tr = $field.find('.acf-field-setting-conditional_logic:last');
+
 
 				// choices
 				var choices	= [];
 
-				// loop over ancestors
-				$.each( $ancestors, function( i ){
+
+				// loop over ancestor lists
+				$.each( $lists, function( i ){
 
 					// vars
 					var group = (i == 0) ? acf._e('sibling_fields') : acf._e('parent_fields');
@@ -34,7 +36,7 @@
 							this_label	= $this_field.find('.field-label:first').val();
 
 						// validate
-						if( $.inArray(this_type, ['select', 'checkbox', 'true_false', 'radio', 'country']) === -1 ) {
+						if( $.inArray(this_type, ['select', 'checkbox', 'true_false', 'radio', 'button_group', 'country']) === -1 ) {
 
 							return;
 
@@ -101,7 +103,7 @@
 					});
 
 				// select
-				} else if( field_type == "select" || field_type == "checkbox" || field_type == "radio" || field_type == "country" ) {
+				} else if( field_type == "select" || field_type == "checkbox" || field_type == "radio" || field_type == "button_group" || field_type == "country" ) {
 
 					// vars
 					var lines = $field.find('.acf-field[data-name="choices"] textarea').val().split("\n");

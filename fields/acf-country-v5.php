@@ -192,11 +192,14 @@ class acf_field_country extends acf_field {
 
 		// register & include JS
 		wp_register_script( 'acf-country', "{$url}assets/js/acf-country.js", array('acf-input'), $version );
-		wp_enqueue_script('acf-country');
+		wp_enqueue_script( 'acf-country' );
+		wp_localize_script( 'acf-country', 'acf_select2_version', array(
+			'select2_version' => acf_get_setting('select2_version'),
+		));
 
 		// register & include CSS
 		wp_register_style( 'acf-country', "{$url}assets/css/acf-country.css", array('acf-input'), $version );
-		wp_enqueue_style('acf-country');
+		wp_enqueue_style( 'acf-country' );
 
 		wp_register_style( 'famfamfam-flags', sprintf('%sassets/vendor/famfamfam-flags/dist/sprite/famfamfam-flags%s.css', $url, WP_DEBUG ? '' : '.min'), false, $version);
 		wp_enqueue_style( 'famfamfam-flags' );

@@ -1,16 +1,27 @@
 (function($){
 
-	function format_country(code, country) {
+	function format_v3_country(code, country) {
 		return '<span class="acf-country-flag-icon famfamfam-flags ' + code + '"></span> <span class="acf-country-flag-name">' + country + '</span>';
 	}
 
-	function format_country_result(result, container, query, escapeMarkup) {
+	function format_v3_country_result(result, container, query, escapeMarkup) {
 		var text = $.fn.select2.defaults.formatResult(result, container, query, escapeMarkup);
-		return format_country(result.id.toLowerCase(), text);
+		return format_v3_country(result.id.toLowerCase(), text);
 	}
 
-	function format_country_selection(result, container, query, escapeMarkup) {
-		return format_country(result.id.toLowerCase(), result.text);
+	function format_v3_country_selection(result, container, query, escapeMarkup) {
+		return format_v3_country(result.id.toLowerCase(), result.text);
+	}
+
+	function format_country(state) {
+		if(!state.id) {
+			return state.text;
+		}
+		return $('<span class="acf-country-flag-icon famfamfam-flags ' + state.id.toLowerCase() + '"></span> <span class="acf-country-flag-name">' + state.text + '</span>');
+	}
+
+	function get_select2_version() {
+		return typeof acf_select2_version != 'undefined' && acf_select2_version.hasOwnProperty('select2_version') ? parseInt(acf_select2_version.select2_version) : 3;
 	}
 
 	function init_field( $el ) {
@@ -18,11 +29,24 @@
 		if( !$acf_country.length ) {
 			return;
 		}
-		$acf_country.select2({
+		var select2_version = get_select2_version();
+		var options = {
 			allowClear: !!$acf_country.data('allow-null'),
-			formatResult: format_country_result,
-			formatSelection: format_country_selection
-		});
+			width: '100%'
+		};
+		if( select2_version === 3 ) {
+			$.extend(options, {
+				formatResult: format_v3_country_result,
+				formatSelection: format_v3_country_selection
+			});
+		} else if( select2_version === 4 ) {
+			$.extend(options, {
+				templateResult: format_country,
+				templateSelection: format_country
+			});
+		}
+		console.log(options)
+		$acf_country.select2(options);
 	}
 
 	if( typeof acf.add_action !== 'undefined' ) {
@@ -54,7 +78,7 @@
 
 		// Extend conditional logic to allow country type
 		acf.conditional_logic.extend({
-			calculate : function( rule, $trigger, $target ){
+			calculate: function( rule, $trigger, $target ){
 
 				// bail early if $trigger could not be found
 				if( !$trigger || !$target ) return false;
@@ -68,12 +92,13 @@
 
 
 				// input with :checked
-				if( type == 'true_false' || type == 'checkbox' || type == 'radio' ) {
+				if( type == 'true_false' || type == 'checkbox' || type == 'radio' || type == 'button_group' ) {
 
 					match = this.calculate_checkbox( rule, $trigger );
 
 
 				} else if( type == 'select' || type == 'country' ) {
+
 
 					match = this.calculate_select( rule, $trigger );
 
