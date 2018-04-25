@@ -3,8 +3,7 @@
   "version": "1.1.1",
   "description": "Adds a 'Country' field type for the [Advanced Custom Fields](http://wordpress.org/extend/plugins/advanced-custom-fields/) WordPress plugin.",
   "scripts": {
-    "postinstall": "mv node_modules assets && mv assets/node_modules assets/vendor && npm run lowerselect2",
-    "lowerselect2": "mv assets/vendor/Select2 assets/vendor/select2"
+    "postinstall": "mv node_modules assets/vendor"
   },
   "repository": {
     "type": "git",
