@@ -43,6 +43,7 @@ class acf_country_helpers {
 			'data-multiple'		=> $field['multiple'],
 			'data-placeholder'	=> $field['placeholder'],
 			'data-allow-null'	=> $field['allow_null'] ? 1 : 0,
+			'data-preserve-order'	=> $field['preserve_order'] ? 1 : 0,
 		);
 
 		$attrs['class'] .=  ' acf-country';
