@@ -156,6 +156,25 @@ class acf_field_country extends acf_field {
 		?>
 	</td>
 </tr>
+<tr class="field_option field_option_<?php echo $this->name; ?>">
+        <td class="label">
+            <label><?php _e('Preserve Order','acf'); ?></label>
+        </td>
+        <td>
+            <?php
+            do_action('acf/create_field', array(
+                'type'	=>	'radio',
+                'name'	=>	'fields['.$key.'][preserve_order]',
+                'value'	=>	$field['preserve_order'],
+                'choices'	=>	array(
+                    1	=>	__('Yes','acf'),
+                    0	=>	__('No','acf'),
+                ),
+                'layout'	=>	'horizontal',
+            ));
+            ?>
+        </td>
+    </tr>
 <?php
 
 	}
