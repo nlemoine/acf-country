@@ -5,8 +5,8 @@
     "description": "Add a country field to ACF (Advanced Custom Fields)",
     "homepage": "https://github.com/juslintek/acf-country",
     "support": {
-        "issues": "https://github.com/nlemoine/acf-country/issues",
-        "source": "https://github.com/nlemoine/acf-country.git"
+        "issues": "https://github.com/juslintek/acf-country/issues",
+        "source": "https://github.com/juslintek/acf-country.git"
     },
     "authors": [
         {
