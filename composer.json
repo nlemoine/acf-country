@@ -1,18 +1,23 @@
 {
-    "name": "hellonico/acf-country",
+    "name": "juslintek/acf-country",
     "type": "wordpress-plugin",
     "license": "MIT",
     "description": "Add a country field to ACF (Advanced Custom Fields)",
-    "homepage": "https://github.com/nlemoine/acf-country",
+    "homepage": "https://github.com/juslintek/acf-country",
     "support": {
-        "issues": "https://github.com/nlemoine/acf-country/issues",
-        "source": "https://github.com/nlemoine/acf-country.git"
+        "issues": "https://github.com/juslintek/acf-country/issues",
+        "source": "https://github.com/juslintek/acf-country.git"
     },
     "authors": [
         {
             "name": "Nicolas Lemoine",
             "email": "dev@helloni.co",
             "homepage": "https://github.com/nlemoine"
+        },
+        {
+            "name": "Linas Jusys",
+            "email": "jusys.linas@gmail.com",
+            "homepage": "https://github.com/juslintek"
         }
     ],
     "keywords": [

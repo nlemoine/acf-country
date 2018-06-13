@@ -132,6 +132,15 @@ class acf_field_country extends acf_field {
 			)
 		));
 
+		// preserve order
+        acf_render_field_setting( $field, array(
+            'label'			=> __('Preserve Order','acf'),
+            'instructions'	=> 'Will save countries in the order you select them',
+            'name'			=> 'preserve_order',
+            'type'			=> 'true_false',
+            'ui'			=> 1,
+        ));
+
 	}
 
 

@@ -15,6 +15,7 @@ class acf_country_helpers {
 			'default_value' => '',
 			'ui'            => 1,
 			'return_format' => 'array',
+			'preserve_order' => 0,
 			'placeholder'   => __('Select a country', 'acf-country'),
 		);
 	}
@@ -43,6 +44,7 @@ class acf_country_helpers {
 			'data-multiple'		=> $field['multiple'],
 			'data-placeholder'	=> $field['placeholder'],
 			'data-allow-null'	=> $field['allow_null'] ? 1 : 0,
+			'data-preserve-order'	=> $field['preserve_order'] ? 1 : 0,
 		);
 
 		$attrs['class'] .=  ' acf-country';
@@ -57,6 +59,18 @@ class acf_country_helpers {
 		}
 
 		// create Field HTML
+
+        var_dump($field['value']);
+        var_dump($field['choices']);
+        if ($field['preserve_order'] == 1 && !empty($field['value'])) {
+            foreach ($field['value'] as $country_code) {
+                $country_data = $field['choices'][$country_code];
+                unset($field['choices'][$country_code]);
+                $field['choices'][$country_code] = $country_data;
+            }
+        }
+
+
 		?>
 		<select <?php echo implode( ' ', array_map(function($val, $key) { return sprintf( '%1$s="%2$s"', $key, esc_attr($val) ); }, $attrs, array_keys( $attrs ))); ?>>
 			<?php if( $field['allow_null'] ): ?>
