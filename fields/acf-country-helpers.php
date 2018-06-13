@@ -59,6 +59,18 @@ class acf_country_helpers {
 		}
 
 		// create Field HTML
+
+        var_dump($field['value']);
+        var_dump($field['choices']);
+        if ($field['preserve_order'] == 1 && !empty($field['value'])) {
+            foreach ($field['value'] as $country_code) {
+                $country_data = $field['choices'][$country_code];
+                unset($field['choices'][$country_code]);
+                $field['choices'][$country_code] = $country_data;
+            }
+        }
+
+
 		?>
 		<select <?php echo implode( ' ', array_map(function($val, $key) { return sprintf( '%1$s="%2$s"', $key, esc_attr($val) ); }, $attrs, array_keys( $attrs ))); ?>>
 			<?php if( $field['allow_null'] ): ?>
