@@ -59,9 +59,6 @@ class acf_country_helpers {
 		}
 
 		// create Field HTML
-
-        var_dump($field['value']);
-        var_dump($field['choices']);
         if ($field['preserve_order'] == 1 && !empty($field['value'])) {
             foreach ($field['value'] as $country_code) {
                 $country_data = $field['choices'][$country_code];
