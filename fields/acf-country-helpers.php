@@ -118,9 +118,20 @@ class acf_country_helpers {
 		if( is_array($value) ) {
 
 			// default to array
-			$value = array_filter($countries, function($k) use($value) {
-				return in_array($k, $value, true);
-			}, ARRAY_FILTER_USE_KEY);
+			if ($field['preserve_order'] == 1) {
+			$countries_good_order = [];
+
+				foreach ($value as $country_code) {
+					$countries_good_order[$country_code] = $countries[$country_code];
+				}
+
+				$value = $countries_good_order;
+
+			} else {
+				$value = array_filter( $countries, function ( $k ) use ( $value ) {
+					return in_array( $k, $value, true );
+				}, ARRAY_FILTER_USE_KEY );
+			}
 
 			// name
 			if( $field['return_format'] === 'name' ) {
