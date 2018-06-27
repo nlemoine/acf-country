@@ -91,6 +91,7 @@
     });
 
     // Extend conditional logic to allow country type
+    if (typeof acf.conditional_logic !== 'undefined' ) {
     acf.conditional_logic.extend({
       calculate: function (rule, $trigger, $target) {
 
@@ -130,6 +131,7 @@
 
       }
     });
+    }
 
   } else {
 
