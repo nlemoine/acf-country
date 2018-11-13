@@ -67,8 +67,10 @@ class acf_country_helpers {
 			)
 		);
 		?>
-		<?php if ( $field['multiple'] ) : ?>
-			<?php // Empty select multiple will not be posted, thus prevents from saving an empty field/deleting field data ?>
+		<?php
+		// Empty select multiple will not be posted, thus prevents from saving an empty field/deleting field data
+		if ( $field['multiple'] ) :
+			?>
 			<input type="hidden" name="<?php echo esc_attr( $field['name'] ); ?>" value="" />
 		<?php endif; ?>
 		<select <?php echo $select_attrs; // phpcs:ignore ?>>
