@@ -63,7 +63,7 @@ composer require hellonico/acf-country
 
 ### Contributing
 
-See (CONTRIBUTING)[CONTRIBUTING.MD].
+See [CONTRIBUTING](CONTRIBUTING.MD).
 
 ### Support
 
