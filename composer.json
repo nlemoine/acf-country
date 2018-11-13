@@ -1,13 +1,14 @@
 {
     "name": "hellonico/acf-country",
     "type": "wordpress-plugin",
-    "license": "MIT",
     "description": "Add a country field to ACF (Advanced Custom Fields)",
+    "keywords": [
+        "acf",
+        "advanced custom fields",
+        "country"
+    ],
     "homepage": "https://github.com/nlemoine/acf-country",
-    "support": {
-        "issues": "https://github.com/nlemoine/acf-country/issues",
-        "source": "https://github.com/nlemoine/acf-country.git"
-    },
+    "license": "MIT",
     "authors": [
         {
             "name": "Nicolas Lemoine",
@@ -15,17 +16,39 @@
             "homepage": "https://github.com/nlemoine"
         }
     ],
-    "keywords": [
-        "acf",
-        "advanced custom fields",
-        "country"
-    ],
-    "prefer-stable": true,
     "require": {
-        "composer/installers": "^1.0",
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "composer/installers": "^1.0"
     },
     "require-dev": {
-        "umpirsky/country-list": "^2.0"
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+        "phpcompatibility/phpcompatibility-wp": "^2.0",
+        "umpirsky/country-list": "^2.0",
+        "wp-coding-standards/wpcs": "^1.1"
+    },
+    "prefer-stable": true,
+    "scripts": {
+        "post-install-cmd": [
+            "@install-codestandards",
+            "@configure-phpcs"
+        ],
+        "post-update-cmd": [
+            "@configure-phpcs"
+        ],
+        "configure-phpcs": [
+            "if [ -f vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set colors 1; fi",
+            "if [ -f vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set show_progress 0; fi",
+            "if [ -f vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set report_width auto; fi",
+            "if [ -f vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set encoding utf-8; fi",
+            "if [ -f vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set ignore_warnings_on_exit 1; fi"
+        ],
+        "install-codestandards": [
+            "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+        ],
+        "test": "./vendor/bin/phpcs"
+    },
+    "support": {
+        "issues": "https://github.com/nlemoine/acf-country/issues",
+        "source": "https://github.com/nlemoine/acf-country.git"
     }
 }

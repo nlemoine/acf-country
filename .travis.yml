@@ -1,0 +1,18 @@
+language: php
+
+sudo: false
+
+matrix:
+  allow_failures:
+    - php: hhvm
+  include:
+    - php: 5.3
+      env: WP_VERSION=4.4
+      dist: precise
+
+before_script:
+  - composer self-update --no-interaction
+  - composer install --no-interaction
+
+script:
+  - vendor/bin/phpcs

@@ -2,8 +2,13 @@
 
 [![GitHub issues](https://img.shields.io/github/issues/nlemoine/acf-country.svg?style=flat-square)](https://github.com/nlemoine/acf-country/issues)
 [![Packagist](https://img.shields.io/packagist/dt/hellonico/acf-country.svg?style=flat-square)](https://packagist.org/packages/hellonico/acf-country)
+[![Beerpay](https://beerpay.io/nlemoine/acf-country/badge.svg?style=flat-square)](https://beerpay.io/nlemoine/acf-country)
 
 Adds a 'Country' field type for the [Advanced Custom Fields](http://wordpress.org/extend/plugins/advanced-custom-fields/) WordPress plugin.
+
+## ⚠️ Warning
+
+From version 2.0, ACF Country will add some breaking changes. Keep an eye on the repository if you included an autoupdater.
 
 ### Overview
 
@@ -21,15 +26,16 @@ Or multiple ones:
 
 ### Compatibility
 
-This add-on will work with:
-
 * ACF version 4
-* ACF version 5 (pro)
+* ACF version 5/pro
 * PHP 5.3 or higher
+
+*Note: I [tried my best](https://github.com/nlemoine/acf-country/tree/master/assets/js) to support every ACF version since version 4. However, before 5.7, ACF didn't provide any convenient way to work with conditional logic. This feature may be broken in some ACF versions. Update ACF to the latest if you absolutely need it.*
 
 ### Field options
 
-* Allow null: enable/disable null value (disabled by default)
+* Default value: set a default value for the country field (country code)
+* Allow null: enable/disable null value (disabled by default, only apply when "allow multiple" is set to `false`)
 * Allow multiple: enable/disable multiple countries selection (disabled by default)
 * Stylised UI: enable/disable enhanced select field thanks to [Select2](https://select2.github.io/) (enabled by default)
 * Return format:
@@ -54,3 +60,11 @@ This add-on will work with:
 ```bash
 composer require hellonico/acf-country
 ```
+
+### Contributing
+
+See (CONTRIBUTING)[CONTRIBUTING.MD].
+
+### Support
+
+This ACF field was originally developed for a personal project I don't use  anymore. I still decided to maintain it anyway. If you use it in a commercial project, please consider [buying me a beer](https://beerpay.io/nlemoine/acf-country).

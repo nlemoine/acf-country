@@ -9,3 +9,4 @@ vendor/umpirsky/country-list/data/*/*
 !vendor/umpirsky/country-list/data/*/*.php
 vendor/composer
 vendor/autoload.php
+vendor
