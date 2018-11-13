@@ -23,7 +23,7 @@
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
         "phpcompatibility/phpcompatibility-wp": "^2.0",
-        "umpirsky/country-list": "^2.0",
+        "umpirsky/country-list": "*",
         "wp-coding-standards/wpcs": "^1.1"
     },
     "prefer-stable": true,
