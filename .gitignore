@@ -1,12 +1,3 @@
-assets/vendor/famfamfam-flags/dist/gif/*
-assets/vendor/famfamfam-flags/dist/png/*
-assets/vendor/famfamfam-flags/*.md
-assets/vendor/famfamfam-flags/*.json
-!assets/vendor/famfamfam-flags/dist/sprite/famfamfam-flags.css
-!assets/vendor/famfamfam-flags/dist/sprite/famfamfam-flags.min.css
-!assets/vendor/famfamfam-flags/dist/sprite/famfamfam-flags.png
+/vendor/*
 vendor/umpirsky/country-list/data/*/*
 !vendor/umpirsky/country-list/data/*/*.php
-vendor/composer
-vendor/autoload.php
-vendor
