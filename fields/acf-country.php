@@ -253,17 +253,17 @@ class AcfCountry extends acf_field {
 	 */
 	private function get_countries() {
 
-		$locale = get_locale();
+		$wp_locale = get_locale();
 
 		// Try locales in that order
 		$locales = [
-			$locale,
-			substr( $locale, 0, 2 ),
+			$wp_locale,
+			substr( $wp_locale, 0, 2 ),
 			'en',
 		];
 
-		foreach ( $locales as $loc ) {
-			$file = sprintf( '%s/data/%s/country.php', $this->settings['path'], 'fr' );
+		foreach ( $locales as $locale ) {
+			$file = sprintf( '%s/data/%s/country.php', $this->settings['path'], $locale );
 			if ( is_file( $file ) ) {
 				break;
 			}
