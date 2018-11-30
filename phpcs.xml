@@ -6,7 +6,7 @@
 
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
-	<!-- <exclude-pattern>*/data/*</exclude-pattern> -->
+	<exclude-pattern>*/data/*</exclude-pattern>
 
 	<arg name="extensions" value="php"/>
 	<arg value="sp"/>
