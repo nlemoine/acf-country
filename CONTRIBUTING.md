@@ -26,7 +26,7 @@ yarn watch
 Build for production/release
 
 ```bash
-yarn build
+yarn production
 ```
 
 

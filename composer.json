@@ -13,7 +13,7 @@
         {
             "name": "Nicolas Lemoine",
             "email": "dev@helloni.co",
-            "homepage": "https://github.com/nlemoine"
+            "homepage": "https://helloni.co/"
         }
     ],
     "require": {
@@ -30,10 +30,12 @@
     "scripts": {
         "post-install-cmd": [
             "@install-codestandards",
-            "@configure-phpcs"
+            "@configure-phpcs",
+            "@sync-country-data"
         ],
         "post-update-cmd": [
-            "@configure-phpcs"
+            "@configure-phpcs",
+            "@sync-country-data"
         ],
         "configure-phpcs": [
             "if [ -f vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set colors 1; fi",
@@ -45,7 +47,11 @@
         "install-codestandards": [
             "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
         ],
-        "test": "./vendor/bin/phpcs"
+        "sync-country-data": [
+            "rsync -zavr --include '*/' --include '*.php' --exclude '*' --prune-empty-dirs vendor/umpirsky/country-list/data ."
+        ],
+        "test": "./vendor/bin/phpcs",
+        "fix": "./vendor/bin/phpcbf"
     },
     "support": {
         "issues": "https://github.com/nlemoine/acf-country/issues",

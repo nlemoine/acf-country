@@ -1,14 +1,20 @@
 # ACF Country field
 
-[![GitHub issues](https://img.shields.io/github/issues/nlemoine/acf-country.svg?style=flat-square)](https://github.com/nlemoine/acf-country/issues)
+[![Latest Version](https://img.shields.io/packagist/v/hellonico/acf-country.svg?style=flat-square)](https://github.com/hellonico/acf-country/releases)
 [![Packagist](https://img.shields.io/packagist/dt/hellonico/acf-country.svg?style=flat-square)](https://packagist.org/packages/hellonico/acf-country)
 [![Beerpay](https://beerpay.io/nlemoine/acf-country/badge.svg?style=flat-square)](https://beerpay.io/nlemoine/acf-country)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/hellonico)
 
 Adds a 'Country' field type for the [Advanced Custom Fields](http://wordpress.org/extend/plugins/advanced-custom-fields/) WordPress plugin.
 
-## ⚠️ Warning
+## ⚠️ WARNING ⚠️
 
-From version 2.0, ACF Country will add some breaking changes. Keep an eye on the repository if you included an autoupdater.
+**From version 2.0.0, ACF Country introduced some important breaking changes**:
+
+- Dropped support for older PHP & ACF versions, new requirements are:
+	- ACF 5.7+ 
+	- PHP 5.4+
+- Return format has changed. To better stick to ACF and make use of ACF functions, ACF Country will now return values the same way select field do.
 
 ### Overview
 
@@ -26,28 +32,32 @@ Or multiple ones:
 
 ### Compatibility
 
-* ACF version 4
-* ACF version 5/pro
-* PHP 5.3 or higher
+- ACF 5.7+ 
+- PHP 5.4+
 
-*Note: I [tried my best](https://github.com/nlemoine/acf-country/tree/master/assets/js) to support every ACF version since version 4. However, before 5.7, ACF didn't provide any convenient way to work with conditional logic. This feature may be broken in some ACF versions. Update ACF to the latest if you absolutely need it.*
 
 ### Field options
 
-* Default value: set a default value for the country field (country code)
-* Allow null: enable/disable null value (disabled by default, only apply when "allow multiple" is set to `false`)
-* Allow multiple: enable/disable multiple countries selection (disabled by default)
-* Stylised UI: enable/disable enhanced select field thanks to [Select2](https://select2.github.io/) (enabled by default)
-* Return format:
-	* country code and country name (default):
-		* single: `array('FR' => 'France')`
-		* multiple: `array('FR' => 'France', 'DE' => 'Germany')`
-	* country code:
-		* single: `FR`
-		* multiple: `array('FR', 'DE', 'ES')`
-	* country name:
-		* single: `France`
-		* multiple: `array('France', 'Germany', 'Spain')`
+| Option  | Default | Description |
+| ------------- | ------------- | ------------- |
+| Default value | emtpy | Set a default value for the country field (as country code)  |
+| Allow null | `false` | Enable/disable null value  |
+| Allow multiple | `false` | Enable/disable multiple countries selection  |
+| Stylised UI | `true` | Enable/disable enhanced select field thanks to [Select2](https://select2.github.io/)  |
+| Return format | `value` | See [ACF Select field](https://www.advancedcustomfields.com/resources/select/) |
+
+### Filters
+
+You can remove (or add) some countries with the `acf/country/countries` filter, example:
+
+```php 
+add_filter( 'acf/country/countries', function( $countries ) {
+	return array_filter( $countries, function( $code ) {
+		return !in_array( $code, ['IC', 'EA'], true );
+	}, ARRAY_FILTER_USE_KEY);
+} );
+```
+*Note: PHP5.6+ example*
 
 ### Installation
 

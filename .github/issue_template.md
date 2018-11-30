@@ -12,7 +12,7 @@ Details
  - Multiple values: [ true | false ]
  - Stylised UI: [ true | false ]
  - Condtional logic: [ true | false ]
- - Rules: []
+ - Rules: [] <!-- If conditional logic is true -->
 
 Reproduction
 ------------
