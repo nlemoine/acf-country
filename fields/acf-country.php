@@ -144,6 +144,9 @@ class AcfCountry extends acf_field {
 	public function render_field( $field ) {
 		$field['choices'] = $this->get_countries();
 		$field['ajax']    = 0;
+		if ( $field['value'] && is_array( $field['value'] ) ) {
+			$field['value'] = array_map( 'strtoupper', $field['value'] );
+		}
 		acf_get_field_type( 'select' )->render_field( $field );
 	}
 
