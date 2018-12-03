@@ -14,7 +14,9 @@ Adds a 'Country' field type for the [Advanced Custom Fields](http://wordpress.or
 - Dropped support for older PHP & ACF versions, new requirements are:
 	- ACF 5.7+ 
 	- PHP 5.4+
-- Return format has changed. To better stick to ACF and make use of ACF functions, ACF Country will now return values the same way select field do.
+- Return format has changed. To better stick to ACF and make use of ACF functions, ACF Country will now return values the same way select field do. `['FR' => 'France']` will now look like `['label' => 'France', 'value' => 'FR']`
+
+Looking for a ACF pre 5.7 support? Check the [1.0 branch](https://github.com/nlemoine/acf-country/tree/1.0). 
 
 ### Overview
 

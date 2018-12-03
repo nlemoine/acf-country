@@ -6,6 +6,7 @@ Description: Display a select field of all countries, in any language.
 Version: 2.0.0
 Author: Nicolas Lemoine
 Author URI: https://helloni.co/
+GitHub Plugin URI: https://github.com/nlemoine/acf-country
 
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
