@@ -1,0 +1,10 @@
+version: 1
+update_configs:
+  - package_manager: "php:composer"
+    directory: "/"
+    update_schedule: "weekly"
+    version_requirement_updates: "increase_versions"
+    allowed_updates:
+      - match:
+          dependency_type: "development"
+          update_type: "all"
