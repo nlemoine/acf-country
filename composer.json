@@ -44,14 +44,14 @@
             "if [ -f vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set encoding utf-8; fi",
             "if [ -f vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set ignore_warnings_on_exit 1; fi"
         ],
+        "fix": "./vendor/bin/phpcbf",
         "install-codestandards": [
             "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
         ],
         "sync-country-data": [
             "rsync -zavr --include '*/' --include '*.php' --exclude '*' --prune-empty-dirs vendor/umpirsky/country-list/data ."
         ],
-        "test": "./vendor/bin/phpcs",
-        "fix": "./vendor/bin/phpcbf"
+        "test": "./vendor/bin/phpcs"
     },
     "support": {
         "issues": "https://github.com/nlemoine/acf-country/issues",
