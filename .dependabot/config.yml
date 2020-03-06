@@ -7,4 +7,5 @@ update_configs:
     allowed_updates:
       - match:
           dependency_type: "development"
+          dependency_name: "umpirsky/country-list"
           update_type: "all"
