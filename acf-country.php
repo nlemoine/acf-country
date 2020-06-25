@@ -30,15 +30,15 @@ class FieldLoader {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->settings = [
+		$this->settings = array(
 			'version' => '2.0.0',
 			'url'     => plugin_dir_url( __FILE__ ),
 			'path'    => plugin_dir_path( __FILE__ ),
-		];
+		);
 
 		load_plugin_textdomain( 'acf-country', false, plugin_basename( dirname( __FILE__ ) ) . '/lang' );
-		add_action( 'acf/include_field_types', [ $this, 'fields' ] );
-		add_action( 'acf/register_fields', [ $this, 'fields' ] );
+		add_action( 'acf/include_field_types', array( $this, 'fields' ) );
+		add_action( 'acf/register_fields', array( $this, 'fields' ) );
 	}
 
 	/**
