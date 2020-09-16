@@ -40,72 +40,117 @@ class FieldLoader {
 		add_action( 'acf/include_field_types', array( $this, 'fields' ) );
 		add_action( 'acf/register_fields', array( $this, 'fields' ) );
 
-		add_filter( 'wpgraphql_acf_supported_fields', function ( $supported_fields ) {
-			array_push( $supported_fields, 'country' );
+		add_filter( 'wpgraphql_acf_register_graphql_field', array( $this, 'register_graphql_field' ), 10, 4 );
+	}
 
-			return $supported_fields;
-		} );
+	/**
+	 * Register WPGraphQL field
+	 *
+	 * @see https://github.com/wp-graphql/wp-graphql/issues/214#issuecomment-653141685
+	 *
+	 * @param array $field_config
+	 * @param string $type_name
+	 * @param string $field_name
+	 * @param array $config
+	 *
+	 * @return mixed
+	 */
+	public function register_graphql_field( $field_config, $type_name, $field_name, $config ) {
 
-		add_filter( 'wpgraphql_acf_register_graphql_field', function ( $field_config, $type_name, $field_name, $config ) {
+		$acf_field = isset( $config['acf_field'] ) ? $config['acf_field'] : null;
+		$acf_type  = isset( $acf_field['type'] ) ? $acf_field['type'] : null;
 
-			// How to add new WPGraphQL fields is super undocumented, I used this code as a base
-			// https://github.com/wp-graphql/wp-graphql/issues/214#issuecomment-653141685
-
-			$acf_field = isset( $config['acf_field'] ) ? $config['acf_field'] : null;
-			$acf_type  = isset( $acf_field['type'] ) ? $acf_field['type'] : null;
-
-			$resolve = $field_config['resolve'];
-
-			if ( $acf_type === "country" ) {
-
-				switch ( $acf_field['return_format'] ) {
-					case 'array':
-						$field_config = [
-							'type'    => [ 'list_of' => 'String' ],
-							'resolve' => function ( $root, $args, $context, $info ) use ( $resolve, $acf_field ) {
-								$value = $resolve( $root, $args, $context, $info );
-
-								if ( ! empty( $value ) ) {
-									return [
-										'value' => $value,
-										'label' => $acf_field['choices'][ $value ]
-									];
-								}
-
-								return [];
-							}
-						];
-						break;
-					case 'value':
-						$field_config = [
-							'type'    => 'String',
-							'resolve' => function ( $root, $args, $context, $info ) use ( $resolve ) {
-								$value = $resolve( $root, $args, $context, $info );
-
-								return ! empty( $value ) ? $value : null;
-							}
-						];
-						break;
-					case 'label':
-						$field_config = [
-							'type'    => 'String',
-							'resolve' => function ( $root, $args, $context, $info ) use ( $resolve, $acf_field ) {
-								$value = $resolve( $root, $args, $context, $info );
-
-								if ( ! empty( $value ) ) {
-									return $acf_field['choices'][ $value ];
-								}
-
-								return null;
-							}
-						];
-						break;
-				}
-
-			}
-
+		if ( $acf_type !== 'country' ) {
 			return $field_config;
-		}, 10, 4 );
+		}
+
+		$resolve = $field_config['resolve'];
+
+		switch ( $acf_field['return_format'] ) {
+			case 'array':
+				$field_config = array(
+					'type'    => empty( $acf_field['multiple'] ) ? array( 'list_of' => 'String' ) : array( 'list_of' => array( 'list_of' => 'String' ) ),
+					'resolve' => function ( $root, $args, $context, $info ) use ( $resolve, $acf_field ) {
+						$value = $resolve( $root, $args, $context, $info );
+
+						if ( ! empty( $value ) ) {
+							if ( is_array( $value ) ) {
+								$values = array();
+
+								foreach ( $value as $single_value ) {
+									array_push( $values, array(
+										'value' => $single_value,
+										'label' => $acf_field['choices'][ $single_value ],
+									) );
+								}
+
+								return $values;
+
+							} else {
+								return array(
+									'value' => $value,
+									'label' => $acf_field['choices'][ $value ],
+								);
+							}
+
+						}
+
+						return array();
+					},
+				);
+				break;
+			case 'value':
+				$field_config = array(
+					'type'    => empty( $acf_field['multiple'] ) ? 'String' : array( 'list_of' => 'String' ),
+					'resolve' => function ( $root, $args, $context, $info ) use ( $resolve ) {
+						$value = $resolve( $root, $args, $context, $info );
+
+						return ! empty( $value ) ? $value : null;
+					},
+				);
+				break;
+			case 'label':
+				$field_config = array(
+					'type'    => empty( $acf_field['multiple'] ) ? 'String' : array( 'list_of' => 'String' ),
+					'resolve' => function ( $root, $args, $context, $info ) use ( $resolve, $acf_field ) {
+						$value = $resolve( $root, $args, $context, $info );
+
+						if ( ! empty( $value ) ) {
+							if ( is_array( $value ) ) {
+								$values = array();
+
+								foreach ( $value as $single_value ) {
+									array_push( $values, $acf_field['choices'][ $single_value ] );
+								}
+
+								return $values;
+
+							} else {
+								return $acf_field['choices'][ $value ];
+							}
+
+						}
+
+						return null;
+					},
+				);
+				break;
+		}
+
+		return $field_config;
+	}
+
+	/**
+	 * Add ACF Country to WPGraphQL supported fields
+	 *
+	 * @param array $supported_fields
+	 *
+	 * @return array
+	 */
+	public function add_graphql_field_support( $supported_fields ) {
+		array_push( $supported_fields, 'country' );
+
+		return $supported_fields;
 	}
 
 	/**
