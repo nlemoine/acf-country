@@ -52,7 +52,6 @@ class FieldLoader {
 	 * @param string $type_name
 	 * @param string $field_name
 	 * @param array $config
-	 *
 	 * @return mixed
 	 */
 	public function register_graphql_field( $field_config, $type_name, $field_name, $config ) {
@@ -69,30 +68,15 @@ class FieldLoader {
 		switch ( $acf_field['return_format'] ) {
 			case 'array':
 				$field_config = array(
-					'type'    => empty( $acf_field['multiple'] ) ? array( 'list_of' => 'String' ) : array( 'list_of' => array( 'list_of' => 'String' ) ),
+					'type'    => array( 'list_of' => 'String' ),
 					'resolve' => function ( $root, $args, $context, $info ) use ( $resolve, $acf_field ) {
 						$value = $resolve( $root, $args, $context, $info );
 
 						if ( ! empty( $value ) ) {
-							if ( is_array( $value ) ) {
-								$values = array();
-
-								foreach ( $value as $single_value ) {
-									array_push( $values, array(
-										'value' => $single_value,
-										'label' => $acf_field['choices'][ $single_value ],
-									) );
-								}
-
-								return $values;
-
-							} else {
-								return array(
-									'value' => $value,
-									'label' => $acf_field['choices'][ $value ],
-								);
-							}
-
+							return array(
+								'value' => $value,
+								'label' => $acf_field['choices'][ $value ],
+							);
 						}
 
 						return array();
@@ -101,7 +85,7 @@ class FieldLoader {
 				break;
 			case 'value':
 				$field_config = array(
-					'type'    => empty( $acf_field['multiple'] ) ? 'String' : array( 'list_of' => 'String' ),
+					'type'    => 'String',
 					'resolve' => function ( $root, $args, $context, $info ) use ( $resolve ) {
 						$value = $resolve( $root, $args, $context, $info );
 
@@ -111,24 +95,12 @@ class FieldLoader {
 				break;
 			case 'label':
 				$field_config = array(
-					'type'    => empty( $acf_field['multiple'] ) ? 'String' : array( 'list_of' => 'String' ),
+					'type'    => 'String',
 					'resolve' => function ( $root, $args, $context, $info ) use ( $resolve, $acf_field ) {
 						$value = $resolve( $root, $args, $context, $info );
 
 						if ( ! empty( $value ) ) {
-							if ( is_array( $value ) ) {
-								$values = array();
-
-								foreach ( $value as $single_value ) {
-									array_push( $values, $acf_field['choices'][ $single_value ] );
-								}
-
-								return $values;
-
-							} else {
-								return $acf_field['choices'][ $value ];
-							}
-
+							return $acf_field['choices'][ $value ];
 						}
 
 						return null;
@@ -144,12 +116,10 @@ class FieldLoader {
 	 * Add ACF Country to WPGraphQL supported fields
 	 *
 	 * @param array $supported_fields
-	 *
 	 * @return array
 	 */
 	public function add_graphql_field_support( $supported_fields ) {
 		array_push( $supported_fields, 'country' );
-
 		return $supported_fields;
 	}
 
