@@ -68,15 +68,30 @@ class FieldLoader {
 		switch ( $acf_field['return_format'] ) {
 			case 'array':
 				$field_config = array(
-					'type'    => array( 'list_of' => 'String' ),
+					'type'    => empty( $acf_field['multiple'] ) ? array( 'list_of' => 'String' ) : array( 'list_of' => array( 'list_of' => 'String' ) ),
 					'resolve' => function ( $root, $args, $context, $info ) use ( $resolve, $acf_field ) {
 						$value = $resolve( $root, $args, $context, $info );
 
 						if ( ! empty( $value ) ) {
-							return array(
-								'value' => $value,
-								'label' => $acf_field['choices'][ $value ],
-							);
+							if ( is_array( $value ) ) {
+								$values = array();
+
+								foreach ( $value as $single_value ) {
+									array_push( $values, array(
+										'value' => $single_value,
+										'label' => $acf_field['choices'][ $single_value ],
+									) );
+								}
+
+								return $values;
+
+							} else {
+								return array(
+									'value' => $value,
+									'label' => $acf_field['choices'][ $value ],
+								);
+							}
+
 						}
 
 						return array();
@@ -85,7 +100,7 @@ class FieldLoader {
 				break;
 			case 'value':
 				$field_config = array(
-					'type'    => 'String',
+					'type'    => empty( $acf_field['multiple'] ) ? 'String' : array( 'list_of' => 'String' ),
 					'resolve' => function ( $root, $args, $context, $info ) use ( $resolve ) {
 						$value = $resolve( $root, $args, $context, $info );
 
@@ -95,12 +110,24 @@ class FieldLoader {
 				break;
 			case 'label':
 				$field_config = array(
-					'type'    => 'String',
+					'type'    => empty( $acf_field['multiple'] ) ? 'String' : array( 'list_of' => 'String' ),
 					'resolve' => function ( $root, $args, $context, $info ) use ( $resolve, $acf_field ) {
 						$value = $resolve( $root, $args, $context, $info );
 
 						if ( ! empty( $value ) ) {
-							return $acf_field['choices'][ $value ];
+							if ( is_array( $value ) ) {
+								$values = array();
+
+								foreach ( $value as $single_value ) {
+									array_push( $values, $acf_field['choices'][ $single_value ] );
+								}
+
+								return $values;
+
+							} else {
+								return $acf_field['choices'][ $value ];
+							}
+
 						}
 
 						return null;
