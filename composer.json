@@ -1,60 +1,80 @@
 {
-    "name": "hellonico/acf-country",
-    "type": "wordpress-plugin",
-    "description": "Add a country field to ACF (Advanced Custom Fields)",
-    "keywords": [
-        "acf",
-        "advanced custom fields",
-        "country"
-    ],
-    "homepage": "https://github.com/nlemoine/acf-country",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Nicolas Lemoine",
-            "email": "dev@helloni.co",
-            "homepage": "https://helloni.co/"
-        }
-    ],
-    "require": {
-        "php": ">=5.3.0",
-        "composer/installers": "^1.0"
+  "name": "hellonico/acf-country",
+  "description": "A country field for ACF.",
+  "type": "wordpress-plugin",
+  "keywords": [
+    "advanced custom fields",
+    "acf",
+    "acf-field",
+    "country",
+    "wordpress",
+    "wordpress-plugin"
+  ],
+  "support": {
+    "issues": "https://github.com/nlemoine/acf-country/issues",
+    "source": "https://github.com/nlemoine/acf-country.git"
+  },
+  "require": {
+    "php": "^7.4 || ^8.0"
+  },
+  "require-dev": {
+    "advanced-custom-fields/advanced-custom-fields-pro": "^5.9 || ^6.0",
+    "stoutlogic/acf-builder": "^1.12",
+    "symplify/easy-coding-standard": "^11.1",
+    "umpirsky/country-list": "*"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org",
+      "only": [
+        "wpackagist-plugin/*",
+        "wpackagist-theme/*"
+      ]
     },
-    "require-dev": {
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
-        "phpcompatibility/phpcompatibility-wp": "^2.0",
-        "umpirsky/country-list": "*",
-        "wp-coding-standards/wpcs": "^2.2"
-    },
-    "prefer-stable": true,
-    "scripts": {
-        "post-install-cmd": [
-            "@install-codestandards",
-            "@configure-phpcs",
-            "@sync-country-data"
-        ],
-        "post-update-cmd": [
-            "@configure-phpcs",
-            "@sync-country-data"
-        ],
-        "configure-phpcs": [
-            "if [ -f vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set colors 1; fi",
-            "if [ -f vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set show_progress 0; fi",
-            "if [ -f vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set report_width auto; fi",
-            "if [ -f vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set encoding utf-8; fi",
-            "if [ -f vendor/bin/phpcs ]; then \"vendor/bin/phpcs\" --config-set ignore_warnings_on_exit 1; fi"
-        ],
-        "fix": "./vendor/bin/phpcbf",
-        "install-codestandards": [
-            "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
-        ],
-        "sync-country-data": [
-            "rsync -zavr --include '*/' --include '*.php' --exclude '*' --prune-empty-dirs vendor/umpirsky/country-list/data ."
-        ],
-        "test": "./vendor/bin/phpcs"
-    },
-    "support": {
-        "issues": "https://github.com/nlemoine/acf-country/issues",
-        "source": "https://github.com/nlemoine/acf-country.git"
+    {
+      "type": "composer",
+      "url": "https://pivvenit.github.io/acf-composer-bridge/composer/v3/wordpress-plugin/"
     }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true,
+      "pivvenit/acf-pro-installer": true,
+      "roots/wordpress-core-installer": true
+    },
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "extra": {
+    "installer-paths": {
+      "dev/mu-plugins/{$name}/": [
+        "type:wordpress-muplugin"
+      ],
+      "dev/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ]
+    },
+    "wordpress-install-dir": "tests/wp"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "@sync-country-data"
+    ],
+    "post-update-cmd": [
+      "@sync-country-data"
+    ],
+    "lint": [
+      "ecs check"
+    ],
+    "lint:fix": [
+      "ecs check --fix"
+    ],
+    "sync-country-data": [
+      "rsync -zavr --include '*/' --include '*.php' --exclude '*' --prune-empty-dirs vendor/umpirsky/country-list/data ."
+    ]
+  }
 }

@@ -1,0 +1,3 @@
+.field-type-icon.field-type-icon-country::before {
+  mask-image: url('../images/icon-field-flag.svg');
+}

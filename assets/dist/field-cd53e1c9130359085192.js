@@ -1,1 +1,0 @@
-((e,o)=>{const t=acf.models.SelectField.extend({type:"country"});acf.registerFieldType(t),acf.registerConditionForFieldType("contains","country"),acf.registerConditionForFieldType("selectEqualTo","country"),acf.registerConditionForFieldType("selectNotEqualTo","country")})(jQuery);

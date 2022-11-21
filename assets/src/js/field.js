@@ -1,6 +1,4 @@
-(($, undefined) => {
-
-	// Needed for conditional logic
+(($) => {
 	const Field = acf.models.SelectField.extend({
 		type: 'country',
 	});
@@ -8,5 +6,4 @@
 	acf.registerConditionForFieldType('contains', 'country');
 	acf.registerConditionForFieldType('selectEqualTo', 'country');
 	acf.registerConditionForFieldType('selectNotEqualTo', 'country');
-
 })(jQuery);
