@@ -4,14 +4,14 @@
  * Plugin Name:       Advanced Custom Fields: ACF Country
  * Plugin URI:        https://github.com/nlemoine/acf-country
  * Description:       A country field for ACF. Display a select field of all countries, in any language.
- * Version:           2.0.2
+ * Version:           3.0.0
  * Requires at least: 5.0
  * Requires PHP:      7.4
  * Author:            Nicolas Lemoine
  * Author URI:        https://github.com/nlemoine
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       acf-coountry
+ * Text Domain:       acf-country
  * Domain Path:       /languages
  * GitHub Plugin URI: https://github.com/nlemoine/acf-country.
  */
