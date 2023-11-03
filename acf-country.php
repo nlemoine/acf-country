@@ -25,6 +25,7 @@ if ( class_exists( 'FieldLoader' ) ) {
  * Field Loader
  */
 class FieldLoader {
+	public $settings = [];
 
 	/**
 	 * Constructor
