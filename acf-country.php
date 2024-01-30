@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields: ACF Country
 Plugin URI: https://github.com/nlemoine/acf-country
 Description: Display a select field of all countries, in any language.
-Version: 2.1.0
+Version: 2.1.1
 Author: Nicolas Lemoine
 Author URI: https://helloni.co/
 GitHub Plugin URI: https://github.com/nlemoine/acf-country
@@ -32,7 +32,7 @@ class FieldLoader {
 	 */
 	public function __construct() {
 		$this->settings = array(
-			'version' => '2.0.2',
+			'version' => '2.1.1',
 			'url'     => plugin_dir_url( __FILE__ ),
 			'path'    => plugin_dir_path( __FILE__ ),
 		);
@@ -159,7 +159,9 @@ class FieldLoader {
 	 * @return void
 	 */
 	public function fields( $version = 5 ) {
-		include_once 'fields/acf-country.php';
+		require_once 'fields/acf-country.php';
+		$field = new AcfCountry( $this->settings );
+		acf_register_field_type( $field );
 	}
 }
 

@@ -6,12 +6,10 @@ if ( class_exists( 'AcfCountry' ) ) {
 	return;
 }
 
-use acf_field;
-
 /**
  * ACF Country field
  */
-class AcfCountry extends acf_field {
+class AcfCountry extends \acf_field {
 
 	/**
 	 * Constructor
@@ -277,5 +275,3 @@ class AcfCountry extends acf_field {
 		return apply_filters( 'acf/country/countries', $countries );
 	}
 }
-
-new AcfCountry( $this->settings );
