@@ -1,5 +1,6 @@
 /node_modules
 /vendor
+/package-lock.json
 composer.lock
-/dev/*
-!/dev/mu.php
+/wp-content
+

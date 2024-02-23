@@ -15,14 +15,10 @@
   "scripts": {
     "start": "wp-scripts start",
     "build": "wp-scripts build",
-    "format": "wp-scripts format ./assets/src/js",
-    "packages-update": "wp-scripts packages-update",
-    "env:start": "wp-env start"
+    "format": "wp-scripts format ./assets/src/js"
   },
   "devDependencies": {
-    "@wordpress/env": "^9.4.0",
     "@wordpress/scripts": "^27.3.0",
-    "assets-webpack-plugin": "^7.1.1",
     "mini-css-extract-plugin": "^2.8.0",
     "webpack-manifest-plugin": "^5.0.0"
   }

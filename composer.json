@@ -18,10 +18,10 @@
     "php": "^7.4 || ^8.0"
   },
   "require-dev": {
-    "wpengine/advanced-custom-fields-pro": "^6.0",
-    "stoutlogic/acf-builder": "^1.12",
+    "ergebnis/composer-normalize": "^2.42",
     "symplify/easy-coding-standard": "^12.1",
-    "umpirsky/country-list": "*"
+    "umpirsky/country-list": "*",
+    "wpengine/advanced-custom-fields-pro": "^6.0"
   },
   "repositories": [
     {
@@ -36,7 +36,7 @@
       "type": "composer",
       "url": "https://connect.advancedcustomfields.com",
       "only": [
-          "wpengine/*"
+        "wpengine/*"
       ]
     }
   ],
@@ -45,23 +45,11 @@
   "config": {
     "allow-plugins": {
       "composer/installers": true,
-      "pivvenit/acf-pro-installer": true,
-      "roots/wordpress-core-installer": true
+      "ergebnis/composer-normalize": true
     },
     "optimize-autoloader": true,
     "preferred-install": "dist",
     "sort-packages": true
-  },
-  "extra": {
-    "installer-paths": {
-      "dev/mu-plugins/{$name}/": [
-        "type:wordpress-muplugin"
-      ],
-      "dev/plugins/{$name}/": [
-        "type:wordpress-plugin"
-      ]
-    },
-    "wordpress-install-dir": "tests/wp"
   },
   "scripts": {
     "post-install-cmd": [
