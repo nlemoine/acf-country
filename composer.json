@@ -18,9 +18,9 @@
     "php": "^7.4 || ^8.0"
   },
   "require-dev": {
-    "advanced-custom-fields/advanced-custom-fields-pro": "^5.9 || ^6.0",
+    "wpengine/advanced-custom-fields-pro": "^6.0",
     "stoutlogic/acf-builder": "^1.12",
-    "symplify/easy-coding-standard": "^11.1",
+    "symplify/easy-coding-standard": "^12.1",
     "umpirsky/country-list": "*"
   },
   "repositories": [
@@ -34,7 +34,10 @@
     },
     {
       "type": "composer",
-      "url": "https://pivvenit.github.io/acf-composer-bridge/composer/v3/wordpress-plugin/"
+      "url": "https://connect.advancedcustomfields.com",
+      "only": [
+          "wpengine/*"
+      ]
     }
   ],
   "minimum-stability": "dev",
@@ -67,12 +70,8 @@
     "post-update-cmd": [
       "@sync-country-data"
     ],
-    "lint": [
-      "ecs check"
-    ],
-    "lint:fix": [
-      "ecs check --fix"
-    ],
+    "cs": "ecs check",
+    "cs:fix": "ecs check --fix",
     "sync-country-data": [
       "rsync -zavr --include '*/' --include '*.php' --exclude '*' --prune-empty-dirs vendor/umpirsky/country-list/data ."
     ]

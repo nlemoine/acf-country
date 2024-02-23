@@ -20,10 +20,10 @@
     "env:start": "wp-env start"
   },
   "devDependencies": {
-    "@wordpress/env": "^5.7.0",
-    "@wordpress/scripts": "^24.6.0",
+    "@wordpress/env": "^9.4.0",
+    "@wordpress/scripts": "^27.3.0",
     "assets-webpack-plugin": "^7.1.1",
-    "mini-css-extract-plugin": "^2.7.0",
+    "mini-css-extract-plugin": "^2.8.0",
     "webpack-manifest-plugin": "^5.0.0"
   }
 }

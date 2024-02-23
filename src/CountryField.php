@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HelloNico\AcfCountry;
 
 use acf_field;
 
-class CountryField extends \acf_field
+class CountryField extends acf_field
 {
     public const FORMAT_VALUE = 'value';
 
@@ -26,6 +28,13 @@ class CountryField extends \acf_field
     protected string $uri;
 
     protected acf_field $select;
+
+    /**
+     * Isn't needed because we're extending acf_field, but it's here for clarity.
+     *
+     * @var boolean
+     */
+    public bool $show_in_rest = true;
 
     /**
      * Create a new field instance.
