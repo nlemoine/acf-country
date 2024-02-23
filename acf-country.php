@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Plugin Name:       Advanced Custom Fields: ACF Country
  * Plugin URI:        https://github.com/nlemoine/acf-country
