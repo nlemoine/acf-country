@@ -34,7 +34,7 @@ class CountryField extends acf_field
      *
      * @var boolean
      */
-    public bool $show_in_rest = true;
+    public $show_in_rest = true;
 
     /**
      * Create a new field instance.
