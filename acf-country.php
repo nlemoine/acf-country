@@ -167,11 +167,11 @@ add_filter('after_setup_theme', new class() {
      * Hook the Admin Columns Pro plugin to provide basic field support
      * if detected on the current WordPress installation.
      */
-    protected function admin_column($value, $id, $column)
+    public function admin_column($value, $id, $column)
     {
         if (
             !is_a($column, '\ACA\ACF\Column')
-            || $column->get_acf_field_option('type') !== 'country'
+            || $column->get_field()->get_settings()['type'] !== 'country'
         ) {
             return $value;
         }
