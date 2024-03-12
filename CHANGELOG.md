@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/nlemoine/acf-country/compare/v3.0.0...v3.0.1) (2024-03-12)
+
+
+### Bug Fixes
+
+* ACF Column compatibility ([5f6c517](https://github.com/nlemoine/acf-country/commit/5f6c5170145103e4d0e03462251bec153f84dc13))
+
 ## [3.0.0](https://github.com/nlemoine/acf-country/compare/2.1.0...v3.0.0) (2024-02-23)
 
 
