@@ -1,21 +1,21 @@
-# name: Release
+name: Release
 
-# on:
-#   push:
-#     branches:
-#       - 3.x
+on:
+  push:
+    branches:
+      - 3.x
 
-# permissions:
-#   contents: write
-#   pull-requests: write
-#   packages: write
+permissions:
+  contents: write
+  pull-requests: write
+  packages: write
 
-# jobs:
-#   release:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: google-github-actions/release-please-action@v4
-#         with:
-#           target-branch: ${{ github.ref_name }}
-#           config-file: release-please-config.json
-#           manifest-file: .release-please-manifest.json
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v4
+        with:
+          target-branch: ${{ github.ref_name }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
