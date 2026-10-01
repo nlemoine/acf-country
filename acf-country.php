@@ -35,7 +35,7 @@ add_action('after_setup_theme', new class () {
         if (defined('ACP_FILE')) {
             add_filter('ac/column/value', [$this, 'admin_column'], 10, 3);
         }
-        load_plugin_textdomain('acf-country', false, plugin_basename(__DIR__) . '/lang');
+        load_plugin_textdomain('acf-country', false, plugin_basename(__DIR__) . '/languages');
         add_filter('wpgraphql_acf_register_graphql_field', [$this, 'register_graphql_field'], 10, 4);
     }
 
