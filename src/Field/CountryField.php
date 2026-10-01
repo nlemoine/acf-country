@@ -114,7 +114,7 @@ class CountryField extends acf_field
         ]);
 
         $formats = [];
-        foreach ([ReturnFormat::Array, ReturnFormat::Value, ReturnFormat::Name, ReturnFormat::Emoji] as $format) {
+        foreach (ReturnFormat::cases() as $format) {
             $formats[$format->value] = $format->label();
         }
 
