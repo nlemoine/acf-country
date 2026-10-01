@@ -193,9 +193,12 @@ class CountryField extends acf_field
     {
         $field['choices'] = $this->get_countries();
 
-        // Set format to 'value' if 'emoji'
+        // Map our formats to the ones the select field understands.
         $original_format = $field['return_format'];
-        $field['return_format'] = $field['return_format'] === self::FORMAT_EMOJI ? self::FORMAT_VALUE : $field['return_format'];
+        $field['return_format'] = [
+            self::FORMAT_EMOJI => self::FORMAT_VALUE,
+            self::FORMAT_NAME => 'label',
+        ][$original_format] ?? $original_format;
         $value = $this->select->format_value($value, $post_id, $field);
         $field['return_format'] = $original_format;
 
