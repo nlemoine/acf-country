@@ -20,8 +20,6 @@
 
 declare(strict_types=1);
 
-use AC\Column\CustomFieldContext;
-use ACA\ACF\Column;
 use HelloNico\AcfCountry\CountryField;
 use n5s\AcfCountry\Plugin;
 
@@ -41,8 +39,6 @@ add_action('after_setup_theme', new class () {
 
         add_action('acf/include_field_types', $this->register_field(...));
 
-        add_filter('ac/column/render', $this->admin_column(...), 10, 3);
-        add_filter('ac/column/value', $this->admin_column_pro_6(...), 10, 3);
         load_plugin_textdomain('acf-country', false, plugin_basename(__DIR__) . '/languages');
         add_filter('wpgraphql_acf_register_graphql_field', $this->register_graphql_field(...), 10, 4);
     }
@@ -163,70 +159,5 @@ add_action('after_setup_theme', new class () {
         $supported_fields[] = 'country';
 
         return $supported_fields;
-    }
-
-    /**
-     * Admin Columns Pro before 7: show the formatted value of country field columns.
-     *
-     * @param mixed      $value
-     * @param int|string $id
-     * @param mixed      $column
-     *
-     * @return mixed
-     */
-    public function admin_column_pro_6($value, $id, $column)
-    {
-        if (
-            !$column instanceof Column
-            || $column->get_field()->get_settings()['type'] !== 'country'
-        ) {
-            return $value;
-        }
-
-        return get_field($column->get_meta_key()) ?? $value;
-    }
-
-    /**
-     * Show country flags and names in Admin Columns (7+) custom field columns.
-     *
-     * @param mixed $value
-     * @param mixed $context
-     * @param mixed $id
-     *
-     * @return mixed
-     */
-    public function admin_column($value, $context, $id)
-    {
-        if (!$context instanceof CustomFieldContext || !is_numeric($id)) {
-            return $value;
-        }
-
-        // ACF post ID format for each Admin Columns meta type.
-        $post_id = [
-            'post' => (int) $id,
-            'user' => 'user_' . $id,
-            'term' => 'term_' . $id,
-            'comment' => 'comment_' . $id,
-        ][$context->get_meta_type()] ?? null;
-        if ($post_id === null) {
-            return $value;
-        }
-
-        $field = get_field_object($context->get_meta_key(), $post_id, false);
-        $field_type = acf_get_field_type('country');
-        if (!is_array($field) || $field['type'] !== 'country' || !$field_type instanceof CountryField) {
-            return $value;
-        }
-
-        // Admin screens follow the language of the logged-in user.
-        $countries = $field_type->get_countries_for_locale(determine_locale());
-        $names = [];
-        foreach ((array) $field['value'] as $code) {
-            if (is_string($code) && isset($countries[$code])) {
-                $names[] = trim($field_type->country_flag_emoji($code) . ' ' . $countries[$code]);
-            }
-        }
-
-        return $names === [] ? $value : esc_html(implode(', ', $names));
     }
 });

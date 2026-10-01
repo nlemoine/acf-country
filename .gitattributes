@@ -13,4 +13,3 @@
 /bin                               export-ignore
 /rector.php                        export-ignore
 /blueprint.json                    export-ignore
-/phpstan                           export-ignore

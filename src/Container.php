@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace n5s\AcfCountry;
 
 use InvalidArgumentException;
+use n5s\AcfCountry\Integration\AdminColumns;
 
 /**
  * Builds services on first use.
@@ -25,6 +26,9 @@ final class Container
     {
         $this->factories = [
             Countries::class => static fn (): Countries => new Countries($pluginDir . '/data'),
+            AdminColumns::class => fn (): AdminColumns => new AdminColumns(
+                $this->get(Countries::class)
+            ),
         ];
     }
 

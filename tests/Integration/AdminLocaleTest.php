@@ -10,6 +10,8 @@ use AC\Setting\Config;
 use AC\Type\TableScreenContext;
 use HelloNico\AcfCountry\CountryField;
 use Mantle\Testing\Concerns\Admin_Screen;
+use n5s\AcfCountry\Integration\AdminColumns;
+use n5s\AcfCountry\Plugin;
 use n5s\AcfCountry\Tests\TestCase;
 
 use function Mantle\Support\Helpers\capture;
@@ -25,6 +27,9 @@ final class AdminLocaleTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        // Admin Columns is not active in tests: register the integration hooks directly.
+        Plugin::getInstance()->getContainer()->get(AdminColumns::class)->registerHooks();
 
         $this->acting_as(self::factory()->user->create(['role' => 'administrator', 'locale' => 'fr_FR']));
     }

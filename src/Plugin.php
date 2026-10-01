@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace n5s\AcfCountry;
 
+use n5s\AcfCountry\Integration\AdminColumns;
+
 /**
  * Wires the field and the integrations.
  */
@@ -12,9 +14,9 @@ final class Plugin
     /**
      * Integrations, booted when supported.
      *
-     * @var list<class-string>
+     * @var list<class-string<Integration\IntegrationInterface>>
      */
-    public const INTEGRATIONS = [];
+    public const INTEGRATIONS = [AdminColumns::class];
 
     private static ?self $instance = null;
 
@@ -44,6 +46,13 @@ final class Plugin
     {
         if ($this->initialized) {
             return $this;
+        }
+
+        foreach (self::INTEGRATIONS as $class) {
+            $integration = $this->container->get($class);
+            if ($integration->isSupported()) {
+                $integration->registerHooks();
+            }
         }
 
         $this->initialized = true;
