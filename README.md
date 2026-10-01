@@ -2,21 +2,9 @@
 
 [![Latest Version](https://img.shields.io/packagist/v/hellonico/acf-country.svg?style=flat-square)](https://github.com/nlemoine/acf-country/releases)
 [![Packagist](https://img.shields.io/packagist/dt/hellonico/acf-country.svg?style=flat-square)](https://packagist.org/packages/hellonico/acf-country)
-[![Beerpay](https://beerpay.io/nlemoine/acf-country/badge.svg?style=flat-square)](https://beerpay.io/nlemoine/acf-country)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/hellonico)
 
 Adds a 'Country' field type for the [Advanced Custom Fields](http://wordpress.org/extend/plugins/advanced-custom-fields/) WordPress plugin.
-
-## ⚠️ WARNING ⚠️
-
-**From version 2.0.0, ACF Country introduced some important breaking changes**:
-
-- Dropped support for older PHP & ACF versions, new requirements are:
-	- ACF 5.7+ 
-	- PHP 5.4+
-- Return format has changed. To better stick to ACF and make use of ACF functions, ACF Country will now return values the same way select field do. `['FR' => 'France']` will now look like `['label' => 'France', 'value' => 'FR']`
-
-Looking for a ACF pre 5.7 support? Check the [1.0 branch](https://github.com/nlemoine/acf-country/tree/1.0). 
 
 ### Overview
 
@@ -34,7 +22,7 @@ Or multiple ones:
 
 ### Compatibility
 
-- ACF 5.7+ 
+- ACF 5.7+
 - PHP 5.4+
 
 
@@ -52,7 +40,7 @@ Or multiple ones:
 
 You can remove (or add) some countries with the `acf/country/countries` filter, example:
 
-```php 
+```php
 add_filter( 'acf/country/countries', function( $countries ) {
 	return array_filter( $countries, function( $code ) {
 		return !in_array( $code, ['IC', 'EA'], true );
