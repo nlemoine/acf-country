@@ -31,9 +31,18 @@ The old name still works as an alias in 4.x and will be removed in 5.0.
 
 The old methods still work in 4.x and trigger a deprecation notice.
 
+The functions are available once plugins are loaded. With the bundled ZIP, call them from a hook such as `init`, not when a must-use plugin file loads: must-use plugins load before regular plugins.
+
+## Return values
+
+- `get_field()` with the `emoji` return format now returns an empty string for codes that are not in the country list. 3.x returned a flag for any two letters.
+- Multiple values now skip empty and non-string items, and the returned list is re-indexed from 0.
+
 ## Classes extending CountryField
 
-The `HelloNico\AcfCountry\CountryField` alias covers `instanceof` checks and `new`, but not subclasses written for 3.x. Overriding methods must add the new return types, and the 3.x protected `normalize_codes()`, `get_asset_url()`, `$uri` and `$path` members are no longer accessible to subclasses: they are now private, and the two helper methods were renamed. Match the signatures of `n5s\AcfCountry\Field\CountryField`.
+The `HelloNico\AcfCountry\CountryField` alias works for `instanceof` checks, type declarations, `new` and static calls, but subclasses written for 3.x must update their signatures. Overriding methods must add the new return types, and the 3.x protected `normalize_codes()`, `get_asset_url()`, `$uri` and `$path` members are no longer accessible to subclasses: they are now private, and the two helper methods were renamed. Match the signatures of `n5s\AcfCountry\Field\CountryField`.
+
+The protected `$select` property type changed from `acf_field` to `acf_field_select`: a subclass redeclaring it must use the new type.
 
 The constructor stays compatible: `new CountryField($uri, $path)` with the 3.x arguments still works, and 4.0 adds an optional third `?Countries $countries` parameter.
 
