@@ -3,7 +3,7 @@
 [![Latest Version](https://img.shields.io/packagist/v/hellonico/acf-country.svg?style=flat-square)](https://github.com/nlemoine/acf-country/releases)
 [![Packagist](https://img.shields.io/packagist/dt/hellonico/acf-country.svg?style=flat-square)](https://packagist.org/packages/hellonico/acf-country)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/hellonico)
-[![Try in WordPress Playground](https://img.shields.io/badge/Try%20in-WordPress%20Playground-3858e9?style=flat-square&logo=wordpress)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/nlemoine/acf-country/3.x/blueprint.json)
+[![Try in WordPress Playground](https://img.shields.io/badge/Try%20in-WordPress%20Playground-3858e9?style=flat-square&logo=wordpress)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/nlemoine/acf-country/4.x/blueprint.json)
 
 Adds a 'Country' field type for the [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/) WordPress plugin (free or PRO).
 
@@ -11,7 +11,7 @@ Adds a 'Country' field type for the [Advanced Custom Fields](https://wordpress.o
 
 Display a select list of all countries in your language.
 
-Country names are available in every language ([see available list](https://github.com/nlemoine/acf-country/tree/3.x/data), generated from [Unicode CLDR](https://cldr.unicode.org/) via [symfony/intl](https://github.com/symfony/intl)). By default, country names are localized in your current WordPress language.
+Country names are available in every language ([see available list](https://github.com/nlemoine/acf-country/tree/4.x/data), generated from [Unicode CLDR](https://cldr.unicode.org/) via [symfony/intl](https://github.com/symfony/intl)). By default, country names are localized in your current WordPress language.
 
 Select a single value:
 
