@@ -11,9 +11,9 @@ use n5s\AcfCountry\Flag;
 /**
  * Admin Columns 7+: country flags and names in custom field columns.
  */
-final class AdminColumns implements IntegrationInterface
+final readonly class AdminColumns implements IntegrationInterface
 {
-    public function __construct(private readonly Countries $countries)
+    public function __construct(private Countries $countries)
     {
     }
 
