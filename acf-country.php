@@ -20,6 +20,7 @@
 
 declare(strict_types=1);
 
+use ACA\ACF\Column;
 use HelloNico\AcfCountry\CountryField;
 
 add_action('after_setup_theme', new class () {
@@ -57,10 +58,10 @@ add_action('after_setup_theme', new class () {
      *
      * @see https://github.com/wp-graphql/wp-graphql/issues/214#issuecomment-653141685
      *
-     * @param array  $field_config
+     * @param array<string, mixed> $field_config
      * @param string $type_name
      * @param string $field_name
-     * @param array  $config
+     * @param array<string, mixed> $config
      *
      * @return mixed
      */
@@ -158,9 +159,9 @@ add_action('after_setup_theme', new class () {
     /**
      * Add ACF Country to WPGraphQL supported fields.
      *
-     * @param array $supported_fields
+     * @param string[] $supported_fields
      *
-     * @return array
+     * @return string[]
      */
     public function add_graphql_field_support($supported_fields)
     {
@@ -172,11 +173,17 @@ add_action('after_setup_theme', new class () {
     /**
      * Hook the Admin Columns Pro plugin to provide basic field support
      * if detected on the current WordPress installation.
+     *
+     * @param mixed      $value
+     * @param int|string $id
+     * @param mixed      $column
+     *
+     * @return mixed
      */
     public function admin_column($value, $id, $column)
     {
         if (
-            !is_a($column, '\ACA\ACF\Column')
+            !$column instanceof Column
             || $column->get_field()->get_settings()['type'] !== 'country'
         ) {
             return $value;

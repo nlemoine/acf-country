@@ -22,7 +22,7 @@ $existing = \array_map(
     \glob($dataDir . '/*/country.php') ?: []
 );
 
-if (\in_array('--check', $argv, true)) {
+if (\in_array('--check', $_SERVER['argv'] ?? [], true)) {
     $errors = [];
     foreach (\array_diff($existing, $locales) as $locale) {
         $errors[] = "{$locale}: not provided by symfony/intl";

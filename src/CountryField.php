@@ -7,6 +7,9 @@ namespace HelloNico\AcfCountry;
 use acf_field;
 use acf_field_select;
 
+/**
+ * @phpstan-type Field array<string, mixed>
+ */
 class CountryField extends acf_field
 {
     public const FORMAT_VALUE = 'value';
@@ -70,7 +73,7 @@ class CountryField extends acf_field
     /**
      * The rendered field type.
      *
-     * @param array $field
+     * @param Field $field
      */
     public function render_field($field): void
     {
@@ -90,7 +93,7 @@ class CountryField extends acf_field
     /**
      * The rendered field type settings.
      *
-     * @param array $field
+     * @param Field $field
      */
     public function render_field_settings($field): void
     {
@@ -152,7 +155,7 @@ class CountryField extends acf_field
     /**
      * Validation settings.
      *
-     * @param array $field
+     * @param Field $field
      */
     public function render_field_validation_settings($field): void
     {
@@ -163,7 +166,7 @@ class CountryField extends acf_field
     /**
      * Presentation settings.
      *
-     * @param array $field
+     * @param Field $field
      */
     public function render_field_presentation_settings($field): void
     {
@@ -184,7 +187,7 @@ class CountryField extends acf_field
      *
      * @param mixed $value
      * @param int   $post_id
-     * @param array $field
+     * @param Field $field
      *
      * @return mixed
      */
@@ -217,12 +220,12 @@ class CountryField extends acf_field
      * The condition the field value must meet before
      * it is valid and can be saved.
      *
-     * @param bool  $valid
-     * @param mixed $value
-     * @param array $field
-     * @param array $input
+     * @param bool|string $valid
+     * @param mixed       $value
+     * @param Field       $field
+     * @param string      $input
      *
-     * @return bool
+     * @return bool|string
      */
     public function validate_value($valid, $value, $field, $input)
     {
@@ -256,7 +259,9 @@ class CountryField extends acf_field
     /**
      * The REST API schema, listing country codes as allowed values.
      *
-     * @return array
+     * @param Field $field
+     *
+     * @return array<string, mixed>
      */
     public function get_rest_schema(array $field)
     {
@@ -275,12 +280,16 @@ class CountryField extends acf_field
      *
      * @param bool|\WP_Error $valid
      * @param mixed $value
-     * @param array $field
+     * @param Field $field
      *
      * @return bool|\WP_Error
      */
     public function validate_rest_value($valid, $value, $field)
     {
+        if ($valid instanceof \WP_Error) {
+            return $valid;
+        }
+
         $field['choices'] = $this->get_countries();
 
         return $this->select->validate_rest_value($valid, $this->normalize_codes($value), $field);
@@ -291,7 +300,7 @@ class CountryField extends acf_field
      *
      * @param mixed $value
      * @param int   $post_id
-     * @param array $field
+     * @param Field $field
      *
      * @return mixed
      */
@@ -305,7 +314,7 @@ class CountryField extends acf_field
      *
      * @param mixed $value
      * @param int   $post_id
-     * @param array $field
+     * @param Field $field
      *
      * @return mixed
      */
@@ -328,9 +337,9 @@ class CountryField extends acf_field
     /**
      * The field after loading from the database.
      *
-     * @param array $field
+     * @param Field $field
      *
-     * @return array
+     * @return Field
      */
     public function load_field($field)
     {
@@ -340,9 +349,9 @@ class CountryField extends acf_field
     /**
      * The field before saving to the database.
      *
-     * @param array $field
+     * @param Field $field
      *
-     * @return array
+     * @return Field
      */
     public function update_field($field)
     {
@@ -352,7 +361,7 @@ class CountryField extends acf_field
     /**
      * The action fired when deleting a field from the database.
      *
-     * @param array $field
+     * @param Field $field
      */
     public function delete_field($field): void
     {
@@ -383,11 +392,15 @@ class CountryField extends acf_field
             return '';
         }
 
-        $unicode_prefix = "\xF0\x9F\x87";
-        $unicode_addition_for_upper_case = 0x65;
+        // A flag is the pair of regional indicator symbols (U+1F1E6 for "A") matching the letters.
+        $offset = 0x1F1E6 - \ord('A');
         $country_iso_alpha2 = \strtoupper($country_iso_alpha2);
 
-        return $unicode_prefix . \chr(\ord($country_iso_alpha2[0]) + $unicode_addition_for_upper_case) . $unicode_prefix . \chr(\ord($country_iso_alpha2[1]) + $unicode_addition_for_upper_case);
+        return \html_entity_decode(
+            \sprintf('&#%d;&#%d;', $offset + \ord($country_iso_alpha2[0]), $offset + \ord($country_iso_alpha2[1])),
+            \ENT_QUOTES,
+            'UTF-8'
+        );
     }
 
     /**
@@ -416,7 +429,7 @@ class CountryField extends acf_field
     /**
      * Get countries.
      *
-     * @return array
+     * @return array<string, string> Names indexed by country code.
      */
     public function get_countries()
     {
@@ -447,8 +460,9 @@ class CountryField extends acf_field
     protected function get_asset_url(string $asset): string
     {
         $manifest_path = $this->path . '/assets/dist/manifest.json';
-        if (\is_file($manifest_path) && \is_readable($manifest_path)) {
-            $manifest = \json_decode(\file_get_contents($manifest_path), true);
+        $json = \is_readable($manifest_path) ? \file_get_contents($manifest_path) : false;
+        if ($json !== false) {
+            $manifest = \json_decode($json, true);
             $asset = $manifest[$asset] ?? $asset;
         }
 
