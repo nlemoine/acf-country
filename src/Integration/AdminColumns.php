@@ -25,7 +25,7 @@ final readonly class AdminColumns implements IntegrationInterface
 
     public function registerHooks(): void
     {
-        \add_filter('ac/column/render', $this->render(...), 10, 3);
+        \add_filter('ac/column/render', [$this, 'render'], 10, 3);
     }
 
     public function render(mixed $value, mixed $context, mixed $id): mixed

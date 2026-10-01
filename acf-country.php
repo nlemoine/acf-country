@@ -30,27 +30,37 @@ if (!\defined('ABSPATH')) {
 
 // @bundle-autoload
 
-// Before ACF registers field types on init 5: the field label is translated then.
-\add_action('init', static function (): void {
-    \load_plugin_textdomain('acf-country', false, \basename(__DIR__) . '/languages');
-}, 4);
+// Named functions rather than closures, so other plugins can remove these hooks.
 
-\add_action('plugins_loaded', static function (): void {
+// Before ACF registers field types on init 5: the field label is translated then.
+\add_action('init', __NAMESPACE__ . '\\load_textdomain', 4);
+\add_action('plugins_loaded', __NAMESPACE__ . '\\boot', 0);
+
+function load_textdomain(): void
+{
+    \load_plugin_textdomain('acf-country', false, \basename(__DIR__) . '/languages');
+}
+
+function boot(): void
+{
     // The GitHub source archive and Composer sites that never load vendor/autoload.php have no autoloader.
     if (!\class_exists(Plugin::class)) {
-        \add_action('admin_notices', static function (): void {
-            if (!\current_user_can('activate_plugins')) {
-                return;
-            }
-
-            \printf(
-                '<div class="notice notice-error"><p>%s</p></div>',
-                \esc_html__('ACF Country could not load its classes. Install the plugin from the acf-country.zip release asset, or load Composer\'s vendor/autoload.php.', 'acf-country')
-            );
-        });
+        \add_action('admin_notices', __NAMESPACE__ . '\\missing_autoloader_notice');
 
         return;
     }
 
     Plugin::getInstance()->init();
-}, 0);
+}
+
+function missing_autoloader_notice(): void
+{
+    if (!\current_user_can('activate_plugins')) {
+        return;
+    }
+
+    \printf(
+        '<div class="notice notice-error"><p>%s</p></div>',
+        \esc_html__('ACF Country could not load its classes. Install the plugin from the acf-country.zip release asset, or load Composer\'s vendor/autoload.php.', 'acf-country')
+    );
+}

@@ -50,9 +50,7 @@ final class Plugin
             return $this;
         }
 
-        \add_action('acf/include_field_types', function (): void {
-            \acf_register_field_type($this->container->get(CountryField::class));
-        });
+        \add_action('acf/include_field_types', [$this, 'registerFieldType']);
 
         foreach (self::INTEGRATIONS as $class) {
             $integration = $this->container->get($class);
@@ -64,5 +62,10 @@ final class Plugin
         $this->initialized = true;
 
         return $this;
+    }
+
+    public function registerFieldType(): void
+    {
+        \acf_register_field_type($this->container->get(CountryField::class));
     }
 }

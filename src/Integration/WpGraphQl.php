@@ -26,8 +26,8 @@ final readonly class WpGraphQl implements IntegrationInterface
 
     public function registerHooks(): void
     {
-        \add_action('graphql_register_types', $this->registerObjectType(...));
-        \add_action('wpgraphql/acf/registry_init', $this->registerFieldType(...));
+        \add_action('graphql_register_types', [$this, 'registerObjectType']);
+        \add_action('wpgraphql/acf/registry_init', [$this, 'registerFieldType']);
     }
 
     public function registerObjectType(): void

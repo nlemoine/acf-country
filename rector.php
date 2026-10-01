@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\Php81\Rector\Array_\ArrayToFirstClassCallableRector;
 use Rector\PHPUnit\CodeQuality\Rector\MethodCall\AssertInstanceOfComparisonRector;
 use Rector\PHPUnit\CodeQuality\Rector\MethodCall\FlipAssertRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
@@ -34,6 +35,8 @@ return RectorConfig::configure()
     ->withPhpstanConfigs([__DIR__ . '/phpstan.neon.dist'])
     ->withImportNames(importShortClasses: false, removeUnusedImports: true)
     ->withSkip([
+        // WordPress hook callbacks stay array callables: closures cannot be removed with remove_action()/remove_filter().
+        ArrayToFirstClassCallableRector::class,
         // Hook callbacks receive third-party data: a native array type would turn bad input into a fatal error.
         // acf_field methods stay untyped: if ACF declares them untyped in acf_field, a narrower type would be fatal.
         ArrayParamTypeByMethodCallTypeRector::class => [__DIR__ . '/src/Field/CountryField.php'],
