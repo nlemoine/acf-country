@@ -46,6 +46,11 @@
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "n5s\\AcfCountry\\": "src/"
+        }
+    },
     "autoload-dev": {
         "psr-4": {
             "n5s\\AcfCountry\\Tests\\": "tests/"

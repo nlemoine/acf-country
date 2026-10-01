@@ -6,6 +6,7 @@
 
     <file>./acf-country.php</file>
     <file>./src</file>
+    <exclude-pattern>src/CountryField.php</exclude-pattern>
     <file>./tests</file>
     <exclude-pattern>tests/fixtures/*</exclude-pattern>
 
@@ -18,7 +19,7 @@
     <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
         <properties>
             <property name="rootNamespaces" type="array">
-                <element key="src" value="HelloNico\AcfCountry" />
+                <element key="src" value="n5s\AcfCountry" />
                 <element key="tests" value="n5s\AcfCountry\Tests" />
             </property>
         </properties>
