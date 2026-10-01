@@ -14,7 +14,7 @@ use n5s\AcfCountry\Integration\WpGraphQl;
 final class Plugin
 {
     /**
-     * Integrations, booted when supported.
+     * Integrations: their hooks only fire when the third-party plugin is active.
      *
      * @internal Not part of the public API; may change in minor versions.
      *
@@ -58,10 +58,7 @@ final class Plugin
         \add_action('acf/include_field_types', [$this, 'registerFieldType']);
 
         foreach (self::INTEGRATIONS as $class) {
-            $integration = $this->container->get($class);
-            if ($integration->isSupported()) {
-                $integration->registerHooks();
-            }
+            $this->container->get($class)->registerHooks();
         }
 
         $this->initialized = true;

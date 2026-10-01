@@ -22,11 +22,6 @@ final readonly class WpGraphQl implements IntegrationInterface
     {
     }
 
-    public function isSupported(): bool
-    {
-        return \function_exists('register_graphql_acf_field_type');
-    }
-
     public function registerHooks(): void
     {
         \add_action('graphql_register_types', [$this, 'registerObjectType']);
@@ -35,6 +30,11 @@ final readonly class WpGraphQl implements IntegrationInterface
 
     public function registerObjectType(): void
     {
+        // graphql_register_types is a WPGraphQL hook: no AcfCountry type without WPGraphQL for ACF.
+        if (!\function_exists('register_graphql_acf_field_type')) {
+            return;
+        }
+
         \register_graphql_object_type(self::TYPE, [
             'description' => \__('A country selected in an ACF Country field.', 'acf-country'),
             'fields' => [

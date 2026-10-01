@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace n5s\AcfCountry\Tests\Integration;
 
 use n5s\AcfCountry\Field\CountryField;
+use n5s\AcfCountry\Integration\AdminColumns;
+use n5s\AcfCountry\Integration\WpGraphQl;
 use n5s\AcfCountry\Plugin;
 use n5s\AcfCountry\Tests\TestCase;
 
@@ -19,7 +21,7 @@ final class PluginTest extends TestCase
         $this->assertTrue($fieldType->show_in_rest);
     }
 
-    public function testInitRegistersTheFieldAndSupportedIntegrations(): void
+    public function testInitRegistersTheFieldAndTheIntegrations(): void
     {
         // The test bootstrap already booted the plugin: reset the singleton to boot a fresh instance.
         $instance = new \ReflectionProperty(Plugin::class, 'instance');
@@ -31,10 +33,10 @@ final class PluginTest extends TestCase
             $fieldTypeHooks = \count($GLOBALS['wp_filter']['acf/include_field_types']->callbacks[10] ?? []);
             $plugin = Plugin::getInstance()->init();
 
-            // The field registers on acf/include_field_types; WPGraphQL for ACF is loaded in tests, Admin Columns is not.
+            // The field registers on acf/include_field_types; integrations hook into their plugin's hooks.
             $this->assertCount($fieldTypeHooks + 1, $GLOBALS['wp_filter']['acf/include_field_types']->callbacks[10]);
-            $this->assertNotFalse(\has_action('wpgraphql/acf/registry_init'));
-            $this->assertFalse(\has_filter('ac/column/render'));
+            $this->assertNotFalse(\has_action('wpgraphql/acf/registry_init', [$plugin->getContainer()->get(WpGraphQl::class), 'registerFieldType']));
+            $this->assertNotFalse(\has_filter('ac/column/render', [$plugin->getContainer()->get(AdminColumns::class), 'render']));
             $this->assertSame($plugin, $plugin->init());
 
             \do_action('acf/include_field_types');
@@ -56,7 +58,7 @@ final class PluginTest extends TestCase
 
     public function testHooksCanBeRemoved(): void
     {
-        $this->assertSame(0, \has_action('plugins_loaded', 'n5s\\AcfCountry\\boot'));
+        $this->assertSame(10, \has_action('plugins_loaded', 'n5s\\AcfCountry\\boot'));
         $this->assertSame(10, \has_action('acf/include_field_types', [Plugin::getInstance(), 'registerFieldType']));
     }
 

@@ -21,12 +21,6 @@ final readonly class AdminColumns implements IntegrationInterface
     {
     }
 
-    public function isSupported(): bool
-    {
-        // Defined by the plugin file; Admin Columns classes are only autoloaded later, on after_setup_theme.
-        return \defined('AC_FILE');
-    }
-
     public function registerHooks(): void
     {
         \add_filter('ac/column/render', [$this, 'render'], 10, 3);
@@ -38,7 +32,7 @@ final readonly class AdminColumns implements IntegrationInterface
             return $value;
         }
 
-        // Admin Columns can be active without ACF. Checked here rather than in isSupported(): ACF bundled in a theme loads after plugins.
+        // Admin Columns can be active without ACF. Checked when rendering: ACF bundled in a theme loads after plugins.
         if (!\function_exists('get_field_object')) {
             return $value;
         }

@@ -37,7 +37,7 @@ if (!\defined('ABSPATH')) {
 
 // Before ACF registers field types on init 5: the field label is translated then.
 \add_action('init', __NAMESPACE__ . '\\load_textdomain', 4);
-\add_action('plugins_loaded', __NAMESPACE__ . '\\boot', 0);
+\add_action('plugins_loaded', __NAMESPACE__ . '\\boot');
 
 function load_textdomain(): void
 {
