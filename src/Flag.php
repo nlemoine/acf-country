@@ -13,7 +13,7 @@ final class Flag
 
     public static function fromCode(string $code): string
     {
-        if (\preg_match('/^[A-Za-z]{2}$/', $code) !== 1) {
+        if (\preg_match('/^[A-Za-z]{2}\z/', $code) !== 1) {
             return '';
         }
 

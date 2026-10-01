@@ -23,6 +23,7 @@ final class FlagTest extends TestCase
         yield 'digits' => ['12', ''];
         yield 'non-ASCII letter' => ['é', ''];
         yield 'spaces' => [' FR', ''];
+        yield 'trailing newline' => ["FR\n", ''];
     }
 
     #[DataProvider('codes')]
