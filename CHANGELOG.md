@@ -1,5 +1,55 @@
 # Changelog
 
+## [4.0.0](https://github.com/nlemoine/acf-country/compare/v3.1.0...v4.0.0) (2026-10-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* ACF Country 4.0 requires WordPress 6.0.
+* ACF Country 4.0 requires PHP 8.2.
+* **graphql:** the WPGraphQL for ACF 0.x integration is removed; query the code, name and emoji subfields instead.
+* classes moved to the n5s\AcfCountry namespace, CountryField method signatures changed, and the plugin needs Composer autoloading or the bundled release ZIP.
+* **admin-columns:** Admin Columns Pro versions before 7 are no longer supported.
+* ACF Country now requires PHP 8.1.
+
+### Features
+
+* add get_countries(), get_country_name() and get_country_flag() ([3d1f401](https://github.com/nlemoine/acf-country/commit/3d1f401e9dc3da22354e92f2822302e3a97cad89))
+* **graphql:** support WPGraphQL for ACF 2+ ([981bd94](https://github.com/nlemoine/acf-country/commit/981bd94cc35a6007a79997d7478087cda99f441b))
+
+
+### Bug Fixes
+
+* **admin-columns:** do nothing when ACF is inactive ([ed7fb7a](https://github.com/nlemoine/acf-country/commit/ed7fb7abee8ddba9a35cce8e3d4ccd56c1c1112f))
+* declare the deprecated class alias eagerly ([401d04d](https://github.com/nlemoine/acf-country/commit/401d04d072dde9bf2800751d2bbb3f76c34e8e94))
+* **graphql:** move the integration to Integration\WpGraphQl ([f08b031](https://github.com/nlemoine/acf-country/commit/f08b031ad3c7ad7840a0b682b6e1c9f118ec8968))
+* **i18n:** load translations before ACF registers the field ([c963988](https://github.com/nlemoine/acf-country/commit/c963988b8bad670afe133c5657c02b91afae3c70))
+* reject flag codes with a trailing newline ([a32ff38](https://github.com/nlemoine/acf-country/commit/a32ff383d1380b6173bce7e053335d8f217cf161))
+* remove the trailing period from the GitHub Plugin URI header ([8eeb6c3](https://github.com/nlemoine/acf-country/commit/8eeb6c304be12a138da943ac822bb7c51ddf9789))
+* **security:** anchor the locale check at the end of the string ([d1447d6](https://github.com/nlemoine/acf-country/commit/d1447d6446c2ff9a15ad6b78bdf8a18b03d758b7))
+* **security:** reject malformed locales before loading country data ([01750b1](https://github.com/nlemoine/acf-country/commit/01750b136dc948b9ec48585ae7ddabebda4ac3d1))
+* show an admin notice instead of a fatal error without an autoloader ([3b85443](https://github.com/nlemoine/acf-country/commit/3b8544357c364aa09bfc05b27b3184614f1e1727))
+* use a prefixed handle for the field assets ([c17e099](https://github.com/nlemoine/acf-country/commit/c17e099b6b1b34b65c14929ce6ed00145cdd5669))
+
+
+### Performance Improvements
+
+* read the asset manifest once ([f941b8f](https://github.com/nlemoine/acf-country/commit/f941b8f647c4a7239d918274c2756a2af7e72f59))
+* resolve each country data locale once ([8d9f70b](https://github.com/nlemoine/acf-country/commit/8d9f70b47f9cd1e454670235c5c83c190f1286e5))
+
+
+### Code Refactoring
+
+* **admin-columns:** move the integration to Integration\AdminColumns ([6168db0](https://github.com/nlemoine/acf-country/commit/6168db0470d6acc3ce12af21d872c12624757c70))
+* move the field to n5s\AcfCountry\Field\CountryField ([2f84ded](https://github.com/nlemoine/acf-country/commit/2f84deda9ffafc347719f99dba7c3799f7e70320))
+
+
+### Build System
+
+* require PHP 8.1 ([5ad2506](https://github.com/nlemoine/acf-country/commit/5ad2506fe83dff1badbb942edb8cd7d6ed5a9a44))
+* require PHP 8.2 ([0d30470](https://github.com/nlemoine/acf-country/commit/0d30470c97c262607970e7047dba6307c22c3f59))
+* require WordPress 6.0 ([48c7875](https://github.com/nlemoine/acf-country/commit/48c7875784e6d5df52417353f349e9f6e103c022))
+
 ## [3.1.0](https://github.com/nlemoine/acf-country/compare/v3.0.1...v3.1.0) (2026-10-01)
 
 
