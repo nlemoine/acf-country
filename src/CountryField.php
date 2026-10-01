@@ -253,6 +253,39 @@ class CountryField extends acf_field
     }
 
     /**
+     * The REST API schema, listing country codes as allowed values.
+     *
+     * @return array
+     */
+    public function get_rest_schema(array $field)
+    {
+        $field['choices'] = $this->get_countries();
+        $schema = $this->select->get_rest_schema($field);
+
+        // Codes are strings; the select field also allows "int", which is not a JSON schema type.
+        $schema['type'] = ['string', 'array', 'null'];
+        $schema['items']['type'] = 'string';
+
+        return $schema;
+    }
+
+    /**
+     * Validates values sent through the REST API.
+     *
+     * @param bool|\WP_Error $valid
+     * @param mixed $value
+     * @param array $field
+     *
+     * @return bool|\WP_Error
+     */
+    public function validate_rest_value($valid, $value, $field)
+    {
+        $field['choices'] = $this->get_countries();
+
+        return $this->select->validate_rest_value($valid, $this->normalize_codes($value), $field);
+    }
+
+    /**
      * The field value after loading from the database.
      *
      * @param mixed $value

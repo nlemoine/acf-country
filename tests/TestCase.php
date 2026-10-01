@@ -34,9 +34,10 @@ abstract class TestCase extends MantleTestCase
      * Register a country field on posts and return its settings.
      *
      * @param array<string, mixed> $settings
+     * @param array<string, mixed> $groupSettings
      * @return array<string, mixed>
      */
-    protected function registerField(array $settings = []): array
+    protected function registerField(array $settings = [], array $groupSettings = []): array
     {
         // ACF caches local fields by key: use a fresh key for each registration.
         $suffix = \uniqid();
@@ -50,7 +51,7 @@ abstract class TestCase extends MantleTestCase
             $settings
         );
 
-        \acf_add_local_field_group([
+        \acf_add_local_field_group(\array_merge([
             'key' => 'group_acf_country_' . $suffix,
             'title' => 'Country test',
             'fields' => [$field],
@@ -63,7 +64,7 @@ abstract class TestCase extends MantleTestCase
                     ],
                 ],
             ],
-        ]);
+        ], $groupSettings));
 
         return \acf_get_field($field['key']);
     }
