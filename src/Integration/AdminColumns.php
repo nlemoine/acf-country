@@ -10,6 +10,10 @@ use n5s\AcfCountry\Flag;
 
 /**
  * Admin Columns 7+: country flags and names in custom field columns.
+ *
+ * The hook callback methods stay public so they can be removed with remove_filter().
+ *
+ * @internal Not part of the public API; may change in minor versions.
  */
 final readonly class AdminColumns implements IntegrationInterface
 {

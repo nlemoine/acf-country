@@ -75,6 +75,8 @@ get_country_name('DE');      // 'Germany', null for an unknown code
 get_country_flag('FR');      // '🇫🇷', '' when the code is not two letters
 ```
 
+Classes and methods marked `@internal` are not part of the public API and may change in minor versions.
+
 ### Filters
 
 You can remove (or add) some countries with the `acf/country/countries` filter, example:

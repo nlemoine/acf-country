@@ -16,6 +16,8 @@ final class Plugin
     /**
      * Integrations, booted when supported.
      *
+     * @internal Not part of the public API; may change in minor versions.
+     *
      * @var list<class-string<Integration\IntegrationInterface>>
      */
     public const INTEGRATIONS = [AdminColumns::class, WpGraphQl::class];
@@ -34,6 +36,9 @@ final class Plugin
         return self::$instance ??= new self(new Container(\dirname(__DIR__)));
     }
 
+    /**
+     * @internal Not part of the public API; may change in minor versions.
+     */
     public function getContainer(): Container
     {
         return $this->container;

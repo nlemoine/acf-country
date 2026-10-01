@@ -11,6 +11,8 @@ use n5s\AcfCountry\Integration\WpGraphQl;
 
 /**
  * Builds services on first use.
+ *
+ * @internal Not part of the public API; may change in minor versions.
  */
 final class Container
 {

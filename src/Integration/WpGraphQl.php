@@ -10,6 +10,10 @@ use WPGraphQL\Acf\FieldConfig;
 
 /**
  * WPGraphQL for ACF 2+: country fields resolve to AcfCountry objects.
+ *
+ * The hook callback methods stay public so they can be removed with remove_action().
+ *
+ * @internal Not part of the public API; may change in minor versions.
  */
 final readonly class WpGraphQl implements IntegrationInterface
 {

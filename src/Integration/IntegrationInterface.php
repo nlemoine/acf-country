@@ -6,6 +6,8 @@ namespace n5s\AcfCountry\Integration;
 
 /**
  * A third-party plugin integration.
+ *
+ * @internal Not part of the public API; may change in minor versions.
  */
 interface IntegrationInterface
 {
