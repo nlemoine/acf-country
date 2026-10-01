@@ -29,8 +29,11 @@ final class Countries
 
     private bool $missingDataReported = false;
 
-    public function __construct(private readonly string $dataDir, ?bool $debug = null)
-    {
+    public function __construct(
+        private readonly string $dataDir,
+        ?bool $debug = null,
+    ) {
+
         $this->debug = $debug ?? (\defined('WP_DEBUG') && \WP_DEBUG);
     }
 

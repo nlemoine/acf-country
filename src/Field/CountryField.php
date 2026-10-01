@@ -61,7 +61,7 @@ class CountryField extends acf_field
     public function __construct(
         private readonly string $uri,
         private readonly string $path,
-        ?Countries $countries = null
+        ?Countries $countries = null,
     ) {
 
         $this->countries = $countries ?? Plugin::getInstance()->countries();
