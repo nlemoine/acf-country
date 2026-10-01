@@ -48,7 +48,7 @@ The constructor stays compatible: `new CountryField($uri, $path)` with the 3.x a
 
 ## WPGraphQL
 
-The integration with the archived WPGraphQL for ACF 0.x was replaced by support for WPGraphQL for ACF 2+. Country fields are now exposed as an `AcfCountry` object (`code`, `name`, `flag`), or a list of them for multiple fields, whatever the field's return format. Update your queries to select these subfields.
+The integration with the archived WPGraphQL for ACF 0.x was replaced by support for WPGraphQL for ACF 2+. Country fields are now exposed as an `AcfCountry` object (`code`, `name`, `emoji`), or a list of them for multiple fields, whatever the field's return format. Update your queries to select these subfields.
 
 ## Admin Columns Pro 6
 
