@@ -76,11 +76,13 @@ final class CountriesTest extends TestCase
 
     public function testMissingDataReturnsAnEmptyListInProduction(): void
     {
+        // phpcs:ignore WordPress.PHP.IniSet.Risky -- Keep the error_log() call of the production branch out of the test output.
         $previous = \ini_set('error_log', '/dev/null');
 
         try {
             $this->assertSame([], (new Countries(__DIR__, false))->all('fr'));
         } finally {
+            // phpcs:ignore WordPress.PHP.IniSet.Risky -- Keep the error_log() call of the production branch out of the test output.
             \ini_set('error_log', (string) $previous);
         }
     }

@@ -18,11 +18,11 @@ final class Countries
      */
     private array $lists = [];
 
-    private bool $debug;
+    private readonly bool $debug;
 
     private bool $missingDataReported = false;
 
-    public function __construct(private string $dataDir, ?bool $debug = null)
+    public function __construct(private readonly string $dataDir, ?bool $debug = null)
     {
         $this->debug = $debug ?? (\defined('WP_DEBUG') && \WP_DEBUG);
     }
@@ -93,7 +93,7 @@ final class Countries
 
         if (!$this->missingDataReported) {
             $this->missingDataReported = true;
-            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.Security.EscapeOutput.ExceptionNotEscaped
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
             \error_log($message);
         }
 

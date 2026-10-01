@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictTypedCallRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\StrictArrayParamDimFetchRector;
 
@@ -41,4 +42,6 @@ return RectorConfig::configure()
             __DIR__ . '/acf-country.php',
             __DIR__ . '/src/CountryField.php',
         ],
+        // Data fixtures mirror data/ files.
+        SafeDeclareStrictTypesRector::class => [__DIR__ . '/tests/fixtures'],
     ]);
