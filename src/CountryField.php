@@ -345,7 +345,7 @@ class CountryField extends acf_field
 
     public function country_flag_emoji(string $country_iso_alpha2): string
     {
-        if (\strlen($country_iso_alpha2) !== 2) {
+        if (!\preg_match('/^[A-Za-z]{2}$/', $country_iso_alpha2)) {
             return '';
         }
 
@@ -355,7 +355,7 @@ class CountryField extends acf_field
 
         $emoji = $unicode_prefix . \chr(\ord($country_iso_alpha2[0]) + $unicode_addition_for_upper_case) . $unicode_prefix . \chr(\ord($country_iso_alpha2[1]) + $unicode_addition_for_upper_case);
 
-        return \strlen($emoji) ? $emoji : '';
+        return $emoji;
     }
 
     /**

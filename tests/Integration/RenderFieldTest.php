@@ -53,5 +53,7 @@ class RenderFieldTest extends TestCase
         self::assertSame("\u{1F1EB}\u{1F1F7}", $fieldType->country_flag_emoji('fr'));
         self::assertSame('', $fieldType->country_flag_emoji('FRA'));
         self::assertSame('', $fieldType->country_flag_emoji(''));
+        self::assertSame('', $fieldType->country_flag_emoji('12'));
+        self::assertSame('', $fieldType->country_flag_emoji('é'));
     }
 }
