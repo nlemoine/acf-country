@@ -22,6 +22,8 @@
         "slevomat/coding-standard": "^8.22",
         "syde/phpcs": "^1.0",
         "umpirsky/country-list": "*",
+        "wp-cli/i18n-command": "^2.7",
+        "wp-cli/wp-cli": "^2.12",
         "wpengine/advanced-custom-fields-pro": "^6.0"
     },
     "repositories": [
@@ -54,6 +56,7 @@
         ],
         "cs": "phpcs",
         "cs:fix": "phpcbf",
+        "i18n:pot": "wp i18n make-pot . languages/acf-country.pot --domain=acf-country --slug=acf-country --exclude=vendor,node_modules,wp-content,data,assets",
         "sync-country-data": [
             "rsync -zavr --include '*/' --include '*.php' --exclude '*' --prune-empty-dirs vendor/umpirsky/country-list/data ."
         ]
