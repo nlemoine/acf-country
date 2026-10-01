@@ -5,16 +5,22 @@ on:
     branches:
       - 3.x
 
-permissions:
-  contents: write
-  pull-requests: write
-  packages: write
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   release:
+    name: Release Please
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write # create tags and GitHub releases, push the release branch
+      pull-requests: write # open and label the release PR
     steps:
-      - uses: google-github-actions/release-please-action@v4
+      - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
         with:
           target-branch: ${{ github.ref_name }}
           config-file: release-please-config.json
