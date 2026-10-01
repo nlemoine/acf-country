@@ -1,0 +1,58 @@
+name: QA
+
+on:
+  push:
+    branches:
+      - 3.x
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Dev dependencies (Mantle, symfony/intl) need PHP 8.4+.
+        # PHP 7.4 compatibility of the plugin itself is checked by PHPCompatibility.
+        php: ['8.4', '8.5']
+        experimental: [false]
+        include:
+          # Nightly build, allowed to fail.
+          - php: '8.6'
+            experimental: true
+    name: Tests (PHP ${{ matrix.php }}${{ matrix.experimental && ', experimental' || '' }})
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+      # Runs post-install-cmd, which regenerates data/ from symfony/intl.
+      - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
+        with:
+          # Dependencies may not declare support for unreleased PHP versions yet.
+          composer-options: ${{ matrix.experimental && '--ignore-platform-req=php+' || '' }}
+      - name: Check country data is up to date
+        run: |
+          if [ -n "$(git status --porcelain -- data)" ]; then
+            git status --short -- data
+            echo "::error::data/ is out of date, run 'composer sync-country-data' and commit the result."
+            exit 1
+          fi
+      - run: composer test
+
+  coding-standards:
+    uses: inpsyde/reusable-workflows/.github/workflows/coding-standards-php.yml@236c6b5a7fea73b5058b6f11bd17ff4b80994e54  # main as of 2026-09-28
+    with:
+      PHP_VERSION: '8.4'
