@@ -37,7 +37,7 @@ pnpm build
 
 ## Tests
 
-Tests use [Mantle Testkit](https://mantle.alley.com/docs/testing) and run against WordPress and ACF with SQLite, so no database is needed. WordPress is downloaded to `tmp/` on the first run. There are two suites, `unit` and `integration`, and `composer test` runs both. The `unit` suite needs no database fixtures but still runs with the WordPress test bootstrap, so WordPress functions such as `add_filter` are available.
+Tests use [Mantle Testkit](https://mantle.alley.com/docs/testing) and run against WordPress and ACF with SQLite, so no database is needed. WordPress is downloaded to `tmp/` on the first run. Each integration runs in its own PHP process, so the plugins it loads cannot affect the other tests: `composer test:core` runs the `unit` and `core` suites with ACF only, `composer test:wpgraphql` and `composer test:admin-columns` load their plugin (the bootstrap reads `ACF_COUNTRY_TEST_INTEGRATION`), and `composer test` runs all three. `composer test:coverage` covers the core run only. The `unit` suite needs no database fixtures but still runs with the WordPress test bootstrap, so WordPress functions such as `add_filter` are available.
 
 ```bash
 composer test

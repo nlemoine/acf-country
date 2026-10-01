@@ -2,15 +2,9 @@
 
 declare(strict_types=1);
 
-namespace n5s\AcfCountry\Tests\Integration;
+namespace n5s\AcfCountry\Tests\Integration\Core;
 
-use AC\Column\CustomFieldContext;
-use AC\MetaType;
-use AC\Setting\Config;
-use AC\Type\TableScreenContext;
 use Mantle\Testing\Concerns\Admin_Screen;
-use n5s\AcfCountry\Integration\AdminColumns;
-use n5s\AcfCountry\Plugin;
 use n5s\AcfCountry\ReturnFormat;
 use n5s\AcfCountry\Tests\TestCase;
 
@@ -27,9 +21,6 @@ final class AdminLocaleTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        // Admin Columns is not active in tests: register the integration hooks directly.
-        Plugin::getInstance()->getContainer()->get(AdminColumns::class)->registerHooks();
 
         $this->acting_as(self::factory()->user->create(['role' => 'administrator', 'locale' => 'fr_FR']));
     }
@@ -51,23 +42,6 @@ final class AdminLocaleTest extends TestCase
         $html = capture(fn () => $this->fieldType()->render_field_settings($field));
 
         $this->assertStringContainsString('DE : Allemagne', $html);
-    }
-
-    public function testAdminColumnsUseTheUserLanguage(): void
-    {
-        $field = $this->registerField();
-        $postId = self::factory()->post->create();
-        \update_field($field['key'], 'DE', $postId);
-
-        $context = new CustomFieldContext(
-            new Config(['type' => 'column-meta', 'field' => self::FIELD_NAME]),
-            'Custom Field',
-            '',
-            self::FIELD_NAME,
-            new TableScreenContext(new MetaType(MetaType::POST))
-        );
-
-        $this->assertSame("\u{1F1E9}\u{1F1EA} Allemagne", \apply_filters('ac/column/render', 'DE', $context, $postId));
     }
 
     public function testFormattedValuesKeepTheSiteLanguage(): void

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace n5s\AcfCountry\Tests\Integration;
+namespace n5s\AcfCountry\Tests\Integration\Core;
 
 use n5s\AcfCountry\Field\CountryField;
 use n5s\AcfCountry\Integration\AdminColumns;
@@ -68,7 +68,7 @@ final class PluginTest extends TestCase
 
         $this->assertScriptEnqueued('acf-country-field');
 
-        $manifest = \json_decode((string) \file_get_contents(\dirname(__DIR__, 2) . '/assets/dist/manifest.json'), true);
+        $manifest = \json_decode((string) \file_get_contents(\dirname(__DIR__, 3) . '/assets/dist/manifest.json'), true);
         $this->assertStringEndsWith('/assets/dist/' . $manifest['field.js'], \wp_scripts()->registered['acf-country-field']->src);
     }
 

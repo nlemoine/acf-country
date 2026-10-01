@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace n5s\AcfCountry\Tests\Integration;
+namespace n5s\AcfCountry\Tests\Integration\Core;
 
 use n5s\AcfCountry\Tests\TestCase;
 
@@ -69,10 +69,10 @@ final class CountriesTest extends TestCase
 
     public function testEveryLocaleFileListsTheSameCountries(): void
     {
-        $expected = \array_keys(require \dirname(__DIR__, 2) . '/data/en/country.php');
+        $expected = \array_keys(require \dirname(__DIR__, 3) . '/data/en/country.php');
         \sort($expected);
 
-        foreach (\glob(\dirname(__DIR__, 2) . '/data/*/country.php') ?: [] as $file) {
+        foreach (\glob(\dirname(__DIR__, 3) . '/data/*/country.php') ?: [] as $file) {
             $codes = \array_keys(require $file);
             \sort($codes);
             $this->assertSame($expected, $codes, $file);

@@ -1,11 +1,18 @@
 <?xml version="1.0"?>
-<phpunit bootstrap="tests/bootstrap.php" backupGlobals="false" colors="true" executionOrder="random">
+<!-- The wpgraphql and admin-columns suites need their plugins: run them with composer test, which sets ACF_COUNTRY_TEST_INTEGRATION. -->
+<phpunit bootstrap="tests/bootstrap.php" backupGlobals="false" colors="true" executionOrder="random" defaultTestSuite="unit,core">
   <testsuites>
     <testsuite name="unit">
       <directory suffix="Test.php">./tests/Unit</directory>
     </testsuite>
-    <testsuite name="integration">
-      <directory suffix="Test.php">./tests/Integration</directory>
+    <testsuite name="core">
+      <directory suffix="Test.php">./tests/Integration/Core</directory>
+    </testsuite>
+    <testsuite name="wpgraphql">
+      <directory suffix="Test.php">./tests/Integration/WpGraphQl</directory>
+    </testsuite>
+    <testsuite name="admin-columns">
+      <directory suffix="Test.php">./tests/Integration/AdminColumns</directory>
     </testsuite>
   </testsuites>
   <source>

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace n5s\AcfCountry\Tests\Integration;
+namespace n5s\AcfCountry\Tests\Integration\Core;
 
 use n5s\AcfCountry\ReturnFormat;
 use n5s\AcfCountry\Tests\TestCase;

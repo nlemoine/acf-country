@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace n5s\AcfCountry\Tests\Integration;
+namespace n5s\AcfCountry\Tests\Integration\Core;
 
 use Mantle\Testing\Attributes\Expected_Deprecation;
 use n5s\AcfCountry\Field\CountryField;

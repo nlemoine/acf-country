@@ -93,7 +93,26 @@
         "rector": "rector process --dry-run",
         "rector:fix": "rector process",
         "sync-country-data": "php bin/sync-country-data.php",
-        "test": "phpunit",
-        "test:coverage": "php -d pcov.enabled=1 vendor/bin/phpunit --coverage-text"
+        "test": [
+            "@test:core",
+            "@test:wpgraphql",
+            "@test:admin-columns"
+        ],
+        "test:core": [
+            "@putenv ACF_COUNTRY_TEST_INTEGRATION=",
+            "phpunit --testsuite unit,core"
+        ],
+        "test:wpgraphql": [
+            "@putenv ACF_COUNTRY_TEST_INTEGRATION=wpgraphql",
+            "phpunit --testsuite wpgraphql"
+        ],
+        "test:admin-columns": [
+            "@putenv ACF_COUNTRY_TEST_INTEGRATION=admin-columns",
+            "phpunit --testsuite admin-columns"
+        ],
+        "test:coverage": [
+            "@putenv ACF_COUNTRY_TEST_INTEGRATION=",
+            "php -d pcov.enabled=1 vendor/bin/phpunit --testsuite unit,core --coverage-text"
+        ]
     }
 }

@@ -2,28 +2,18 @@
 
 declare(strict_types=1);
 
-namespace n5s\AcfCountry\Tests\Integration;
+namespace n5s\AcfCountry\Tests\Integration\AdminColumns;
 
 use AC\Column\Context;
 use AC\Column\CustomFieldContext;
 use AC\MetaType;
 use AC\Setting\Config;
 use AC\Type\TableScreenContext;
-use n5s\AcfCountry\Integration\AdminColumns;
-use n5s\AcfCountry\Plugin;
 use n5s\AcfCountry\ReturnFormat;
 use n5s\AcfCountry\Tests\TestCase;
 
 final class AdminColumnsTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // Admin Columns is not active in tests: register the integration hooks directly.
-        Plugin::getInstance()->getContainer()->get(AdminColumns::class)->registerHooks();
-    }
-
     public function testShowsCountryNamesWithFlags(): void
     {
         $field = $this->registerField(['multiple' => 1]);

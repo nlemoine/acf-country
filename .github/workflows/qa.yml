@@ -69,10 +69,17 @@ jobs:
           php-version: '8.4'
           coverage: pcov
       - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
-      - run: php -d pcov.enabled=1 vendor/bin/phpunit --coverage-clover build/coverage.xml
+      # One process per integration, so one report each: Codecov merges them.
+      - run: php -d pcov.enabled=1 vendor/bin/phpunit --testsuite unit,core --coverage-clover build/coverage-core.xml
+      - run: php -d pcov.enabled=1 vendor/bin/phpunit --testsuite wpgraphql --coverage-clover build/coverage-wpgraphql.xml
+        env:
+          ACF_COUNTRY_TEST_INTEGRATION: wpgraphql
+      - run: php -d pcov.enabled=1 vendor/bin/phpunit --testsuite admin-columns --coverage-clover build/coverage-admin-columns.xml
+        env:
+          ACF_COUNTRY_TEST_INTEGRATION: admin-columns
       - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
-          files: build/coverage.xml
+          files: build/coverage-core.xml,build/coverage-wpgraphql.xml,build/coverage-admin-columns.xml
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
