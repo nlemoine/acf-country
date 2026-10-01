@@ -18,30 +18,41 @@
         "php": "^7.4 || ^8.0"
     },
     "require-dev": {
+        "composer/installers": "^2.0",
         "ergebnis/composer-normalize": "^2.54",
+        "mantle-framework/testkit": "^1.17",
         "slevomat/coding-standard": "^8.22",
         "syde/phpcs": "^1.0",
         "symfony/intl": "^8.1",
         "wp-cli/i18n-command": "^2.7",
         "wp-cli/wp-cli": "^2.12",
-        "wpengine/advanced-custom-fields-pro": "^6.0"
+        "wp-plugin/advanced-custom-fields": "^6"
     },
     "repositories": [
         {
+            "name": "wp-packages",
             "type": "composer",
-            "url": "https://connect.advancedcustomfields.com",
+            "url": "https://repo.wp-packages.org",
             "only": [
-                "wpengine/*"
+                "wp-plugin/*",
+                "wp-theme/*"
             ]
         }
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "autoload-dev": {
+        "psr-4": {
+            "HelloNico\\AcfCountry\\Tests\\": "tests/"
+        }
+    },
     "config": {
         "allow-plugins": {
+            "alleyinteractive/composer-wordpress-autoloader": true,
             "composer/installers": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
-            "ergebnis/composer-normalize": true
+            "ergebnis/composer-normalize": true,
+            "roots/wordpress-core-installer": true
         },
         "optimize-autoloader": true,
         "preferred-install": "dist",
@@ -57,6 +68,7 @@
         "cs": "phpcs",
         "cs:fix": "phpcbf",
         "i18n:pot": "wp i18n make-pot . languages/acf-country.pot --domain=acf-country --slug=acf-country --exclude=vendor,node_modules,wp-content,data,assets",
-        "sync-country-data": "php bin/sync-country-data.php"
+        "sync-country-data": "php bin/sync-country-data.php",
+        "test": "phpunit"
     }
 }

@@ -6,6 +6,7 @@
 
     <file>./acf-country.php</file>
     <file>./src</file>
+    <file>./tests</file>
 
     <arg name="colors" />
     <arg value="sp" />
@@ -17,6 +18,7 @@
         <properties>
             <property name="rootNamespaces" type="array">
                 <element key="src" value="HelloNico\AcfCountry" />
+                <element key="tests" value="HelloNico\AcfCountry\Tests" />
             </property>
         </properties>
     </rule>
@@ -39,6 +41,11 @@
         <properties>
             <property name="includeSpecialFunctions" value="true"/>
         </properties>
+    </rule>
+
+    <!-- Tests run on the PHP versions Mantle supports, not the plugin minimum. -->
+    <rule ref="PHPCompatibility">
+        <exclude-pattern>tests/*</exclude-pattern>
     </rule>
 
 </ruleset>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<phpunit bootstrap="tests/bootstrap.php" backupGlobals="false" colors="true" executionOrder="random">
+  <testsuites>
+    <testsuite name="integration">
+      <directory suffix="Test.php">./tests/Integration</directory>
+    </testsuite>
+  </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">./src</directory>
+      <file>./acf-country.php</file>
+    </include>
+  </source>
+</phpunit>
