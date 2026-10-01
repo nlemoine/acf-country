@@ -22,6 +22,9 @@
 
 declare(strict_types=1);
 
+// The plugin file registers hooks next to their named callbacks.
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
+
 namespace n5s\AcfCountry;
 
 if (!\defined('ABSPATH')) {
