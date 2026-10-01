@@ -31,7 +31,10 @@ class CountryField extends acf_field
 
     protected string $uri;
 
-    protected acf_field_select $select;
+    /**
+     * @var acf_field_select
+     */
+    protected acf_field $select;
 
     /**
      * Isn't needed because we're extending acf_field, but it's here for clarity.
@@ -51,7 +54,10 @@ class CountryField extends acf_field
         parent::__construct();
     }
 
-    public function initialize(): void
+    /**
+     * @return void
+     */
+    public function initialize()
     {
         $this->name = 'country';
         $this->label = \__('Country', 'acf-country');
@@ -74,11 +80,13 @@ class CountryField extends acf_field
      * The rendered field type.
      *
      * @param Field $field
+     *
+     * @return void
      */
-    public function render_field($field): void
+    public function render_field($field)
     {
         // Admin screens follow the language of the logged-in user.
-        $countries = $this->get_countries(\determine_locale());
+        $countries = $this->get_countries_for_locale(\determine_locale());
 
         \array_walk($countries, function (&$name, string $code): void {
             $name = $this->country_flag_emoji($code) . '  ' . $name;
@@ -95,10 +103,12 @@ class CountryField extends acf_field
      * The rendered field type settings.
      *
      * @param Field $field
+     *
+     * @return void
      */
-    public function render_field_settings($field): void
+    public function render_field_settings($field)
     {
-        $field['choices'] = \acf_encode_choices($this->get_countries(\determine_locale()));
+        $field['choices'] = \acf_encode_choices($this->get_countries_for_locale(\determine_locale()));
 
         $field['default_value'] = \acf_encode_choices($field['default_value'], false);
 
@@ -157,8 +167,10 @@ class CountryField extends acf_field
      * Validation settings.
      *
      * @param Field $field
+     *
+     * @return void
      */
-    public function render_field_validation_settings($field): void
+    public function render_field_validation_settings($field)
     {
         // allow_null
         $this->select->render_field_validation_settings($field);
@@ -168,8 +180,10 @@ class CountryField extends acf_field
      * Presentation settings.
      *
      * @param Field $field
+     *
+     * @return void
      */
-    public function render_field_presentation_settings($field): void
+    public function render_field_presentation_settings($field)
     {
         \acf_render_field_setting(
             $field,
@@ -329,8 +343,10 @@ class CountryField extends acf_field
      *
      * @param int    $post_id
      * @param string $key
+     *
+     * @return void
      */
-    public function delete_value($post_id, $key): void
+    public function delete_value($post_id, $key)
     {
         // delete_value($post_id, $key);
     }
@@ -363,16 +379,20 @@ class CountryField extends acf_field
      * The action fired when deleting a field from the database.
      *
      * @param Field $field
+     *
+     * @return void
      */
-    public function delete_field($field): void
+    public function delete_field($field)
     {
         // parent::delete_field($field);
     }
 
     /**
      * The assets enqueued when rendering the field.
+     *
+     * @return void
      */
-    public function input_admin_enqueue_scripts(): void
+    public function input_admin_enqueue_scripts()
     {
         $this->select->input_admin_enqueue_scripts();
         \wp_enqueue_script($this->name, $this->get_asset_url('field.js'), ['jquery'], null, true);
@@ -380,8 +400,10 @@ class CountryField extends acf_field
 
     /**
      * The assets enqueued when creating a field group.
+     *
+     * @return void
      */
-    public function field_group_admin_enqueue_scripts(): void
+    public function field_group_admin_enqueue_scripts()
     {
         $this->input_admin_enqueue_scripts();
         \wp_enqueue_style($this->name, $this->get_asset_url('field.css'), [], null);
@@ -428,15 +450,23 @@ class CountryField extends acf_field
     }
 
     /**
-     * Get countries.
-     *
-     * @param string|null $locale Defaults to the site locale.
+     * Get countries, in the site language.
      *
      * @return array<string, string> Names indexed by country code.
      */
-    public function get_countries(?string $locale = null)
+    public function get_countries()
     {
-        $wp_locale = $locale ?? \get_locale();
+        return $this->get_countries_for_locale(\get_locale());
+    }
+
+    /**
+     * Get countries in a given language.
+     *
+     * @return array<string, string> Names indexed by country code.
+     */
+    public function get_countries_for_locale(string $locale): array
+    {
+        $wp_locale = $locale;
 
         // Try the locale, then less specific ones: pt_PT_ao90, pt_PT, pt, then en.
         $locales = [];

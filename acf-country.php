@@ -201,7 +201,7 @@ add_action('after_setup_theme', new class () {
         }
 
         // Admin screens follow the language of the logged-in user.
-        $countries = $field_type->get_countries(determine_locale());
+        $countries = $field_type->get_countries_for_locale(determine_locale());
         $names = [];
         foreach ((array) $field['value'] as $code) {
             if (is_string($code) && isset($countries[$code])) {
