@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+// acf_field method parameters stay untyped: a future ACF version could declare them untyped.
+// phpcs:disable Syde.Functions.ArgumentTypeDeclaration.NoArgumentType
+
 namespace n5s\AcfCountry\Field;
 
 use acf_field;

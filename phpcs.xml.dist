@@ -44,16 +44,6 @@
         </properties>
     </rule>
 
-    <!-- acf_field method parameters stay untyped: a future ACF version could declare them untyped. -->
-    <rule ref="Syde.Functions.ArgumentTypeDeclaration.NoArgumentType">
-        <exclude-pattern>src/Field/CountryField.php</exclude-pattern>
-    </rule>
-
-    <!-- The 3.x class alias autoloader is registered next to the functions. -->
-    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
-        <exclude-pattern>src/functions.php</exclude-pattern>
-    </rule>
-
     <!-- Tests run on the PHP versions Mantle supports, not the plugin minimum. -->
     <rule ref="PHPCompatibility">
         <exclude-pattern>tests/*</exclude-pattern>

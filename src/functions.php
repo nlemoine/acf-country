@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+// The 3.x class alias autoloader is registered next to the functions.
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
+
 namespace n5s\AcfCountry;
 
 use n5s\AcfCountry\Field\CountryField;
