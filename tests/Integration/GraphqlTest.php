@@ -27,6 +27,15 @@ final class GraphqlTest extends TestCase
         \acf_get_local_store('fields')->reset();
     }
 
+    protected function tearDown(): void
+    {
+        // The show_in_graphql groups of this test must not leak into later tests.
+        \acf_get_local_store('groups')->reset();
+        \acf_get_local_store('fields')->reset();
+
+        parent::tearDown();
+    }
+
     /**
      * @return iterable<string, array{string}>
      */
@@ -37,8 +46,6 @@ final class GraphqlTest extends TestCase
         yield 'array' => [ReturnFormat::Array->value];
     }
 
-    /**
-     */
     #[DataProvider('returnFormats')]
     public function testSingleField(string $format): void
     {
