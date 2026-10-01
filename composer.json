@@ -93,6 +93,7 @@
         "rector": "rector process --dry-run",
         "rector:fix": "rector process",
         "sync-country-data": "php bin/sync-country-data.php",
-        "test": "phpunit"
+        "test": "phpunit",
+        "test:coverage": "php -d pcov.enabled=1 vendor/bin/phpunit --coverage-text"
     }
 }
