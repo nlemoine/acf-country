@@ -39,14 +39,52 @@ class ValidationTest extends TestCase
         );
     }
 
-    public function testRejectsInvalidCountryCodes(): void
+    public function testListsOnlyTheInvalidCountryCode(): void
     {
         $field = $this->registerField(['multiple' => 1]);
 
-        $valid = $this->fieldType()->validate_value(true, ['FR', 'ZZ'], $field, 'acf[field]');
+        self::assertSame(
+            'ZZ is not a valid country code',
+            $this->fieldType()->validate_value(true, ['FR', 'ZZ'], $field, 'acf[field]')
+        );
+    }
 
-        self::assertIsString($valid);
-        self::assertStringContainsString('ZZ', $valid);
+    public function testListsOnlyTheInvalidCountryCodes(): void
+    {
+        $field = $this->registerField(['multiple' => 1]);
+
+        self::assertSame(
+            'ZZ, XX are not valid country codes',
+            $this->fieldType()->validate_value(true, ['FR', 'ZZ', 'DE', 'XX'], $field, 'acf[field]')
+        );
+    }
+
+    public function testAcceptsLowercaseCountryCodes(): void
+    {
+        $field = $this->registerField(['multiple' => 1]);
+
+        self::assertTrue($this->fieldType()->validate_value(true, 'fr', $field, 'acf[field]'));
+        self::assertTrue($this->fieldType()->validate_value(true, ['fr', 'DE'], $field, 'acf[field]'));
+    }
+
+    public function testRejectsNonStringValues(): void
+    {
+        $field = $this->registerField(['multiple' => 1]);
+
+        self::assertSame(
+            'array is not a valid country code',
+            $this->fieldType()->validate_value(true, [['FR']], $field, 'acf[field]')
+        );
+    }
+
+    public function testEscapesInvalidValuesInTheMessage(): void
+    {
+        $field = $this->registerField();
+
+        self::assertSame(
+            '&lt;b&gt; is not a valid country code',
+            $this->fieldType()->validate_value(true, '<b>', $field, 'acf[field]')
+        );
     }
 
     public function testKeepsAnEarlierValidationError(): void

@@ -229,20 +229,27 @@ class CountryField extends acf_field
             return $valid;
         }
 
-        $countries = \array_keys($this->get_countries());
-        if (\is_array($value)) {
-            if (\count(\array_diff($value, $countries)) !== 0) {
-                /* translators: placeholder indicates the invalid country codes */
-                $valid = \sprintf(\_n('%s is not a valid country code', '%s are not valid country codes', \count($value), 'acf-country'), \implode(', ', $value));
+        $countries = $this->get_countries();
+        $invalid = [];
+        foreach ((array) $value as $code) {
+            if (!\is_string($code)) {
+                $invalid[] = \gettype($code);
+                continue;
             }
-        } elseif (\is_string($value)) {
-            if (!\in_array($value, $countries, true)) {
-                /* translators: placeholder indicates the invalid country code */
-                $valid = \sprintf(\__('%s is not a valid country code', 'acf-country'), $value);
+            if (!isset($countries[\strtoupper($code)])) {
+                $invalid[] = $code;
             }
         }
 
-        return $valid;
+        if ($invalid === []) {
+            return $valid;
+        }
+
+        return \sprintf(
+            /* translators: placeholder indicates the invalid country codes */
+            \_n('%s is not a valid country code', '%s are not valid country codes', \count($invalid), 'acf-country'),
+            \esc_html(\implode(', ', $invalid))
+        );
     }
 
     /**
