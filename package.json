@@ -18,8 +18,9 @@
     "format": "wp-scripts format ./assets/src/js"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^27.3.0",
-    "mini-css-extract-plugin": "^2.8.0",
-    "webpack-manifest-plugin": "^5.0.0"
-  }
+    "@wordpress/scripts": "^36.0.0",
+    "mini-css-extract-plugin": "^2.10.2",
+    "webpack-manifest-plugin": "^6.0.1"
+  },
+  "packageManager": "pnpm@12.6.0+sha512.3ef68f951cb111ac204b4a5a16f0b2ddf0da56a96e0413e81d855d9f0b55ef926714709028e1cd00c405c2c5fb7b9e8ec4dc46777c805d0373c2f2ff00fd20ec"
 }
