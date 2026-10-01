@@ -44,6 +44,8 @@ class CountryField extends acf_field
     // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint -- acf_field declares it untyped.
     public $show_in_rest = true;
 
+    private const ASSET_HANDLE = 'acf-country-field';
+
     protected acf_field_select $select;
 
     private readonly Countries $countries;
@@ -289,14 +291,14 @@ class CountryField extends acf_field
     {
         $this->select->input_admin_enqueue_scripts();
         // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- the file name is hashed by the build.
-        \wp_enqueue_script($this->name, $this->assetUrl('field.js'), ['jquery'], null, true);
+        \wp_enqueue_script(self::ASSET_HANDLE, $this->assetUrl('field.js'), ['jquery'], null, true);
     }
 
     public function field_group_admin_enqueue_scripts(): void
     {
         $this->input_admin_enqueue_scripts();
         // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- the file name is hashed by the build.
-        \wp_enqueue_style($this->name, $this->assetUrl('field.css'), [], null);
+        \wp_enqueue_style(self::ASSET_HANDLE, $this->assetUrl('field.css'), [], null);
     }
 
     /**

@@ -14,6 +14,10 @@ Install `acf-country.zip` from the release assets. The "Source code" archives Gi
 
 3.x worked without an autoloader: the plugin file required its own class. 4.0 needs the site to load Composer's `vendor/autoload.php`, which Bedrock and similar setups already do. Otherwise the plugin shows an admin notice and stays inactive.
 
+## Asset handles
+
+The field's script and style handles changed from `country` to `acf-country-field`, which only matters if you dequeue them.
+
 ## Namespace
 
 Classes moved from `HelloNico\AcfCountry` to `n5s\AcfCountry`:

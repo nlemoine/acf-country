@@ -64,17 +64,17 @@ final class PluginTest extends TestCase
     {
         $this->fieldType()->input_admin_enqueue_scripts();
 
-        $this->assertScriptEnqueued('country');
+        $this->assertScriptEnqueued('acf-country-field');
 
         $manifest = \json_decode((string) \file_get_contents(\dirname(__DIR__, 2) . '/assets/dist/manifest.json'), true);
-        $this->assertStringEndsWith('/assets/dist/' . $manifest['field.js'], \wp_scripts()->registered['country']->src);
+        $this->assertStringEndsWith('/assets/dist/' . $manifest['field.js'], \wp_scripts()->registered['acf-country-field']->src);
     }
 
     public function testEnqueuesTheFieldStyleOnFieldGroupScreens(): void
     {
         $this->fieldType()->field_group_admin_enqueue_scripts();
 
-        $this->assertScriptEnqueued('country');
-        $this->assertStyleEnqueued('country');
+        $this->assertScriptEnqueued('acf-country-field');
+        $this->assertStyleEnqueued('acf-country-field');
     }
 }
