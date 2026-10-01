@@ -20,6 +20,8 @@
 
 declare(strict_types=1);
 
+use HelloNico\AcfCountry\CountryField;
+
 add_action('after_setup_theme', new class () {
     /**
      * Invoke the plugin.
@@ -43,7 +45,7 @@ add_action('after_setup_theme', new class () {
 
     public function register_field(): void
     {
-        $field = new HelloNico\AcfCountry\CountryField(
+        $field = new CountryField(
             untrailingslashit(plugin_dir_url(__FILE__)),
             untrailingslashit(plugin_dir_path(__FILE__))
         );
@@ -84,7 +86,7 @@ add_action('after_setup_theme', new class () {
                             'list_of' => 'String',
                         ],
                     ],
-                    'resolve' => static function ($root, $args, $context, $info) use ($resolve, $acf_field) {
+                    'resolve' => static function ($root, $args, $context, $info) use ($resolve, $acf_field): array {
                         $value = $resolve($root, $args, $context, $info);
 
                         if (!empty($value)) {
@@ -92,10 +94,10 @@ add_action('after_setup_theme', new class () {
                                 $values = [];
 
                                 foreach ($value as $single_value) {
-                                    array_push($values, [
+                                    $values[] = [
                                         'value' => $single_value,
                                         'label' => $acf_field['choices'][$single_value],
-                                    ]);
+                                    ];
                                 }
 
                                 return $values;
@@ -136,7 +138,7 @@ add_action('after_setup_theme', new class () {
                                 $values = [];
 
                                 foreach ($value as $single_value) {
-                                    array_push($values, $acf_field['choices'][$single_value]);
+                                    $values[] = $acf_field['choices'][$single_value];
                                 }
 
                                 return $values;
@@ -162,7 +164,7 @@ add_action('after_setup_theme', new class () {
      */
     public function add_graphql_field_support($supported_fields)
     {
-        array_push($supported_fields, 'country');
+        $supported_fields[] = 'country';
 
         return $supported_fields;
     }

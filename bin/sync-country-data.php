@@ -15,7 +15,7 @@ use Symfony\Component\Intl\Locales;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$dataDir = \dirname(__DIR__) . '/data';
+$dataDir = __DIR__ . '/../data';
 $locales = Locales::getLocales();
 $existing = \array_map(
     static fn (string $file): string => \basename(\dirname($file)),

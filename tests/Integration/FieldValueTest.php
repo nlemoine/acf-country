@@ -8,7 +8,7 @@ use HelloNico\AcfCountry\CountryField;
 use HelloNico\AcfCountry\Tests\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-class FieldValueTest extends TestCase
+final class FieldValueTest extends TestCase
 {
     /**
      * @return iterable<string, array{string, mixed}>
@@ -25,11 +25,11 @@ class FieldValueTest extends TestCase
     public function testFormatsASingleValue(string $format, mixed $expected): void
     {
         $field = $this->registerField(['return_format' => $format]);
-        $postId = static::factory()->post->create();
+        $postId = self::factory()->post->create();
 
         \update_field($field['key'], 'FR', $postId);
 
-        self::assertSame($expected, \get_field($field['key'], $postId));
+        $this->assertSame($expected, \get_field($field['key'], $postId));
     }
 
     /**
@@ -53,63 +53,63 @@ class FieldValueTest extends TestCase
     public function testFormatsMultipleValues(string $format, mixed $expected): void
     {
         $field = $this->registerField(['return_format' => $format, 'multiple' => 1]);
-        $postId = static::factory()->post->create();
+        $postId = self::factory()->post->create();
 
         \update_field($field['key'], ['FR', 'DE'], $postId);
 
-        self::assertSame($expected, \get_field($field['key'], $postId));
+        $this->assertSame($expected, \get_field($field['key'], $postId));
     }
 
     public function testFormatsNamesInTheSiteLanguage(): void
     {
         $this->useLocale('fr_FR');
         $field = $this->registerField(['return_format' => CountryField::FORMAT_NAME]);
-        $postId = static::factory()->post->create();
+        $postId = self::factory()->post->create();
 
         \update_field($field['key'], 'DE', $postId);
 
-        self::assertSame('Allemagne', \get_field($field['key'], $postId));
+        $this->assertSame('Allemagne', \get_field($field['key'], $postId));
     }
 
     public function testStoresTheCountryCode(): void
     {
         $field = $this->registerField();
-        $postId = static::factory()->post->create();
+        $postId = self::factory()->post->create();
 
         \update_field($field['key'], 'FR', $postId);
 
-        self::assertSame('FR', \get_post_meta($postId, self::FIELD_NAME, true));
-        self::assertSame('FR', \get_field($field['key'], $postId, false));
+        $this->assertSame('FR', \get_post_meta($postId, self::FIELD_NAME, true));
+        $this->assertSame('FR', \get_field($field['key'], $postId, false));
     }
 
     public function testStoresCountryCodesInUppercase(): void
     {
         $field = $this->registerField(['multiple' => 1]);
-        $postId = static::factory()->post->create();
+        $postId = self::factory()->post->create();
 
         \update_field($field['key'], ['fr', 'De'], $postId);
 
-        self::assertSame(['FR', 'DE'], \get_post_meta($postId, self::FIELD_NAME, true));
+        $this->assertSame(['FR', 'DE'], \get_post_meta($postId, self::FIELD_NAME, true));
     }
 
     public function testFormatsLowercaseStoredValues(): void
     {
         $field = $this->registerField(['return_format' => CountryField::FORMAT_NAME]);
-        $postId = static::factory()->post->create();
+        $postId = self::factory()->post->create();
 
         // Stored by an older version, an import or a direct meta write.
         \update_post_meta($postId, self::FIELD_NAME, 'fr');
         \update_post_meta($postId, '_' . self::FIELD_NAME, $field['key']);
 
-        self::assertSame('France', \get_field($field['key'], $postId));
-        self::assertSame('FR', \get_field($field['key'], $postId, false));
+        $this->assertSame('France', \get_field($field['key'], $postId));
+        $this->assertSame('FR', \get_field($field['key'], $postId, false));
     }
 
     public function testEmptyValueStaysEmpty(): void
     {
         $field = $this->registerField(['return_format' => CountryField::FORMAT_EMOJI]);
-        $postId = static::factory()->post->create();
+        $postId = self::factory()->post->create();
 
-        self::assertEmpty(\get_field($field['key'], $postId));
+        $this->assertEmpty(\get_field($field['key'], $postId));
     }
 }

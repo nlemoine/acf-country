@@ -48,7 +48,7 @@ class CountryField extends acf_field
         parent::__construct();
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->name = 'country';
         $this->label = \__('Country', 'acf-country');
@@ -72,11 +72,11 @@ class CountryField extends acf_field
      *
      * @param array $field
      */
-    public function render_field($field)
+    public function render_field($field): void
     {
         $countries = $this->get_countries();
 
-        \array_walk($countries, function (&$name, $code) {
+        \array_walk($countries, function (&$name, string $code): void {
             $name = $this->country_flag_emoji($code) . '  ' . $name;
         });
 
@@ -92,7 +92,7 @@ class CountryField extends acf_field
      *
      * @param array $field
      */
-    public function render_field_settings($field)
+    public function render_field_settings($field): void
     {
         $field['choices'] = \acf_encode_choices($this->get_countries());
 
@@ -154,7 +154,7 @@ class CountryField extends acf_field
      *
      * @param array $field
      */
-    public function render_field_validation_settings($field)
+    public function render_field_validation_settings($field): void
     {
         // allow_null
         $this->select->render_field_validation_settings($field);
@@ -165,7 +165,7 @@ class CountryField extends acf_field
      *
      * @param array $field
      */
-    public function render_field_presentation_settings($field)
+    public function render_field_presentation_settings($field): void
     {
         \acf_render_field_setting(
             $field,
@@ -320,7 +320,7 @@ class CountryField extends acf_field
      * @param int    $post_id
      * @param string $key
      */
-    public function delete_value($post_id, $key)
+    public function delete_value($post_id, $key): void
     {
         // delete_value($post_id, $key);
     }
@@ -354,7 +354,7 @@ class CountryField extends acf_field
      *
      * @param array $field
      */
-    public function delete_field($field)
+    public function delete_field($field): void
     {
         // parent::delete_field($field);
     }
@@ -362,7 +362,7 @@ class CountryField extends acf_field
     /**
      * The assets enqueued when rendering the field.
      */
-    public function input_admin_enqueue_scripts()
+    public function input_admin_enqueue_scripts(): void
     {
         $this->select->input_admin_enqueue_scripts();
         \wp_enqueue_script($this->name, $this->get_asset_url('field.js'), ['jquery'], null, true);
@@ -371,7 +371,7 @@ class CountryField extends acf_field
     /**
      * The assets enqueued when creating a field group.
      */
-    public function field_group_admin_enqueue_scripts()
+    public function field_group_admin_enqueue_scripts(): void
     {
         $this->input_admin_enqueue_scripts();
         \wp_enqueue_style($this->name, $this->get_asset_url('field.css'), [], null);
@@ -387,9 +387,7 @@ class CountryField extends acf_field
         $unicode_addition_for_upper_case = 0x65;
         $country_iso_alpha2 = \strtoupper($country_iso_alpha2);
 
-        $emoji = $unicode_prefix . \chr(\ord($country_iso_alpha2[0]) + $unicode_addition_for_upper_case) . $unicode_prefix . \chr(\ord($country_iso_alpha2[1]) + $unicode_addition_for_upper_case);
-
-        return $emoji;
+        return $unicode_prefix . \chr(\ord($country_iso_alpha2[0]) + $unicode_addition_for_upper_case) . $unicode_prefix . \chr(\ord($country_iso_alpha2[1]) + $unicode_addition_for_upper_case);
     }
 
     /**
@@ -410,9 +408,7 @@ class CountryField extends acf_field
         }
 
         return \array_map(
-            static function ($code) {
-                return \is_string($code) ? \strtoupper($code) : $code;
-            },
+            static fn ($code) => \is_string($code) ? \strtoupper($code) : $code,
             $value
         );
     }

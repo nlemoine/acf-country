@@ -9,7 +9,7 @@ use HelloNico\AcfCountry\Tests\TestCase;
 use function Mantle\Support\Helpers\capture;
 use function Mantle\Testing\html_string;
 
-class RenderFieldTest extends TestCase
+final class RenderFieldTest extends TestCase
 {
     public function testRendersASelectOfCountriesWithFlags(): void
     {
@@ -20,8 +20,8 @@ class RenderFieldTest extends TestCase
 
         $html->assertQuerySelectorCount('select option', 249);
         $option = $html->first_by_selector('option[value="FR"]');
-        self::assertSame('selected', $option->get_attribute('selected'));
-        self::assertSame("\u{1F1EB}\u{1F1F7}\u{00A0}\u{00A0}France", $option->text());
+        $this->assertSame('selected', $option->get_attribute('selected'));
+        $this->assertSame("\u{1F1EB}\u{1F1F7}\u{00A0}\u{00A0}France", $option->text());
     }
 
     public function testUppercasesStoredValuesWhenRendering(): void
@@ -31,8 +31,8 @@ class RenderFieldTest extends TestCase
 
         $html = html_string(capture(static fn () => \acf_render_field($field)));
 
-        self::assertSame('selected', $html->first_by_selector('option[value="FR"]')->get_attribute('selected'));
-        self::assertSame('selected', $html->first_by_selector('option[value="DE"]')->get_attribute('selected'));
+        $this->assertSame('selected', $html->first_by_selector('option[value="FR"]')->get_attribute('selected'));
+        $this->assertSame('selected', $html->first_by_selector('option[value="DE"]')->get_attribute('selected'));
     }
 
     public function testSelectsALowercaseSingleValue(): void
@@ -42,18 +42,18 @@ class RenderFieldTest extends TestCase
 
         $html = html_string(capture(static fn () => \acf_render_field($field)));
 
-        self::assertSame('selected', $html->first_by_selector('option[value="FR"]')->get_attribute('selected'));
+        $this->assertSame('selected', $html->first_by_selector('option[value="FR"]')->get_attribute('selected'));
     }
 
     public function testFlagEmoji(): void
     {
         $fieldType = $this->fieldType();
 
-        self::assertSame("\u{1F1EB}\u{1F1F7}", $fieldType->country_flag_emoji('FR'));
-        self::assertSame("\u{1F1EB}\u{1F1F7}", $fieldType->country_flag_emoji('fr'));
-        self::assertSame('', $fieldType->country_flag_emoji('FRA'));
-        self::assertSame('', $fieldType->country_flag_emoji(''));
-        self::assertSame('', $fieldType->country_flag_emoji('12'));
-        self::assertSame('', $fieldType->country_flag_emoji('é'));
+        $this->assertSame("\u{1F1EB}\u{1F1F7}", $fieldType->country_flag_emoji('FR'));
+        $this->assertSame("\u{1F1EB}\u{1F1F7}", $fieldType->country_flag_emoji('fr'));
+        $this->assertSame('', $fieldType->country_flag_emoji('FRA'));
+        $this->assertSame('', $fieldType->country_flag_emoji(''));
+        $this->assertSame('', $fieldType->country_flag_emoji('12'));
+        $this->assertSame('', $fieldType->country_flag_emoji('é'));
     }
 }

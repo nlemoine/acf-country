@@ -25,7 +25,7 @@ abstract class TestCase extends MantleTestCase
     protected function fieldType(): CountryField
     {
         $fieldType = \acf_get_field_type('country');
-        self::assertInstanceOf(CountryField::class, $fieldType);
+        $this->assertInstanceOf(CountryField::class, $fieldType);
 
         return $fieldType;
     }

@@ -7,13 +7,13 @@ namespace HelloNico\AcfCountry\Tests\Integration;
 use HelloNico\AcfCountry\CountryField;
 use HelloNico\AcfCountry\Tests\TestCase;
 
-class GraphqlTest extends TestCase
+final class GraphqlTest extends TestCase
 {
     public function testLeavesOtherFieldTypesUntouched(): void
     {
         $config = ['type' => 'String', 'resolve' => static fn (): string => 'x'];
 
-        self::assertSame($config, $this->registerGraphqlField($config, ['type' => 'text']));
+        $this->assertSame($config, $this->registerGraphqlField($config, ['type' => 'text']));
     }
 
     public function testValueFormat(): void
@@ -23,8 +23,8 @@ class GraphqlTest extends TestCase
             $this->acfField(CountryField::FORMAT_VALUE)
         );
 
-        self::assertSame('String', $config['type']);
-        self::assertSame('FR', $config['resolve'](null, [], null, null));
+        $this->assertSame('String', $config['type']);
+        $this->assertSame('FR', $config['resolve'](null, [], null, null));
     }
 
     public function testNameFormat(): void
@@ -34,8 +34,8 @@ class GraphqlTest extends TestCase
             $this->acfField(CountryField::FORMAT_NAME, true)
         );
 
-        self::assertSame(['list_of' => 'String'], $config['type']);
-        self::assertSame(['France', 'Germany'], $config['resolve'](null, [], null, null));
+        $this->assertSame(['list_of' => 'String'], $config['type']);
+        $this->assertSame(['France', 'Germany'], $config['resolve'](null, [], null, null));
     }
 
     public function testArrayFormat(): void
@@ -45,16 +45,16 @@ class GraphqlTest extends TestCase
             $this->acfField(CountryField::FORMAT_ARRAY)
         );
 
-        self::assertSame(['value' => 'FR', 'label' => 'France'], $config['resolve'](null, [], null, null));
+        $this->assertSame(['value' => 'FR', 'label' => 'France'], $config['resolve'](null, [], null, null));
     }
 
     public function testEmptyValues(): void
     {
         $resolve = static fn (): string => '';
 
-        self::assertNull($this->registerGraphqlField(['resolve' => $resolve], $this->acfField(CountryField::FORMAT_VALUE))['resolve'](null, [], null, null));
-        self::assertNull($this->registerGraphqlField(['resolve' => $resolve], $this->acfField(CountryField::FORMAT_NAME))['resolve'](null, [], null, null));
-        self::assertSame([], $this->registerGraphqlField(['resolve' => $resolve], $this->acfField(CountryField::FORMAT_ARRAY))['resolve'](null, [], null, null));
+        $this->assertNull($this->registerGraphqlField(['resolve' => $resolve], $this->acfField(CountryField::FORMAT_VALUE))['resolve'](null, [], null, null));
+        $this->assertNull($this->registerGraphqlField(['resolve' => $resolve], $this->acfField(CountryField::FORMAT_NAME))['resolve'](null, [], null, null));
+        $this->assertSame([], $this->registerGraphqlField(['resolve' => $resolve], $this->acfField(CountryField::FORMAT_ARRAY))['resolve'](null, [], null, null));
     }
 
     /**
