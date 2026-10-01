@@ -120,6 +120,7 @@ add_action('after_setup_theme', new class () {
                     },
                 ];
                 break;
+            case 'name':
             case 'label':
                 $field_config = [
                     'type' => empty($acf_field['multiple']) ? 'String' : [
