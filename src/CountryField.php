@@ -392,12 +392,12 @@ class CountryField extends acf_field
     {
         $wp_locale = \get_locale();
 
-        // Try locales in that order
-        $locales = [
-            $wp_locale, // e.g. 'en_US'
-            \substr($wp_locale, 0, 2), // e.g. 'en'
-            'en',
-        ];
+        // Try the locale, then less specific ones: pt_PT_ao90, pt_PT, pt, then en.
+        $locales = [];
+        for ($parts = \explode('_', $wp_locale); $parts !== []; \array_pop($parts)) {
+            $locales[] = \implode('_', $parts);
+        }
+        $locales[] = 'en';
 
         foreach ($locales as $locale) {
             $file = \sprintf('%s/data/%s/country.php', $this->path, $locale);

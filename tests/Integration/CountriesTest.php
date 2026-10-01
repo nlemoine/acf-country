@@ -32,6 +32,22 @@ class CountriesTest extends TestCase
         self::assertSame('Deutschland', $this->fieldType()->get_countries()['DE']);
     }
 
+    public function testFallsBackToTheRegionalLocaleOfAVariant(): void
+    {
+        // No data/pt_PT_ao90: pt_PT is used, not Brazilian Portuguese (pt).
+        $this->useLocale('pt_PT_ao90');
+
+        self::assertSame('Arménia', $this->fieldType()->get_countries()['AM']);
+    }
+
+    public function testThreeLetterLanguagesDoNotFallBackToAnotherLanguage(): void
+    {
+        // No data/ast (Asturian): "as" is Assamese, so English must be used.
+        $this->useLocale('ast');
+
+        self::assertSame('France', $this->fieldType()->get_countries()['FR']);
+    }
+
     public function testFallsBackToEnglishForUnknownLocales(): void
     {
         $this->useLocale('xx_XX');
