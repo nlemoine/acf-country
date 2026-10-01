@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace n5s\AcfCountry\Tests;
 
-use HelloNico\AcfCountry\CountryField;
 use Mantle\Testing\Concerns\Refresh_Database;
 use Mantle\Testkit\TestCase as MantleTestCase;
+use n5s\AcfCountry\Field\CountryField;
 
 abstract class TestCase extends MantleTestCase
 {

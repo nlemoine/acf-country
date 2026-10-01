@@ -16,38 +16,24 @@
  * Text Domain:       acf-country
  * Domain Path:       /languages
  * GitHub Plugin URI: https://github.com/nlemoine/acf-country
+ * Primary Branch:    4.x
+ * Release Asset:     true
  */
 
 declare(strict_types=1);
 
-use HelloNico\AcfCountry\CountryField;
-use n5s\AcfCountry\Plugin;
+namespace n5s\AcfCountry;
 
-add_action('after_setup_theme', new class () {
-    /**
-     * Invoke the plugin.
-     */
-    public function __invoke(): void
-    {
-        if (!class_exists('acf_field')) {
-            return;
-        }
+if (!\defined('ABSPATH')) {
+    exit;
+}
 
-        Plugin::getInstance()->init();
+// @bundle-autoload
 
-        require_once __DIR__ . '/src/CountryField.php';
-
-        add_action('acf/include_field_types', $this->register_field(...));
-
-        load_plugin_textdomain('acf-country', false, plugin_basename(__DIR__) . '/languages');
-    }
-
-    public function register_field(): void
-    {
-        $field = new CountryField(
-            untrailingslashit(plugin_dir_url(__FILE__)),
-            untrailingslashit(plugin_dir_path(__FILE__))
-        );
-        acf_register_field_type($field);
-    }
+\add_action('init', static function (): void {
+    \load_plugin_textdomain('acf-country', false, \basename(__DIR__) . '/languages');
 });
+
+\add_action('plugins_loaded', static function (): void {
+    Plugin::getInstance()->init();
+}, 0);

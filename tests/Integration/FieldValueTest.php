@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace n5s\AcfCountry\Tests\Integration;
 
-use HelloNico\AcfCountry\CountryField;
+use n5s\AcfCountry\ReturnFormat;
 use n5s\AcfCountry\Tests\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
@@ -15,10 +15,10 @@ final class FieldValueTest extends TestCase
      */
     public static function singleValueFormats(): iterable
     {
-        yield 'value' => [CountryField::FORMAT_VALUE, 'FR'];
-        yield 'name' => [CountryField::FORMAT_NAME, 'France'];
-        yield 'array' => [CountryField::FORMAT_ARRAY, ['value' => 'FR', 'label' => 'France']];
-        yield 'emoji' => [CountryField::FORMAT_EMOJI, "\u{1F1EB}\u{1F1F7}"];
+        yield 'value' => [ReturnFormat::Value->value, 'FR'];
+        yield 'name' => [ReturnFormat::Name->value, 'France'];
+        yield 'array' => [ReturnFormat::Array->value, ['value' => 'FR', 'label' => 'France']];
+        yield 'emoji' => [ReturnFormat::Emoji->value, "\u{1F1EB}\u{1F1F7}"];
     }
 
     #[DataProvider('singleValueFormats')]
@@ -37,16 +37,16 @@ final class FieldValueTest extends TestCase
      */
     public static function multipleValueFormats(): iterable
     {
-        yield 'value' => [CountryField::FORMAT_VALUE, ['FR', 'DE']];
-        yield 'name' => [CountryField::FORMAT_NAME, ['France', 'Germany']];
+        yield 'value' => [ReturnFormat::Value->value, ['FR', 'DE']];
+        yield 'name' => [ReturnFormat::Name->value, ['France', 'Germany']];
         yield 'array' => [
-            CountryField::FORMAT_ARRAY,
+            ReturnFormat::Array->value,
             [
                 ['value' => 'FR', 'label' => 'France'],
                 ['value' => 'DE', 'label' => 'Germany'],
             ],
         ];
-        yield 'emoji' => [CountryField::FORMAT_EMOJI, ["\u{1F1EB}\u{1F1F7}", "\u{1F1E9}\u{1F1EA}"]];
+        yield 'emoji' => [ReturnFormat::Emoji->value, ["\u{1F1EB}\u{1F1F7}", "\u{1F1E9}\u{1F1EA}"]];
     }
 
     #[DataProvider('multipleValueFormats')]
@@ -63,7 +63,7 @@ final class FieldValueTest extends TestCase
     public function testFormatsNamesInTheSiteLanguage(): void
     {
         $this->useLocale('fr_FR');
-        $field = $this->registerField(['return_format' => CountryField::FORMAT_NAME]);
+        $field = $this->registerField(['return_format' => ReturnFormat::Name->value]);
         $postId = self::factory()->post->create();
 
         \update_field($field['key'], 'DE', $postId);
@@ -94,7 +94,7 @@ final class FieldValueTest extends TestCase
 
     public function testFormatsLowercaseStoredValues(): void
     {
-        $field = $this->registerField(['return_format' => CountryField::FORMAT_NAME]);
+        $field = $this->registerField(['return_format' => ReturnFormat::Name->value]);
         $postId = self::factory()->post->create();
 
         // Stored by an older version, an import or a direct meta write.
@@ -107,9 +107,19 @@ final class FieldValueTest extends TestCase
 
     public function testEmptyValueStaysEmpty(): void
     {
-        $field = $this->registerField(['return_format' => CountryField::FORMAT_EMOJI]);
+        $field = $this->registerField(['return_format' => ReturnFormat::Emoji->value]);
         $postId = self::factory()->post->create();
 
         $this->assertEmpty(\get_field($field['key'], $postId));
+    }
+
+    public function testSkipsInvalidItemsInStoredArrays(): void
+    {
+        $field = $this->registerField(['return_format' => ReturnFormat::Name->value, 'multiple' => 1]);
+        $postId = self::factory()->post->create();
+        \update_post_meta($postId, self::FIELD_NAME, ['FR', null, '', ['DE']]);
+        \update_post_meta($postId, '_' . self::FIELD_NAME, $field['key']);
+
+        $this->assertSame(['France'], \get_field($field['key'], $postId));
     }
 }

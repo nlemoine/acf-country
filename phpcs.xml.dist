@@ -6,7 +6,6 @@
 
     <file>./acf-country.php</file>
     <file>./src</file>
-    <exclude-pattern>src/CountryField.php</exclude-pattern>
     <file>./tests</file>
     <exclude-pattern>tests/fixtures/*</exclude-pattern>
 
@@ -43,6 +42,16 @@
         <properties>
             <property name="includeSpecialFunctions" value="true"/>
         </properties>
+    </rule>
+
+    <!-- acf_field method parameters stay untyped: a future ACF version could declare them untyped. -->
+    <rule ref="Syde.Functions.ArgumentTypeDeclaration.NoArgumentType">
+        <exclude-pattern>src/Field/CountryField.php</exclude-pattern>
+    </rule>
+
+    <!-- The 3.x class alias autoloader is registered next to the functions. -->
+    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+        <exclude-pattern>src/functions.php</exclude-pattern>
     </rule>
 
     <!-- Tests run on the PHP versions Mantle supports, not the plugin minimum. -->

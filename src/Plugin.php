@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace n5s\AcfCountry;
 
+use n5s\AcfCountry\Field\CountryField;
 use n5s\AcfCountry\Integration\AdminColumns;
 use n5s\AcfCountry\Integration\WpGraphQl;
 
@@ -48,6 +49,10 @@ final class Plugin
         if ($this->initialized) {
             return $this;
         }
+
+        \add_action('acf/include_field_types', function (): void {
+            \acf_register_field_type($this->container->get(CountryField::class));
+        });
 
         foreach (self::INTEGRATIONS as $class) {
             $integration = $this->container->get($class);

@@ -78,4 +78,12 @@ final class ValidationTest extends TestCase
 
         $this->assertSame('Required', $this->fieldType()->validate_value('Required', '', $field, 'acf[field]'));
     }
+
+    public function testAcceptsACountryAddedByTheFilter(): void
+    {
+        \add_filter('acf/country/countries', static fn (array $countries): array => $countries + ['ZZ' => 'Test land']);
+        $field = $this->registerField();
+
+        $this->assertTrue($this->fieldType()->validate_value(true, 'ZZ', $field, 'acf[field]'));
+    }
 }

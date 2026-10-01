@@ -9,9 +9,9 @@ use AC\Column\CustomFieldContext;
 use AC\MetaType;
 use AC\Setting\Config;
 use AC\Type\TableScreenContext;
-use HelloNico\AcfCountry\CountryField;
 use n5s\AcfCountry\Integration\AdminColumns;
 use n5s\AcfCountry\Plugin;
+use n5s\AcfCountry\ReturnFormat;
 use n5s\AcfCountry\Tests\TestCase;
 
 final class AdminColumnsTest extends TestCase
@@ -38,7 +38,7 @@ final class AdminColumnsTest extends TestCase
 
     public function testShowsTheNameWhateverTheReturnFormat(): void
     {
-        $field = $this->registerField(['return_format' => CountryField::FORMAT_VALUE]);
+        $field = $this->registerField(['return_format' => ReturnFormat::Value->value]);
         $postId = self::factory()->post->create();
         \update_field($field['key'], 'FR', $postId);
 

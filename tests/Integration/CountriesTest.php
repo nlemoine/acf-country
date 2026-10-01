@@ -6,11 +6,13 @@ namespace n5s\AcfCountry\Tests\Integration;
 
 use n5s\AcfCountry\Tests\TestCase;
 
+use function n5s\AcfCountry\get_countries;
+
 final class CountriesTest extends TestCase
 {
     public function testDefaultsToEnglish(): void
     {
-        $countries = $this->fieldType()->get_countries();
+        $countries = get_countries();
 
         $this->assertSame('France', $countries['FR']);
         $this->assertSame('South Africa', $countries['ZA']);
@@ -21,7 +23,7 @@ final class CountriesTest extends TestCase
     {
         $this->useLocale('pt_BR');
 
-        $this->assertSame('Alemanha', $this->fieldType()->get_countries()['DE']);
+        $this->assertSame('Alemanha', get_countries()['DE']);
     }
 
     public function testFallsBackToTheLanguageCode(): void
@@ -29,7 +31,7 @@ final class CountriesTest extends TestCase
         // No data/de_DE_formal, so "de" is used.
         $this->useLocale('de_DE_formal');
 
-        $this->assertSame('Deutschland', $this->fieldType()->get_countries()['DE']);
+        $this->assertSame('Deutschland', get_countries()['DE']);
     }
 
     public function testFallsBackToTheRegionalLocaleOfAVariant(): void
@@ -37,7 +39,7 @@ final class CountriesTest extends TestCase
         // No data/pt_PT_ao90: pt_PT is used, not Brazilian Portuguese (pt).
         $this->useLocale('pt_PT_ao90');
 
-        $this->assertSame('Arménia', $this->fieldType()->get_countries()['AM']);
+        $this->assertSame('Arménia', get_countries()['AM']);
     }
 
     public function testThreeLetterLanguagesDoNotFallBackToAnotherLanguage(): void
@@ -45,14 +47,14 @@ final class CountriesTest extends TestCase
         // No data/ast (Asturian): "as" is Assamese, so English must be used.
         $this->useLocale('ast');
 
-        $this->assertSame('France', $this->fieldType()->get_countries()['FR']);
+        $this->assertSame('France', get_countries()['FR']);
     }
 
     public function testFallsBackToEnglishForUnknownLocales(): void
     {
         $this->useLocale('xx_XX');
 
-        $this->assertSame('Germany', $this->fieldType()->get_countries()['DE']);
+        $this->assertSame('Germany', get_countries()['DE']);
     }
 
     public function testCountriesCanBeFiltered(): void
@@ -62,7 +64,7 @@ final class CountriesTest extends TestCase
             \array_flip(['FR', 'DE'])
         ));
 
-        $this->assertSame(['FR' => 'France', 'DE' => 'Germany'], $this->fieldType()->get_countries());
+        $this->assertSame(['FR' => 'France', 'DE' => 'Germany'], get_countries());
     }
 
     public function testEveryLocaleFileListsTheSameCountries(): void

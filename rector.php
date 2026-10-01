@@ -3,9 +3,8 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
-use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictTypedCallRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\ArrayParamTypeByMethodCallTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\StrictArrayParamDimFetchRector;
 
 return RectorConfig::configure()
@@ -35,12 +34,10 @@ return RectorConfig::configure()
     ->withSkip([
         // Hook callbacks receive third-party data: a native array type would turn bad input into a fatal error.
         // acf_field methods stay untyped: if ACF declares them untyped in acf_field, a narrower type would be fatal.
-        // CountryField can be extended: keep its 3.0 method signatures until 4.0.
-        AddVoidReturnTypeWhereNoReturnRector::class => [__DIR__ . '/src/CountryField.php'],
-        ReturnTypeFromStrictTypedCallRector::class => [__DIR__ . '/src/CountryField.php'],
+        ArrayParamTypeByMethodCallTypeRector::class => [__DIR__ . '/src/Field/CountryField.php'],
         StrictArrayParamDimFetchRector::class => [
             __DIR__ . '/acf-country.php',
-            __DIR__ . '/src/CountryField.php',
+            __DIR__ . '/src/Field/CountryField.php',
         ],
         // Data fixtures mirror data/ files.
         SafeDeclareStrictTypesRector::class => [__DIR__ . '/tests/fixtures'],

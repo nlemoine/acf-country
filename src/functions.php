@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace n5s\AcfCountry;
 
+use n5s\AcfCountry\Field\CountryField;
+
 /**
  * Country names indexed by ISO 3166-1 alpha-2 code, sorted by name.
  *
@@ -33,3 +35,10 @@ function get_country_flag(string $code): string
 {
     return Flag::fromCode($code);
 }
+
+// Deprecated in 4.0.0, removed in 5.0.0: the 3.x class name.
+\spl_autoload_register(static function (string $class): void {
+    if ($class === 'HelloNico\AcfCountry\CountryField') {
+        \class_alias(CountryField::class, $class);
+    }
+});

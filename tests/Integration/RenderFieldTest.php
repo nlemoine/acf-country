@@ -44,16 +44,4 @@ final class RenderFieldTest extends TestCase
 
         $this->assertSame('selected', $html->first_by_selector('option[value="FR"]')->get_attribute('selected'));
     }
-
-    public function testFlagEmoji(): void
-    {
-        $fieldType = $this->fieldType();
-
-        $this->assertSame("\u{1F1EB}\u{1F1F7}", $fieldType->country_flag_emoji('FR'));
-        $this->assertSame("\u{1F1EB}\u{1F1F7}", $fieldType->country_flag_emoji('fr'));
-        $this->assertSame('', $fieldType->country_flag_emoji('FRA'));
-        $this->assertSame('', $fieldType->country_flag_emoji(''));
-        $this->assertSame('', $fieldType->country_flag_emoji('12'));
-        $this->assertSame('', $fieldType->country_flag_emoji('é'));
-    }
 }

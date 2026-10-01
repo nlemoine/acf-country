@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace n5s\AcfCountry;
 
 use InvalidArgumentException;
+use n5s\AcfCountry\Field\CountryField;
 use n5s\AcfCountry\Integration\AdminColumns;
 use n5s\AcfCountry\Integration\WpGraphQl;
 
@@ -27,6 +28,11 @@ final class Container
     {
         $this->factories = [
             Countries::class => static fn (): Countries => new Countries($pluginDir . '/data'),
+            CountryField::class => fn (): CountryField => new CountryField(
+                \untrailingslashit(\plugin_dir_url($pluginDir . '/acf-country.php')),
+                $pluginDir,
+                $this->get(Countries::class)
+            ),
             AdminColumns::class => fn (): AdminColumns => new AdminColumns(
                 $this->get(Countries::class)
             ),

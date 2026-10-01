@@ -8,10 +8,10 @@ use AC\Column\CustomFieldContext;
 use AC\MetaType;
 use AC\Setting\Config;
 use AC\Type\TableScreenContext;
-use HelloNico\AcfCountry\CountryField;
 use Mantle\Testing\Concerns\Admin_Screen;
 use n5s\AcfCountry\Integration\AdminColumns;
 use n5s\AcfCountry\Plugin;
+use n5s\AcfCountry\ReturnFormat;
 use n5s\AcfCountry\Tests\TestCase;
 
 use function Mantle\Support\Helpers\capture;
@@ -72,7 +72,7 @@ final class AdminLocaleTest extends TestCase
 
     public function testFormattedValuesKeepTheSiteLanguage(): void
     {
-        $field = $this->registerField(['return_format' => CountryField::FORMAT_NAME]);
+        $field = $this->registerField(['return_format' => ReturnFormat::Name->value]);
         $postId = self::factory()->post->create();
         \update_field($field['key'], 'DE', $postId);
 
