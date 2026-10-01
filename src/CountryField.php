@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HelloNico\AcfCountry;
 
 use acf_field;
+use acf_field_select;
 
 class CountryField extends acf_field
 {
@@ -27,7 +28,7 @@ class CountryField extends acf_field
 
     protected string $uri;
 
-    protected acf_field $select;
+    protected acf_field_select $select;
 
     /**
      * Isn't needed because we're extending acf_field, but it's here for clarity.
