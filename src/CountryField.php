@@ -232,7 +232,7 @@ class CountryField extends acf_field
         if (\is_array($value)) {
             if (\count(\array_diff($value, $countries)) !== 0) {
                 /* translators: placeholder indicates the invalid country codes */
-                $valid = \sprintf(\_n('%s is not valid a country code', '%s are not valid country codes', \count($value), 'acf-country'), \implode(', ', $value));
+                $valid = \sprintf(\_n('%s is not a valid country code', '%s are not valid country codes', \count($value), 'acf-country'), \implode(', ', $value));
             }
         } elseif (\is_string($value)) {
             if (!\in_array($value, $countries, true)) {
