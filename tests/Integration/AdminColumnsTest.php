@@ -80,6 +80,11 @@ final class AdminColumnsTest extends TestCase
         $this->assertSame('FR', $this->render('FR', $this->customFieldContext(MetaType::POST, 'subtitle'), $postId));
     }
 
+    public function testLeavesUnsupportedMetaTypesUntouched(): void
+    {
+        $this->assertSame('FR', $this->render('FR', $this->customFieldContext(MetaType::SITE), 1));
+    }
+
     public function testLeavesOtherColumnsUntouched(): void
     {
         $postId = self::factory()->post->create();

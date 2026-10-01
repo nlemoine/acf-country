@@ -31,6 +31,13 @@ final class RestTest extends TestCase
         $this->assertSame(['FR', 'DE'], \get_post_meta($postId, $field['name'], true));
     }
 
+    public function testKeepsAnEarlierValidationError(): void
+    {
+        $error = new \WP_Error('rest_invalid_param', 'Invalid');
+
+        $this->assertSame($error, $this->fieldType()->validate_rest_value($error, 'FR', $this->registerField()));
+    }
+
     public function testRejectsAnInvalidCountryCode(): void
     {
         $field = $this->registerRestField();

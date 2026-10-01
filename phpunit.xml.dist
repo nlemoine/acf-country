@@ -11,7 +11,7 @@
   <source>
     <include>
       <directory suffix=".php">./src</directory>
-      <file>./acf-country.php</file>
     </include>
+    <!-- acf-country.php only boots the plugin: the test bootstrap loads it before coverage starts. -->
   </source>
 </phpunit>

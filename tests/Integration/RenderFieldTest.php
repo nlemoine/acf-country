@@ -35,6 +35,28 @@ final class RenderFieldTest extends TestCase
         $this->assertSame('selected', $html->first_by_selector('option[value="DE"]')->get_attribute('selected'));
     }
 
+    public function testRendersTheValidationAndPresentationSettings(): void
+    {
+        $field = $this->registerField();
+
+        $this->assertStringContainsString('[allow_null]', capture(fn () => $this->fieldType()->render_field_validation_settings($field)));
+        $this->assertStringContainsString('[ui]', capture(fn () => $this->fieldType()->render_field_presentation_settings($field)));
+    }
+
+    public function testDecodesSettingsWhenTheFieldIsSaved(): void
+    {
+        $field = $this->fieldType()->update_field($this->registerField(['default_value' => "FR\nDE", 'multiple' => 1]));
+
+        $this->assertSame(['FR', 'DE'], $field['default_value']);
+    }
+
+    public function testLoadsAnEmptyValueUnchanged(): void
+    {
+        $field = $this->registerField();
+
+        $this->assertNull($this->fieldType()->load_value(null, self::factory()->post->create(), $field));
+    }
+
     public function testSelectsALowercaseSingleValue(): void
     {
         $field = $this->registerField();

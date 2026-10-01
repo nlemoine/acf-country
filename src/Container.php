@@ -65,12 +65,4 @@ final class Container
 
         return $service;
     }
-
-    /**
-     * @param class-string $name
-     */
-    public function has(string $name): bool
-    {
-        return isset($this->factories[$name]);
-    }
 }
