@@ -13,7 +13,7 @@ final class GraphqlTest extends TestCase
     private const QUERY = <<<'GRAPHQL'
         query ($id: ID!) {
           post(id: $id, idType: DATABASE_ID) {
-            countryDetails { country { code name emoji } }
+            countryDetails { country { code name flag } }
           }
         }
         GRAPHQL;
@@ -52,7 +52,7 @@ final class GraphqlTest extends TestCase
         $postId = $this->postWithCountry(['return_format' => $format], 'FR');
 
         $this->assertSame(
-            ['code' => 'FR', 'name' => 'France', 'emoji' => "\u{1F1EB}\u{1F1F7}"],
+            ['code' => 'FR', 'name' => 'France', 'flag' => "\u{1F1EB}\u{1F1F7}"],
             $this->country($postId)
         );
     }
@@ -63,8 +63,8 @@ final class GraphqlTest extends TestCase
 
         $this->assertSame(
             [
-                ['code' => 'FR', 'name' => 'France', 'emoji' => "\u{1F1EB}\u{1F1F7}"],
-                ['code' => 'DE', 'name' => 'Germany', 'emoji' => "\u{1F1E9}\u{1F1EA}"],
+                ['code' => 'FR', 'name' => 'France', 'flag' => "\u{1F1EB}\u{1F1F7}"],
+                ['code' => 'DE', 'name' => 'Germany', 'flag' => "\u{1F1E9}\u{1F1EA}"],
             ],
             $this->country($postId)
         );
@@ -85,7 +85,7 @@ final class GraphqlTest extends TestCase
         $postId = $this->postWithCountry([], 'FR');
         \update_post_meta($postId, 'country', 'ZZ');
 
-        $this->assertSame(['code' => 'ZZ', 'name' => null, 'emoji' => ''], $this->country($postId));
+        $this->assertSame(['code' => 'ZZ', 'name' => null, 'flag' => ''], $this->country($postId));
     }
 
     public function testNamesUseTheSiteLanguage(): void
@@ -107,7 +107,7 @@ final class GraphqlTest extends TestCase
         // Introspection lists fields alphabetically.
         $names = \array_column($result['data']['__type']['fields'] ?? [], 'name');
         \sort($names);
-        $this->assertSame(['code', 'emoji', 'name'], $names);
+        $this->assertSame(['code', 'flag', 'name'], $names);
     }
 
     /**

@@ -43,7 +43,7 @@ final class WpGraphQl implements IntegrationInterface
                     'type' => 'String',
                     'description' => \__('Country name in the site language, null for an unknown code.', 'acf-country'),
                 ],
-                'emoji' => [
+                'flag' => [
                     'type' => 'String',
                     'description' => \__('Emoji flag, empty for an unknown code.', 'acf-country'),
                 ],
@@ -67,7 +67,7 @@ final class WpGraphQl implements IntegrationInterface
     }
 
     /**
-     * @return array{code: string, name: ?string, emoji: string}|list<array{code: string, name: ?string, emoji: string}>|null
+     * @return array{code: string, name: ?string, flag: string}|list<array{code: string, name: ?string, flag: string}>|null
      */
     public function resolve(mixed $value, bool $multiple): ?array
     {
@@ -76,7 +76,7 @@ final class WpGraphQl implements IntegrationInterface
             if (\is_string($code) && $code !== '') {
                 $code = \strtoupper($code);
                 $name = $this->countries->name($code, \get_locale());
-                $countries[] = ['code' => $code, 'name' => $name, 'emoji' => $name === null ? '' : Flag::fromCode($code)];
+                $countries[] = ['code' => $code, 'name' => $name, 'flag' => $name === null ? '' : Flag::fromCode($code)];
             }
         }
 
