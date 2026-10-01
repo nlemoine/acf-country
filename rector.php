@@ -45,9 +45,9 @@ return RectorConfig::configure()
             __DIR__ . '/src/Field/CountryField.php',
         ],
         // The 3.x alias test checks the native instanceof operator, which never autoloads, unlike assertInstanceOf().
-        AssertInstanceOfComparisonRector::class => [__DIR__ . '/tests/Integration/DeprecationsTest.php'],
+        AssertInstanceOfComparisonRector::class => [__DIR__ . '/tests/Integration/Core/DeprecationsTest.php'],
         // It also takes a deprecated constant for the expected value and swaps the arguments.
-        FlipAssertRector::class => [__DIR__ . '/tests/Integration/DeprecationsTest.php'],
+        FlipAssertRector::class => [__DIR__ . '/tests/Integration/Core/DeprecationsTest.php'],
         // Data fixtures mirror data/ files.
         SafeDeclareStrictTypesRector::class => [__DIR__ . '/tests/fixtures'],
     ]);
