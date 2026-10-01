@@ -5,84 +5,88 @@ declare(strict_types=1);
 namespace n5s\AcfCountry\Integration;
 
 use n5s\AcfCountry\Countries;
-use n5s\AcfCountry\ReturnFormat;
+use n5s\AcfCountry\Flag;
+use WPGraphQL\Acf\FieldConfig;
 
 /**
- * WPGraphQL for ACF 0.x (wp-graphql/wp-graphql-acf): country fields with the value, array and name formats.
+ * WPGraphQL for ACF 2+: country fields resolve to AcfCountry objects.
  */
 final class WpGraphQl implements IntegrationInterface
 {
+    public const TYPE = 'AcfCountry';
+
     public function __construct(private readonly Countries $countries)
     {
     }
 
     public function isSupported(): bool
     {
-        return \defined('WPGraphQL\ACF\WPGRAPHQL_ACF_VERSION');
+        return \function_exists('register_graphql_acf_field_type');
     }
 
     public function registerHooks(): void
     {
-        \add_filter('wpgraphql_acf_supported_fields', $this->addSupportedField(...));
-        \add_filter('wpgraphql_acf_register_graphql_field', $this->registerField(...), 10, 4);
+        \add_action('graphql_register_types', $this->registerObjectType(...));
+        \add_action('wpgraphql/acf/registry_init', $this->registerFieldType(...));
     }
 
-    public function addSupportedField(mixed $types): mixed
+    public function registerObjectType(): void
     {
-        if (\is_array($types)) {
-            $types[] = 'country';
-        }
-
-        return $types;
+        \register_graphql_object_type(self::TYPE, [
+            'description' => \__('A country selected in an ACF Country field.', 'acf-country'),
+            'fields' => [
+                'code' => [
+                    'type' => ['non_null' => 'String'],
+                    'description' => \__('ISO 3166-1 alpha-2 code.', 'acf-country'),
+                ],
+                'name' => [
+                    'type' => 'String',
+                    'description' => \__('Country name in the site language, null for an unknown code.', 'acf-country'),
+                ],
+                'emoji' => [
+                    'type' => 'String',
+                    'description' => \__('Emoji flag, empty for an unknown code.', 'acf-country'),
+                ],
+            ],
+        ]);
     }
 
-    public function registerField(mixed $fieldConfig, mixed $typeName, mixed $fieldName, mixed $config): mixed
+    public function registerFieldType(): void
     {
-        $acfField = \is_array($config) ? ($config['acf_field'] ?? null) : null;
-        if (
-            !\is_array($fieldConfig)
-            || !\is_array($acfField)
-            || ($acfField['type'] ?? null) !== 'country'
-            || !\is_callable($fieldConfig['resolve'] ?? null)
-        ) {
-            return $fieldConfig;
-        }
+        \register_graphql_acf_field_type('country', [
+            'graphql_type' => static fn (mixed $fieldConfig): mixed => self::isMultiple($fieldConfig)
+                ? ['list_of' => self::TYPE]
+                : self::TYPE,
+            'resolve' => fn (mixed $root, mixed $args, mixed $context, mixed $info, mixed $fieldType, mixed $fieldConfig): mixed => $this->resolve(
+                $fieldConfig instanceof FieldConfig
+                    ? $fieldConfig->resolve_field($root, (array) $args, $context, $info)
+                    : null,
+                self::isMultiple($fieldConfig)
+            ),
+        ]);
+    }
 
-        $format = ReturnFormat::fromField($acfField);
-        if ($format === ReturnFormat::Emoji) {
-            return $fieldConfig;
-        }
-
-        $multiple = !empty($acfField['multiple']);
-        $resolve = $fieldConfig['resolve'];
-        $countries = $this->countries;
-
-        $formatOne = static fn (mixed $code): mixed => $format->format((string) $code, $countries, \get_locale());
-        $formatValue = static function (mixed $value) use ($formatOne): mixed {
-            if (\is_array($value)) {
-                return \array_map(static fn (mixed $code): mixed => $formatOne($code), \array_values($value));
+    /**
+     * @return array{code: string, name: ?string, emoji: string}|list<array{code: string, name: ?string, emoji: string}>|null
+     */
+    public function resolve(mixed $value, bool $multiple): ?array
+    {
+        $countries = [];
+        foreach ((array) $value as $code) {
+            if (\is_string($code) && $code !== '') {
+                $code = \strtoupper($code);
+                $name = $this->countries->name($code, \get_locale());
+                $countries[] = ['code' => $code, 'name' => $name, 'emoji' => $name === null ? '' : Flag::fromCode($code)];
             }
+        }
 
-            return $formatOne((string) $value);
-        };
+        return $multiple ? $countries : ($countries[0] ?? null);
+    }
 
-        return match ($format) {
-            ReturnFormat::Array => [
-                'type' => $multiple ? ['list_of' => ['list_of' => 'String']] : ['list_of' => 'String'],
-                'resolve' => static function (mixed $root, mixed $args, mixed $context, mixed $info) use ($resolve, $formatValue): array {
-                    $value = $resolve($root, $args, $context, $info);
+    private static function isMultiple(mixed $fieldConfig): bool
+    {
+        $acfField = $fieldConfig instanceof FieldConfig ? $fieldConfig->get_acf_field() : [];
 
-                    return empty($value) ? [] : (array) $formatValue($value);
-                },
-            ],
-            default => [
-                'type' => $multiple ? ['list_of' => 'String'] : 'String',
-                'resolve' => static function (mixed $root, mixed $args, mixed $context, mixed $info) use ($resolve, $formatValue): mixed {
-                    $value = $resolve($root, $args, $context, $info);
-
-                    return empty($value) ? null : $formatValue($value);
-                },
-            ],
-        };
+        return !empty($acfField['multiple']);
     }
 }

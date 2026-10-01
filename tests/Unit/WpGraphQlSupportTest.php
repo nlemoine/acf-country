@@ -10,8 +10,8 @@ use PHPUnit\Framework\TestCase;
 
 final class WpGraphQlSupportTest extends TestCase
 {
-    public function testNotSupportedWithoutWpGraphQlForAcf(): void
+    public function testSupportedWhenWpGraphQlForAcfIsLoaded(): void
     {
-        $this->assertFalse((new WpGraphQl(new Countries(__DIR__)))->isSupported());
+        $this->assertTrue((new WpGraphQl(new Countries(__DIR__)))->isSupported());
     }
 }

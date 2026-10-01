@@ -92,7 +92,7 @@ The filter also receives the locale of the list as a second argument. Admin scre
 
 - **REST API**: the field schema lists the country codes, and invalid codes are rejected.
 - **[Admin Columns](https://wordpress.org/plugins/codepress-admin-columns/) 7+** (free or Pro): custom field columns show flags and country names.
-- **[WPGraphQL for ACF](https://github.com/wp-graphql/wp-graphql-acf) 0.x** (the original, now archived plugin): country fields are exposed with the `value`, `array` and `name` return formats. WPGraphQL for ACF 2.x is not supported yet.
+- **[WPGraphQL for ACF](https://wordpress.org/plugins/wpgraphql-acf/) 2+**: country fields are exposed as an `AcfCountry` object (`code`, `name`, `emoji`), or a list of them for multiple fields.
 
 ### Installation
 

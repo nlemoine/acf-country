@@ -37,6 +37,10 @@ The `HelloNico\AcfCountry\CountryField` alias covers `instanceof` checks and `ne
 
 The constructor stays compatible: `new CountryField($uri, $path)` with the 3.x arguments still works, and 4.0 adds an optional third `?Countries $countries` parameter.
 
+## WPGraphQL
+
+The integration with the archived WPGraphQL for ACF 0.x was replaced by support for WPGraphQL for ACF 2+. Country fields are now exposed as an `AcfCountry` object (`code`, `name`, `emoji`), or a list of them for multiple fields, whatever the field's return format. Update your queries to select these subfields.
+
 ## Admin Columns Pro 6
 
 The Admin Columns integration now supports Admin Columns 7+ (free or Pro) only. Stay on ACF Country 3.x for Admin Columns Pro 6.
