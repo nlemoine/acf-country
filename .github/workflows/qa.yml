@@ -38,18 +38,13 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           coverage: none
-      # Runs post-install-cmd, which regenerates data/ from symfony/intl.
       - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
+          # Skip post-install-cmd so the committed data/ is the one checked and tested.
           # Dependencies may not declare support for unreleased PHP versions yet.
-          composer-options: ${{ matrix.experimental && '--ignore-platform-req=php+' || '' }}
+          composer-options: --no-scripts ${{ matrix.experimental && '--ignore-platform-req=php+' || '' }}
       - name: Check country data is up to date
-        run: |
-          if [ -n "$(git status --porcelain -- data)" ]; then
-            git status --short -- data
-            echo "::error::data/ is out of date, run 'composer sync-country-data' and commit the result."
-            exit 1
-          fi
+        run: php bin/sync-country-data.php --check
       - run: composer test
 
   coding-standards:
