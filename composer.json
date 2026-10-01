@@ -30,7 +30,8 @@
         "szepeviktor/phpstan-wordpress": "^2.0",
         "wp-cli/i18n-command": "^2.7",
         "wp-cli/wp-cli": "^2.12",
-        "wp-plugin/advanced-custom-fields": "^6"
+        "wp-plugin/advanced-custom-fields": "^6",
+        "wp-plugin/codepress-admin-columns": "^7.1"
     },
     "repositories": [
         {

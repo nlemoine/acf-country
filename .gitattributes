@@ -12,4 +12,3 @@
 /CONTRIBUTING.md                   export-ignore
 /bin                               export-ignore
 /rector.php                        export-ignore
-/phpstan                           export-ignore

@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-use ACA\ACF\Column;
+use AC\Column\CustomFieldContext;
 use HelloNico\AcfCountry\CountryField;
 
 add_action('after_setup_theme', new class () {
@@ -37,9 +37,7 @@ add_action('after_setup_theme', new class () {
 
         add_action('acf/include_field_types', [$this, 'register_field']);
 
-        if (defined('ACP_FILE')) {
-            add_filter('ac/column/value', [$this, 'admin_column'], 10, 3);
-        }
+        add_filter('ac/column/render', [$this, 'admin_column'], 10, 3);
         load_plugin_textdomain('acf-country', false, plugin_basename(__DIR__) . '/languages');
         add_filter('wpgraphql_acf_register_graphql_field', [$this, 'register_graphql_field'], 10, 4);
     }
@@ -171,24 +169,45 @@ add_action('after_setup_theme', new class () {
     }
 
     /**
-     * Hook the Admin Columns Pro plugin to provide basic field support
-     * if detected on the current WordPress installation.
+     * Show country flags and names in Admin Columns (7+) custom field columns.
      *
-     * @param mixed      $value
-     * @param int|string $id
-     * @param mixed      $column
+     * @param mixed $value
+     * @param mixed $context
+     * @param mixed $id
      *
      * @return mixed
      */
-    public function admin_column($value, $id, $column)
+    public function admin_column($value, $context, $id)
     {
-        if (
-            !$column instanceof Column
-            || $column->get_field()->get_settings()['type'] !== 'country'
-        ) {
+        if (!$context instanceof CustomFieldContext || !is_numeric($id)) {
             return $value;
         }
 
-        return get_field($column->get_meta_key()) ?? $value;
+        // ACF post ID format for each Admin Columns meta type.
+        $post_id = [
+            'post' => (int) $id,
+            'user' => 'user_' . $id,
+            'term' => 'term_' . $id,
+            'comment' => 'comment_' . $id,
+        ][$context->get_meta_type()] ?? null;
+        if ($post_id === null) {
+            return $value;
+        }
+
+        $field = get_field_object($context->get_meta_key(), $post_id, false);
+        $field_type = acf_get_field_type('country');
+        if (!is_array($field) || $field['type'] !== 'country' || !$field_type instanceof CountryField) {
+            return $value;
+        }
+
+        $countries = $field_type->get_countries();
+        $names = [];
+        foreach ((array) $field['value'] as $code) {
+            if (is_string($code) && isset($countries[$code])) {
+                $names[] = trim($field_type->country_flag_emoji($code) . ' ' . $countries[$code]);
+            }
+        }
+
+        return $names === [] ? $value : esc_html(implode(', ', $names));
     }
 });

@@ -8,5 +8,3 @@ parameters:
         - src
     scanDirectories:
         - wp-content/plugins
-    scanFiles:
-        - phpstan/stubs/admin-columns-pro.stub
