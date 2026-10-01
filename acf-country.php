@@ -15,7 +15,7 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       acf-country
  * Domain Path:       /languages
- * GitHub Plugin URI: https://github.com/nlemoine/acf-country.
+ * GitHub Plugin URI: https://github.com/nlemoine/acf-country
  */
 
 declare(strict_types=1);
