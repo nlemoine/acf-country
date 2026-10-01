@@ -50,8 +50,7 @@ final class PublicFunctionsTest extends TestCase
             $this->assertSame('France', get_country_name('FR', 'en_US'));
             $this->assertSame('Allemagne', get_countries('fr_FR')['DE']);
 
-            $initialized = new \ReflectionProperty(Plugin::class, 'initialized');
-            $this->assertFalse($initialized->getValue(Plugin::getInstance()));
+            $this->assertFalse(\has_action('acf/include_field_types', [Plugin::getInstance(), 'registerFieldType']));
         } finally {
             $property->setValue(null, $saved);
         }
