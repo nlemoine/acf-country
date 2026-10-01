@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- PHP 8.4+ (development only, the plugin itself supports PHP 8.1+)
+- PHP 8.4+ (development only, the plugin itself supports PHP 8.2+)
 - [Composer](https://getcomposer.org/)
 - Node.js with [Corepack](https://github.com/nodejs/corepack) enabled, which provides the pnpm version pinned in `package.json`
 
@@ -45,7 +45,7 @@ composer test
 
 ## Coding standards
 
-PHP code follows the [Syde](https://github.com/inpsyde/phpcs) coding standards. PHPCompatibility also checks that the plugin runs on PHP 8.1.
+PHP code follows the [Syde](https://github.com/inpsyde/phpcs) coding standards. PHPCompatibility also checks that the plugin runs on PHP 8.2.
 
 ```bash
 composer cs      # check

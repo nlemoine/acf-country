@@ -2,7 +2,7 @@
 <ruleset>
     <rule ref="Syde-Extra" />
 
-    <config name="testVersion" value="8.1-" />
+    <config name="testVersion" value="8.2-" />
 
     <file>./acf-country.php</file>
     <file>./src</file>

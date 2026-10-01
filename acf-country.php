@@ -8,7 +8,7 @@
  * Version:           3.1.0
  * x-release-please-end
  * Requires at least: 5.0
- * Requires PHP:      8.1
+ * Requires PHP:      8.2
  * Author:            Nicolas Lemoine
  * Author URI:        https://github.com/nlemoine
  * License:           GPL v2 or later

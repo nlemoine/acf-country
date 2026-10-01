@@ -15,18 +15,18 @@
         "source": "https://github.com/nlemoine/acf-country.git"
     },
     "require": {
-        "php": "^8.1"
+        "php": "^8.2"
     },
     "require-dev": {
         "composer/installers": "^2.0",
         "ergebnis/composer-normalize": "^2.54",
-        "mantle-framework/testkit": "^1.17",
+        "mantle-framework/testkit": "^1.18",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
         "rector/rector": "^2.6",
         "slevomat/coding-standard": "^8.22",
         "syde/phpcs": "^1.0",
-        "symfony/intl": "^8.1",
+        "symfony/intl": "^7.4 || ^8.1",
         "szepeviktor/phpstan-wordpress": "^2.0",
         "wp-cli/i18n-command": "^2.7",
         "wp-cli/wp-cli": "^2.12",

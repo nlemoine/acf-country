@@ -17,7 +17,7 @@ return RectorConfig::configure()
     ])
     ->withRootFiles()
     ->withCache(__DIR__ . '/tmp/rector')
-    // PHP version comes from the "php" constraint in composer.json, so the plugin stays PHP 7.4 compatible.
+    // PHP version comes from the "php" constraint in composer.json, so the plugin stays PHP 8.2 compatible.
     ->withPhpSets()
     ->withPreparedSets(
         deadCode: true,

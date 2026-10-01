@@ -2,9 +2,9 @@
 
 Stored values, the `country` field type, return formats and the `acf/country/countries` filter are unchanged: sites using `get_field()` and field groups built in the ACF UI need no change.
 
-## PHP 8.1
+## PHP 8.2
 
-4.0 requires PHP 8.1. Sites on older PHP versions can stay on 3.x.
+4.0 requires PHP 8.2. Sites on older PHP versions can stay on 3.x.
 
 ## Installation without Composer
 
