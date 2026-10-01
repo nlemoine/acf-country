@@ -82,9 +82,7 @@ class CountryField extends acf_field
         $field['choices'] = $countries;
 
         $field['ajax'] = 0;
-        if ($field['value'] && \is_array($field['value'])) {
-            $field['value'] = \array_map('strtoupper', $field['value']);
-        }
+        $field['value'] = $this->normalize_codes($field['value']);
         $this->select->render_field($field);
     }
 
@@ -258,7 +256,7 @@ class CountryField extends acf_field
      */
     public function load_value($value, $post_id, $field)
     {
-        return $this->select->load_value($value, $post_id, $field);
+        return $this->normalize_codes($this->select->load_value($value, $post_id, $field));
     }
 
     /**
@@ -272,7 +270,7 @@ class CountryField extends acf_field
      */
     public function update_value($value, $post_id, $field)
     {
-        return $this->select->update_value($value, $post_id, $field);
+        return $this->select->update_value($this->normalize_codes($value), $post_id, $field);
     }
 
     /**
@@ -351,6 +349,31 @@ class CountryField extends acf_field
         $emoji = $unicode_prefix . \chr(\ord($country_iso_alpha2[0]) + $unicode_addition_for_upper_case) . $unicode_prefix . \chr(\ord($country_iso_alpha2[1]) + $unicode_addition_for_upper_case);
 
         return \strlen($emoji) ? $emoji : '';
+    }
+
+    /**
+     * Uppercase country codes, the format of data/ keys.
+     *
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    protected function normalize_codes($value)
+    {
+        if (\is_string($value)) {
+            return \strtoupper($value);
+        }
+
+        if (!\is_array($value)) {
+            return $value;
+        }
+
+        return \array_map(
+            static function ($code) {
+                return \is_string($code) ? \strtoupper($code) : $code;
+            },
+            $value
+        );
     }
 
     /**

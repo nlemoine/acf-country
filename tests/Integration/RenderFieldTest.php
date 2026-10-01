@@ -35,6 +35,16 @@ class RenderFieldTest extends TestCase
         self::assertSame('selected', $html->first_by_selector('option[value="DE"]')->get_attribute('selected'));
     }
 
+    public function testSelectsALowercaseSingleValue(): void
+    {
+        $field = $this->registerField();
+        $field['value'] = 'fr';
+
+        $html = html_string(capture(static fn () => \acf_render_field($field)));
+
+        self::assertSame('selected', $html->first_by_selector('option[value="FR"]')->get_attribute('selected'));
+    }
+
     public function testFlagEmoji(): void
     {
         $fieldType = $this->fieldType();

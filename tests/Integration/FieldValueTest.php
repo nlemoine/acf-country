@@ -82,6 +82,29 @@ class FieldValueTest extends TestCase
         self::assertSame('FR', \get_field($field['key'], $postId, false));
     }
 
+    public function testStoresCountryCodesInUppercase(): void
+    {
+        $field = $this->registerField(['multiple' => 1]);
+        $postId = static::factory()->post->create();
+
+        \update_field($field['key'], ['fr', 'De'], $postId);
+
+        self::assertSame(['FR', 'DE'], \get_post_meta($postId, self::FIELD_NAME, true));
+    }
+
+    public function testFormatsLowercaseStoredValues(): void
+    {
+        $field = $this->registerField(['return_format' => CountryField::FORMAT_NAME]);
+        $postId = static::factory()->post->create();
+
+        // Stored by an older version, an import or a direct meta write.
+        \update_post_meta($postId, self::FIELD_NAME, 'fr');
+        \update_post_meta($postId, '_' . self::FIELD_NAME, $field['key']);
+
+        self::assertSame('France', \get_field($field['key'], $postId));
+        self::assertSame('FR', \get_field($field['key'], $postId, false));
+    }
+
     public function testEmptyValueStaysEmpty(): void
     {
         $field = $this->registerField(['return_format' => CountryField::FORMAT_EMOJI]);
