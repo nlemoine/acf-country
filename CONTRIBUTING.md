@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- PHP 8.4+ (development only, the plugin itself supports PHP 7.4+)
+- PHP 8.4+ (development only, the plugin itself supports PHP 8.1+)
 - [Composer](https://getcomposer.org/)
 - Node.js with [Corepack](https://github.com/nodejs/corepack) enabled, which provides the pnpm version pinned in `package.json`
 
@@ -37,7 +37,7 @@ pnpm build
 
 ## Tests
 
-Tests use [Mantle Testkit](https://mantle.alley.com/docs/testing) and run against WordPress and ACF with SQLite, so no database is needed. WordPress is downloaded to `tmp/` on the first run.
+Tests use [Mantle Testkit](https://mantle.alley.com/docs/testing) and run against WordPress and ACF with SQLite, so no database is needed. WordPress is downloaded to `tmp/` on the first run. There are two suites, `unit` and `integration`, and `composer test` runs both.
 
 ```bash
 composer test
@@ -45,7 +45,7 @@ composer test
 
 ## Coding standards
 
-PHP code follows the [Syde](https://github.com/inpsyde/phpcs) coding standards. PHPCompatibility also checks that the plugin runs on PHP 7.4.
+PHP code follows the [Syde](https://github.com/inpsyde/phpcs) coding standards. PHPCompatibility also checks that the plugin runs on PHP 8.1.
 
 ```bash
 composer cs      # check

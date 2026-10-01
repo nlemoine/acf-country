@@ -24,7 +24,7 @@ Or multiple ones:
 ### Requirements
 
 - WordPress 5.0+
-- PHP 7.4+
+- PHP 8.1+
 - ACF 6.0+ (free or PRO)
 
 ### Field options
@@ -61,6 +61,19 @@ $events = new WP_Query([
 
 For a multiple field, values are serialized: compare with `'LIKE'` and `'"FR"'`.
 
+### Public functions
+
+```php
+use function n5s\AcfCountry\get_countries;
+use function n5s\AcfCountry\get_country_flag;
+use function n5s\AcfCountry\get_country_name;
+
+get_countries();             // ['AF' => 'Afghanistan', ...], in the site language
+get_countries('fr_FR');      // [..., 'ZA' => 'Afrique du Sud', ...]
+get_country_name('DE');      // 'Germany', null for an unknown code
+get_country_flag('FR');      // '🇫🇷', '' when the code is not two letters
+```
+
 ### Filters
 
 You can remove (or add) some countries with the `acf/country/countries` filter, example:
@@ -92,6 +105,12 @@ The filter also receives the locale of the list as a second argument. Admin scre
 ```bash
 composer require hellonico/acf-country
 ```
+
+Composer installs use your project's autoloader.
+
+### Upgrading
+
+From 3.x, see [UPGRADE-4.0](UPGRADE-4.0.md).
 
 ### Contributing
 
