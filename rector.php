@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\PHPUnit\CodeQuality\Rector\MethodCall\AssertInstanceOfComparisonRector;
+use Rector\PHPUnit\CodeQuality\Rector\MethodCall\FlipAssertRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ArrayParamTypeByMethodCallTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\StrictArrayParamDimFetchRector;
@@ -39,6 +41,10 @@ return RectorConfig::configure()
             __DIR__ . '/acf-country.php',
             __DIR__ . '/src/Field/CountryField.php',
         ],
+        // The 3.x alias test checks the native instanceof operator, which never autoloads, unlike assertInstanceOf().
+        AssertInstanceOfComparisonRector::class => [__DIR__ . '/tests/Integration/DeprecationsTest.php'],
+        // It also takes a deprecated constant for the expected value and swaps the arguments.
+        FlipAssertRector::class => [__DIR__ . '/tests/Integration/DeprecationsTest.php'],
         // Data fixtures mirror data/ files.
         SafeDeclareStrictTypesRector::class => [__DIR__ . '/tests/fixtures'],
     ]);

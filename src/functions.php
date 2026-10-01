@@ -36,9 +36,10 @@ function get_country_flag(string $code): string
     return Flag::fromCode($code);
 }
 
-// Deprecated in 4.0.0, removed in 5.0.0: the 3.x class name.
+// Deprecated in 4.0.0, removed in 5.0.0: the 3.x class name, for new and static calls before the field class is loaded.
+// Loading the field class declares the alias; it extends acf_field, so it cannot load without ACF.
 \spl_autoload_register(static function (string $class): void {
-    if ($class === 'HelloNico\AcfCountry\CountryField') {
-        \class_alias(CountryField::class, $class);
+    if ($class === 'HelloNico\AcfCountry\CountryField' && \class_exists('acf_field')) {
+        \class_exists(CountryField::class);
     }
 });

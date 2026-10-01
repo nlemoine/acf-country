@@ -360,3 +360,10 @@ class CountryField extends acf_field
         return $this->uri . '/assets/dist/' . $asset;
     }
 }
+
+// Deprecated in 4.0.0, removed in 5.0.0: the 3.x class name. Declared with the class, as instanceof and type checks never autoload.
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
+if (!\class_exists('HelloNico\AcfCountry\CountryField', false)) {
+    \class_alias(CountryField::class, 'HelloNico\AcfCountry\CountryField');
+}
+// phpcs:enable
