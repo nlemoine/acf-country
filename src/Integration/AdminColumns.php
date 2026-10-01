@@ -34,6 +34,11 @@ final class AdminColumns implements IntegrationInterface
             return $value;
         }
 
+        // Admin Columns can be active without ACF. Checked here rather than in isSupported(): ACF bundled in a theme loads after plugins.
+        if (!\function_exists('get_field_object')) {
+            return $value;
+        }
+
         // ACF post ID format for each Admin Columns meta type.
         $postId = [
             'post' => (int) $id,
