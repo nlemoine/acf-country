@@ -30,9 +30,10 @@ if (!\defined('ABSPATH')) {
 
 // @bundle-autoload
 
+// Before ACF registers field types on init 5: the field label is translated then.
 \add_action('init', static function (): void {
     \load_plugin_textdomain('acf-country', false, \basename(__DIR__) . '/languages');
-});
+}, 4);
 
 \add_action('plugins_loaded', static function (): void {
     // The GitHub source archive and Composer sites that never load vendor/autoload.php have no autoloader.

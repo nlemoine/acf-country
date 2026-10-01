@@ -17,6 +17,23 @@ final class PluginTest extends TestCase
         $this->assertTrue($fieldType->show_in_rest);
     }
 
+    public function testLoadsTranslationsBeforeAcfBuildsTheFieldLabel(): void
+    {
+        $pluginFile = \realpath(\dirname(__DIR__, 2) . '/acf-country.php');
+        $priorities = [];
+        foreach ($GLOBALS['wp_filter']['init']->callbacks as $priority => $callbacks) {
+            foreach ($callbacks as $callback) {
+                if ($callback['function'] instanceof \Closure && (new \ReflectionFunction($callback['function']))->getFileName() === $pluginFile) {
+                    $priorities[] = $priority;
+                }
+            }
+        }
+
+        // ACF fires acf/include_field_types from ACF::init(); the field label is translated there.
+        $this->assertSame([4], $priorities);
+        $this->assertSame(5, \has_action('init', [\acf(), 'init']));
+    }
+
     public function testEnqueuesTheFieldScriptFromTheManifest(): void
     {
         $this->fieldType()->input_admin_enqueue_scripts();
