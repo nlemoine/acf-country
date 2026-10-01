@@ -85,7 +85,7 @@ The filter also receives the locale of the list as a second argument. Admin scre
 
 #### Zip
 
-[Download the plugin](https://github.com/nlemoine/acf-country/releases/latest) and extract the archive to your plugins folder.
+[Download acf-country.zip](https://github.com/nlemoine/acf-country/releases/latest/download/acf-country.zip) from the latest release and extract it to your plugins folder. The "Source code" archives GitHub adds to each release are not installable: they lack the autoloader.
 
 #### Composer
 

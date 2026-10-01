@@ -2,7 +2,7 @@
     "$schema": "https://playground.wordpress.net/blueprint-schema.json",
     "meta": {
         "title": "ACF Country",
-        "description": "ACF Country on the 4.x branch, with an events demo: a custom post type, a user profile field and a country filter on the archive.",
+        "description": "ACF Country (latest release), with an events demo: a custom post type, a user profile field and a country filter on the archive.",
         "author": "nlemoine",
         "categories": [
             "Content"
@@ -38,10 +38,8 @@
         {
             "step": "installPlugin",
             "pluginData": {
-                "resource": "git:directory",
-                "url": "https://github.com/nlemoine/acf-country",
-                "ref": "4.x",
-                "refType": "branch"
+                "resource": "url",
+                "url": "https://github.com/nlemoine/acf-country/releases/latest/download/acf-country.zip"
             },
             "options": {
                 "activate": true,
