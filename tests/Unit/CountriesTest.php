@@ -47,6 +47,7 @@ final class CountriesTest extends TestCase
         yield 'nested traversal' => ['fr/../../data/fr'];
         yield 'slash' => ['fr/x'];
         yield 'empty' => [''];
+        yield 'trailing newline' => ["fr\n"];
     }
 
     #[DataProvider('malformedLocales')]

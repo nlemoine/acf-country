@@ -106,7 +106,7 @@ final class Countries
     private function candidates(string $locale): array
     {
         // The locale ends up in a require path: anything that is not a WordPress locale shape gets English.
-        if (\preg_match('/^[A-Za-z]{2,3}(?:_[A-Za-z0-9]+)*$/', $locale) !== 1) {
+        if (\preg_match('/^[A-Za-z]{2,3}(?:_[A-Za-z0-9]+)*\z/', $locale) !== 1) {
             return ['en'];
         }
 
