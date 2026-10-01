@@ -6,6 +6,7 @@ namespace n5s\AcfCountry;
 
 use InvalidArgumentException;
 use n5s\AcfCountry\Integration\AdminColumns;
+use n5s\AcfCountry\Integration\WpGraphQl;
 
 /**
  * Builds services on first use.
@@ -27,6 +28,9 @@ final class Container
         $this->factories = [
             Countries::class => static fn (): Countries => new Countries($pluginDir . '/data'),
             AdminColumns::class => fn (): AdminColumns => new AdminColumns(
+                $this->get(Countries::class)
+            ),
+            WpGraphQl::class => fn (): WpGraphQl => new WpGraphQl(
                 $this->get(Countries::class)
             ),
         ];

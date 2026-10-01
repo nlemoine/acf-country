@@ -4,11 +4,21 @@ declare(strict_types=1);
 
 namespace n5s\AcfCountry\Tests\Integration;
 
-use HelloNico\AcfCountry\CountryField;
+use n5s\AcfCountry\Integration\WpGraphQl;
+use n5s\AcfCountry\Plugin;
+use n5s\AcfCountry\ReturnFormat;
 use n5s\AcfCountry\Tests\TestCase;
 
 final class GraphqlTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // WPGraphQL for ACF is not active in tests: register the integration hooks directly.
+        Plugin::getInstance()->getContainer()->get(WpGraphQl::class)->registerHooks();
+    }
+
     public function testLeavesOtherFieldTypesUntouched(): void
     {
         $config = ['type' => 'String', 'resolve' => static fn (): string => 'x'];
@@ -20,7 +30,7 @@ final class GraphqlTest extends TestCase
     {
         $config = $this->registerGraphqlField(
             ['resolve' => static fn (): string => 'FR'],
-            $this->acfField(CountryField::FORMAT_VALUE)
+            $this->acfField(ReturnFormat::Value->value)
         );
 
         $this->assertSame('String', $config['type']);
@@ -31,7 +41,7 @@ final class GraphqlTest extends TestCase
     {
         $config = $this->registerGraphqlField(
             ['resolve' => static fn (): array => ['FR', 'DE']],
-            $this->acfField(CountryField::FORMAT_NAME, true)
+            $this->acfField(ReturnFormat::Name->value, true)
         );
 
         $this->assertSame(['list_of' => 'String'], $config['type']);
@@ -42,19 +52,36 @@ final class GraphqlTest extends TestCase
     {
         $config = $this->registerGraphqlField(
             ['resolve' => static fn (): string => 'FR'],
-            $this->acfField(CountryField::FORMAT_ARRAY)
+            $this->acfField(ReturnFormat::Array->value)
         );
 
         $this->assertSame(['value' => 'FR', 'label' => 'France'], $config['resolve'](null, [], null, null));
+    }
+
+    public function testDeclaresCountryAsASupportedField(): void
+    {
+        $this->assertContains('country', \apply_filters('wpgraphql_acf_supported_fields', ['text']));
+    }
+
+    public function testNamesUseTheSiteLanguage(): void
+    {
+        \add_filter('locale', static fn (): string => 'fr_FR');
+
+        $config = $this->registerGraphqlField(
+            ['resolve' => static fn (): string => 'DE'],
+            $this->acfField(ReturnFormat::Name->value)
+        );
+
+        $this->assertSame('Allemagne', $config['resolve'](null, [], null, null));
     }
 
     public function testEmptyValues(): void
     {
         $resolve = static fn (): string => '';
 
-        $this->assertNull($this->registerGraphqlField(['resolve' => $resolve], $this->acfField(CountryField::FORMAT_VALUE))['resolve'](null, [], null, null));
-        $this->assertNull($this->registerGraphqlField(['resolve' => $resolve], $this->acfField(CountryField::FORMAT_NAME))['resolve'](null, [], null, null));
-        $this->assertSame([], $this->registerGraphqlField(['resolve' => $resolve], $this->acfField(CountryField::FORMAT_ARRAY))['resolve'](null, [], null, null));
+        $this->assertNull($this->registerGraphqlField(['resolve' => $resolve], $this->acfField(ReturnFormat::Value->value))['resolve'](null, [], null, null));
+        $this->assertNull($this->registerGraphqlField(['resolve' => $resolve], $this->acfField(ReturnFormat::Name->value))['resolve'](null, [], null, null));
+        $this->assertSame([], $this->registerGraphqlField(['resolve' => $resolve], $this->acfField(ReturnFormat::Array->value))['resolve'](null, [], null, null));
     }
 
     /**
@@ -66,7 +93,6 @@ final class GraphqlTest extends TestCase
             'type' => 'country',
             'return_format' => $format,
             'multiple' => (int) $multiple,
-            'choices' => ['FR' => 'France', 'DE' => 'Germany'],
         ];
     }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace n5s\AcfCountry;
 
 use n5s\AcfCountry\Integration\AdminColumns;
+use n5s\AcfCountry\Integration\WpGraphQl;
 
 /**
  * Wires the field and the integrations.
@@ -16,7 +17,7 @@ final class Plugin
      *
      * @var list<class-string<Integration\IntegrationInterface>>
      */
-    public const INTEGRATIONS = [AdminColumns::class];
+    public const INTEGRATIONS = [AdminColumns::class, WpGraphQl::class];
 
     private static ?self $instance = null;
 
