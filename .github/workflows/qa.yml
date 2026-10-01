@@ -53,9 +53,8 @@ jobs:
           coverage: none
       - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
-          # Skip post-install-cmd so the committed data/ is the one checked and tested.
           # Dependencies may not declare support for unreleased PHP versions yet.
-          composer-options: --no-scripts ${{ matrix.experimental && '--ignore-platform-req=php+' || '' }}
+          composer-options: ${{ matrix.experimental && '--ignore-platform-req=php+' || '' }}
       - run: composer test
 
   static-analysis:
@@ -70,8 +69,6 @@ jobs:
           php-version: '8.4'
           coverage: none
       - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
-        with:
-          composer-options: --no-scripts
       - name: Check country data is up to date
         run: php bin/sync-country-data.php --check
       - run: composer phpstan

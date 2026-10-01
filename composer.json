@@ -1,6 +1,7 @@
 {
     "name": "hellonico/acf-country",
     "description": "A country field for ACF.",
+    "license": "GPL-2.0-or-later",
     "type": "wordpress-plugin",
     "keywords": [
         "advanced custom fields",
@@ -10,9 +11,19 @@
         "wordpress",
         "wordpress-plugin"
     ],
+    "authors": [
+        {
+            "name": "Nicolas Lemoine",
+            "email": "nico@n5s.dev",
+            "homepage": "https://n5s.dev/"
+        }
+    ],
+    "homepage": "https://github.com/nlemoine/acf-country",
     "support": {
         "issues": "https://github.com/nlemoine/acf-country/issues",
-        "source": "https://github.com/nlemoine/acf-country.git"
+        "source": "https://github.com/nlemoine/acf-country.git",
+        "security": "https://github.com/nlemoine/acf-country/security/policy",
+        "changelog": "https://github.com/nlemoine/acf-country/releases"
     },
     "require": {
         "php": "^8.2"
@@ -75,12 +86,6 @@
         "sort-packages": true
     },
     "scripts": {
-        "post-install-cmd": [
-            "@sync-country-data"
-        ],
-        "post-update-cmd": [
-            "@sync-country-data"
-        ],
         "cs": "phpcs",
         "cs:fix": "phpcbf",
         "i18n:pot": "wp i18n make-pot . languages/acf-country.pot --domain=acf-country --slug=acf-country --exclude=vendor,node_modules,wp-content,data,assets,tmp",

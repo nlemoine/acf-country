@@ -48,11 +48,10 @@ jobs:
         with:
           php-version: '8.4' # no composer.lock: require-dev is resolved too and needs 8.4; the plugin has no runtime dependencies, so the autoloader does not depend on this version (8.2 compatibility is enforced by phpcs)
           coverage: none
-      # --no-scripts: post-install-cmd regenerates data/ with symfony/intl, a dev dependency; data/ is committed.
       # Not composer dump-autoload: without an install, its classmap points Composer\InstalledVersions to a missing file.
       - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
-          composer-options: --no-dev --no-scripts --optimize-autoloader --classmap-authoritative
+          composer-options: --no-dev --optimize-autoloader --classmap-authoritative
       - name: Build the ZIP
         run: |
           mkdir -p dist

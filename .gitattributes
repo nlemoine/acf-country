@@ -14,5 +14,6 @@
 /rector.php                        export-ignore
 /blueprint.json                    export-ignore
 /UPGRADE-4.0.md                    export-ignore
+/SECURITY.md                       export-ignore
 /pnpm-lock.yaml                    export-ignore
 /pnpm-workspace.yaml               export-ignore
