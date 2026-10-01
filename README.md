@@ -106,7 +106,7 @@ The filter also receives the locale of the list as a second argument. Admin scre
 composer require hellonico/acf-country
 ```
 
-Composer installs use your project's autoloader.
+Composer installs use your project's autoloader: the site must load Composer's `vendor/autoload.php`, as [Bedrock](https://roots.io/bedrock/) does. Without an autoloader, the plugin shows an admin notice and stays inactive.
 
 ### Upgrading
 

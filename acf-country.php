@@ -35,5 +35,21 @@ if (!\defined('ABSPATH')) {
 });
 
 \add_action('plugins_loaded', static function (): void {
+    // The GitHub source archive and Composer sites that never load vendor/autoload.php have no autoloader.
+    if (!\class_exists(Plugin::class)) {
+        \add_action('admin_notices', static function (): void {
+            if (!\current_user_can('activate_plugins')) {
+                return;
+            }
+
+            \printf(
+                '<div class="notice notice-error"><p>%s</p></div>',
+                \esc_html__('ACF Country could not load its classes. Install the plugin from the acf-country.zip release asset, or load Composer\'s vendor/autoload.php.', 'acf-country')
+            );
+        });
+
+        return;
+    }
+
     Plugin::getInstance()->init();
 }, 0);
