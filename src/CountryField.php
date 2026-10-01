@@ -77,7 +77,8 @@ class CountryField extends acf_field
      */
     public function render_field($field): void
     {
-        $countries = $this->get_countries();
+        // Admin screens follow the language of the logged-in user.
+        $countries = $this->get_countries(\determine_locale());
 
         \array_walk($countries, function (&$name, string $code): void {
             $name = $this->country_flag_emoji($code) . '  ' . $name;
@@ -97,7 +98,7 @@ class CountryField extends acf_field
      */
     public function render_field_settings($field): void
     {
-        $field['choices'] = \acf_encode_choices($this->get_countries());
+        $field['choices'] = \acf_encode_choices($this->get_countries(\determine_locale()));
 
         $field['default_value'] = \acf_encode_choices($field['default_value'], false);
 
@@ -429,11 +430,13 @@ class CountryField extends acf_field
     /**
      * Get countries.
      *
+     * @param string|null $locale Defaults to the site locale.
+     *
      * @return array<string, string> Names indexed by country code.
      */
-    public function get_countries()
+    public function get_countries(?string $locale = null)
     {
-        $wp_locale = \get_locale();
+        $wp_locale = $locale ?? \get_locale();
 
         // Try the locale, then less specific ones: pt_PT_ao90, pt_PT, pt, then en.
         $locales = [];
@@ -451,7 +454,7 @@ class CountryField extends acf_field
 
         $countries = require $file;
 
-        return \apply_filters('acf/country/countries', $countries);
+        return \apply_filters('acf/country/countries', $countries, $wp_locale);
     }
 
     /**

@@ -200,7 +200,8 @@ add_action('after_setup_theme', new class () {
             return $value;
         }
 
-        $countries = $field_type->get_countries();
+        // Admin screens follow the language of the logged-in user.
+        $countries = $field_type->get_countries(determine_locale());
         $names = [];
         foreach ((array) $field['value'] as $code) {
             if (is_string($code) && isset($countries[$code])) {

@@ -49,6 +49,8 @@ add_filter( 'acf/country/countries', function( $countries ) {
 ```
 *Note: PHP5.6+ example*
 
+The filter also receives the locale of the list as a second argument. Admin screens use the language of the logged-in user, while values returned by `get_field()` use the site language.
+
 ### Installation
 
 #### Zip
