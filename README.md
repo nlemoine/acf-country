@@ -5,7 +5,7 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/hellonico)
 [![Try in WordPress Playground](https://img.shields.io/badge/Try%20in-WordPress%20Playground-3858e9?style=flat-square&logo=wordpress)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/nlemoine/acf-country/3.x/blueprint.json)
 
-Adds a 'Country' field type for the [Advanced Custom Fields](http://wordpress.org/extend/plugins/advanced-custom-fields/) WordPress plugin.
+Adds a 'Country' field type for the [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/) WordPress plugin (free or PRO).
 
 ### Overview
 
@@ -21,36 +21,65 @@ Or multiple ones:
 
 ![ACF Country field](https://cloud.githubusercontent.com/assets/2526939/24555413/5bf05402-1631-11e7-8d7e-74d425a3eae4.png)
 
-### Compatibility
+### Requirements
 
-- ACF 5.7+
-- PHP 5.4+
-
+- WordPress 5.0+
+- PHP 7.4+
+- ACF 6.0+ (free or PRO)
 
 ### Field options
 
-| Option  | Default | Description |
+| Option | Default | Description |
 | ------------- | ------------- | ------------- |
-| Default value | emtpy | Set a default value for the country field (as country code)  |
-| Allow null | `false` | Enable/disable null value  |
-| Allow multiple | `false` | Enable/disable multiple countries selection  |
-| Stylised UI | `true` | Enable/disable enhanced select field thanks to [Select2](https://select2.github.io/)  |
-| Return format | `value` | See [ACF Select field](https://www.advancedcustomfields.com/resources/select/) |
+| Default value | empty | Default country, as a country code (e.g. `FR`) |
+| Allow null | `false` | Allow an empty value |
+| Select multiple values | `false` | Allow selecting several countries |
+| Stylized UI | `false` | Use an enhanced select field ([Select2](https://select2.org/)) |
+| Return format | `array` | See below |
+
+### Return formats
+
+Values are stored as [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) codes. `get_field()` returns, for France:
+
+| Return format | Value |
+| ------------- | ------------- |
+| Country code and name (`array`) | `['value' => 'FR', 'label' => 'France']` |
+| Country code (`value`) | `'FR'` |
+| Country name (`name`) | `'France'` |
+| Country emoji flag (`emoji`) | `'🇫🇷'` |
+
+With multiple values, you get an array of those. Country names use the site language.
+
+Since codes are stored, you can query posts by country:
+
+```php
+$events = new WP_Query([
+    'post_type' => 'event',
+    'meta_query' => [['key' => 'country', 'value' => 'FR']],
+]);
+```
+
+For a multiple field, values are serialized: compare with `'LIKE'` and `'"FR"'`.
 
 ### Filters
 
 You can remove (or add) some countries with the `acf/country/countries` filter, example:
 
 ```php
-add_filter( 'acf/country/countries', function( $countries ) {
-	return array_filter( $countries, function( $code ) {
-		return !in_array( $code, ['IC', 'EA'], true );
-	}, ARRAY_FILTER_USE_KEY);
-} );
+add_filter('acf/country/countries', static function (array $countries): array {
+    unset($countries['IC'], $countries['EA']);
+
+    return $countries;
+});
 ```
-*Note: PHP5.6+ example*
 
 The filter also receives the locale of the list as a second argument. Admin screens use the language of the logged-in user, while values returned by `get_field()` use the site language.
+
+### Integrations
+
+- **REST API**: the field schema lists the country codes, and invalid codes are rejected.
+- **[Admin Columns](https://wordpress.org/plugins/codepress-admin-columns/) 7+** (free or Pro): custom field columns show flags and country names.
+- **[WPGraphQL for ACF](https://github.com/wp-graphql/wp-graphql-acf) 0.x** (the original, now archived plugin): country fields are exposed with the `value`, `array` and `name` return formats. WPGraphQL for ACF 2.x is not supported yet.
 
 ### Installation
 
@@ -66,8 +95,8 @@ composer require hellonico/acf-country
 
 ### Contributing
 
-See [CONTRIBUTING](CONTRIBUTING.MD).
+See [CONTRIBUTING](CONTRIBUTING.md).
 
 ### Support
 
-This ACF field was originally developed for a personal project I don't use  anymore. I still decided to maintain it anyway. If you use it in a commercial project, please consider [buying me a beer](https://beerpay.io/nlemoine/acf-country).
+This ACF field was originally developed for a personal project I don't use anymore. I still decided to maintain it anyway. If you use it in a commercial project, please consider [supporting it on Open Collective](https://opencollective.com/n5s).
