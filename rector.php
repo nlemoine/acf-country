@@ -26,8 +26,14 @@ return RectorConfig::configure()
     )
     // PHPUnit migration rules, bound to the PHPUnit version in composer.lock.
     ->withComposerBased(phpunit: true)
+    // WordPress and ACF signatures, so type inference does not go blind on their APIs.
+    ->withPhpstanConfigs([__DIR__ . '/phpstan.neon.dist'])
     ->withImportNames(importShortClasses: false, removeUnusedImports: true)
     ->withSkip([
         // Hook callbacks receive third-party data: a native array type would turn bad input into a fatal error.
-        StrictArrayParamDimFetchRector::class => [__DIR__ . '/acf-country.php'],
+        // acf_field methods stay untyped: if ACF declares them untyped in acf_field, a narrower type would be fatal.
+        StrictArrayParamDimFetchRector::class => [
+            __DIR__ . '/acf-country.php',
+            __DIR__ . '/src/CountryField.php',
+        ],
     ]);

@@ -47,7 +47,7 @@ jobs:
         run: php bin/sync-country-data.php --check
       - run: composer test
 
-  rector:
+  static-analysis:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -61,6 +61,7 @@ jobs:
       - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
           composer-options: --no-scripts
+      - run: composer phpstan
       - run: composer rector
 
   coding-standards:

@@ -1,0 +1,12 @@
+parameters:
+    level: 8
+    treatPhpDocTypesAsCertain: false
+    tmpDir: tmp/phpstan
+    paths:
+        - acf-country.php
+        - bin
+        - src
+    scanDirectories:
+        - wp-content/plugins
+    scanFiles:
+        - phpstan/stubs/admin-columns-pro.stub
