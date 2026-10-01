@@ -41,10 +41,19 @@ final class PublicFunctionsTest extends TestCase
 
     public function testFunctionsWorkWithoutInit(): void
     {
-        // Public functions only need the container, not the hooks registered by init().
-        $this->assertSame(
-            'France',
-            Plugin::getInstance()->countries()->name('FR', 'en_US')
-        );
+        // Plugin is a process-wide singleton that may already be booted, so reflection resets it to get a fresh, never-initialized instance.
+        $property = new \ReflectionProperty(Plugin::class, 'instance');
+        $saved = $property->getValue();
+        $property->setValue(null, null);
+
+        try {
+            $this->assertSame('France', get_country_name('FR', 'en_US'));
+            $this->assertSame('Allemagne', get_countries('fr_FR')['DE']);
+
+            $initialized = new \ReflectionProperty(Plugin::class, 'initialized');
+            $this->assertFalse($initialized->getValue(Plugin::getInstance()));
+        } finally {
+            $property->setValue(null, $saved);
+        }
     }
 }
