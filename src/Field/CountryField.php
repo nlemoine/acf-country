@@ -50,6 +50,11 @@ class CountryField extends acf_field
 
     private readonly Countries $countries;
 
+    /**
+     * @var array<mixed>|null
+     */
+    private ?array $manifest = null;
+
     public function __construct(private readonly string $uri, private readonly string $path, ?Countries $countries = null)
     {
         $this->countries = $countries ?? Plugin::getInstance()->countries();
@@ -353,14 +358,26 @@ class CountryField extends acf_field
 
     private function assetUrl(string $asset): string
     {
-        $manifestPath = $this->path . '/assets/dist/manifest.json';
-        $json = \is_readable($manifestPath) ? \file_get_contents($manifestPath) : false;
-        if ($json !== false) {
-            $manifest = \json_decode($json, true);
-            $asset = \is_array($manifest) && \is_string($manifest[$asset] ?? null) ? $manifest[$asset] : $asset;
+        $manifest = $this->manifest();
+
+        return $this->uri . '/assets/dist/' . (\is_string($manifest[$asset] ?? null) ? $manifest[$asset] : $asset);
+    }
+
+    /**
+     * The asset manifest (source file name to hashed file name), read once, empty when missing or invalid.
+     *
+     * @return array<mixed>
+     */
+    private function manifest(): array
+    {
+        if ($this->manifest === null) {
+            $manifestPath = $this->path . '/assets/dist/manifest.json';
+            $json = \is_readable($manifestPath) ? \file_get_contents($manifestPath) : false;
+            $decoded = $json === false ? null : \json_decode($json, true);
+            $this->manifest = \is_array($decoded) ? $decoded : [];
         }
 
-        return $this->uri . '/assets/dist/' . $asset;
+        return $this->manifest;
     }
 }
 
