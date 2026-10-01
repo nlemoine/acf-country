@@ -10,6 +10,10 @@ Stored values, the `country` field type, return formats and the `acf/country/cou
 
 Install `acf-country.zip` from the release assets. The "Source code" archives GitHub adds to each release no longer work as a plugin: they lack the autoloader. Git Updater picks the release asset automatically.
 
+## Composer installs
+
+3.x worked without an autoloader: the plugin file required its own class. 4.0 needs the site to load Composer's `vendor/autoload.php`, which Bedrock and similar setups already do. Otherwise the plugin shows an admin notice and stays inactive.
+
 ## Namespace
 
 Classes moved from `HelloNico\AcfCountry` to `n5s\AcfCountry`:
