@@ -14,16 +14,29 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  php-versions:
+    name: PHP versions
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.versions.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - id: versions
+        uses: WyriHaximus/github-action-composer-php-versions-in-range@b1da538007a030a09a7d257bd3881829a3544882 # v2.1.0
+
   tests:
+    needs: php-versions
     runs-on: ubuntu-latest
     timeout-minutes: 15
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
       matrix:
-        # Dev dependencies (Mantle, symfony/intl) need PHP 8.4+.
-        # PHP 7.4 compatibility of the plugin itself is checked by PHPCompatibility.
-        php: ['8.4', '8.5']
+        # Every PHP version allowed by the "php" constraint of composer.json.
+        php: ${{ fromJson(needs.php-versions.outputs.version) }}
         experimental: [false]
         include:
           # Nightly build, allowed to fail.
@@ -43,8 +56,6 @@ jobs:
           # Skip post-install-cmd so the committed data/ is the one checked and tested.
           # Dependencies may not declare support for unreleased PHP versions yet.
           composer-options: --no-scripts ${{ matrix.experimental && '--ignore-platform-req=php+' || '' }}
-      - name: Check country data is up to date
-        run: php bin/sync-country-data.php --check
       - run: composer test
 
   static-analysis:
@@ -61,10 +72,12 @@ jobs:
       - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
           composer-options: --no-scripts
+      - name: Check country data is up to date
+        run: php bin/sync-country-data.php --check
       - run: composer phpstan
       - run: composer rector
 
   coding-standards:
     uses: inpsyde/reusable-workflows/.github/workflows/coding-standards-php.yml@236c6b5a7fea73b5058b6f11bd17ff4b80994e54  # main as of 2026-09-28
     with:
-      PHP_VERSION: '8.4'
+      PHP_VERSION: '8.2'
