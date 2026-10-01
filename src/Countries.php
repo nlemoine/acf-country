@@ -129,10 +129,11 @@ final class Countries
             throw new LogicException($message);
         }
 
+        // trigger_error() rather than error_log(), so error handlers see it; once per request.
         if (!$this->missingDataReported) {
             $this->missingDataReported = true;
-            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-            \error_log($message);
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error, WordPress.Security.EscapeOutput.OutputNotEscaped -- Intended warning; the message only holds the plugin data path.
+            \trigger_error($message, \E_USER_WARNING);
         }
 
         return [];

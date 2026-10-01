@@ -125,14 +125,26 @@ final class CountriesTest extends TestCase
 
     public function testMissingDataReturnsAnEmptyListInProduction(): void
     {
-        // phpcs:ignore WordPress.PHP.IniSet.Risky -- Keep the error_log() call of the production branch out of the test output.
-        $previous = \ini_set('error_log', '/dev/null');
+        $warnings = [];
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_set_error_handler -- Captures the warning under test.
+        \set_error_handler(
+            static function (int $level, string $message) use (&$warnings): bool {
+                $warnings[] = [$level, $message];
+                return true;
+            },
+            \E_USER_WARNING
+        );
 
         try {
-            $this->assertSame([], (new Countries(__DIR__, false))->all('fr'));
+            $countries = new Countries(__DIR__, false);
+            $this->assertSame([], $countries->all('fr'));
+            $this->assertSame([], $countries->all('de'));
         } finally {
-            // phpcs:ignore WordPress.PHP.IniSet.Risky -- Keep the error_log() call of the production branch out of the test output.
-            \ini_set('error_log', (string) $previous);
+            \restore_error_handler();
         }
+
+        $this->assertCount(1, $warnings);
+        $this->assertSame(\E_USER_WARNING, $warnings[0][0]);
+        $this->assertStringContainsString('no country data found', $warnings[0][1]);
     }
 }
