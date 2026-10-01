@@ -54,7 +54,7 @@ composer cs:fix  # fix what can be fixed automatically
 
 ## Country data
 
-Country names in `data/` are generated from [Unicode CLDR](https://cldr.unicode.org/) through [symfony/intl](https://github.com/symfony/intl). They are regenerated after every `composer install` and `composer update`. To regenerate or check them manually:
+Country names in `data/` are generated from [Unicode CLDR](https://cldr.unicode.org/) through [symfony/intl](https://github.com/symfony/intl). They are not regenerated automatically on `composer install` or `composer update`. To regenerate or check them:
 
 ```bash
 composer sync-country-data
