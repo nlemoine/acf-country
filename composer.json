@@ -49,7 +49,10 @@
     "autoload": {
         "psr-4": {
             "n5s\\AcfCountry\\": "src/"
-        }
+        },
+        "files": [
+            "src/functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

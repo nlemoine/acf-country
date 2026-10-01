@@ -23,6 +23,7 @@ declare(strict_types=1);
 use AC\Column\CustomFieldContext;
 use ACA\ACF\Column;
 use HelloNico\AcfCountry\CountryField;
+use n5s\AcfCountry\Plugin;
 
 add_action('after_setup_theme', new class () {
     /**
@@ -33,6 +34,8 @@ add_action('after_setup_theme', new class () {
         if (!class_exists('acf_field')) {
             return;
         }
+
+        Plugin::getInstance()->init();
 
         require_once __DIR__ . '/src/CountryField.php';
 
