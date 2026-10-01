@@ -48,10 +48,11 @@ jobs:
         with:
           php-version: '8.2' # lowest supported version: runtime dependencies, if any, resolve to versions that run on it
           coverage: none
-      # Not composer dump-autoload: without an install, its classmap points Composer\InstalledVersions to a missing file.
+      # Install without an autoloader, then dump it once with the strict checks (as recommended in composer/composer#12294).
       - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
         with:
-          composer-options: --no-dev --prefer-dist --classmap-authoritative --strict-psr-autoloader
+          composer-options: --no-dev --prefer-dist --no-autoloader
+      - run: composer dump-autoload --no-dev --classmap-authoritative --strict-psr --strict-ambiguous
       - name: Build the ZIP
         run: |
           mkdir -p dist
