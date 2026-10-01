@@ -31,7 +31,7 @@
   'BV' => 'Bouvetinsel',
   'BR' => 'Brasilien',
   'VG' => 'Britesch Joffereninselen',
-  'IO' => 'Britescht Territorium am Indeschen Ozean',
+  'IO' => 'British Indian Ocean Territory',
   'BN' => 'Brunei',
   'BG' => 'Bulgarien',
   'BF' => 'Burkina Faso',

@@ -10,3 +10,4 @@
 /package.json                      export-ignore
 /*.dist                           export-ignore
 /CONTRIBUTING.md                   export-ignore
+/bin                               export-ignore

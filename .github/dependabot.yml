@@ -8,5 +8,5 @@ updates:
   open-pull-requests-limit: 10
   versioning-strategy: increase
   allow:
-  - dependency-name: umpirsky/country-list
+  - dependency-name: symfony/intl
     dependency-type: development

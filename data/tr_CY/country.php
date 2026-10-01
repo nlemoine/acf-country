@@ -41,7 +41,7 @@
   'BF' => 'Burkina Faso',
   'BI' => 'Burundi',
   'BT' => 'Butan',
-  'CV' => 'Cape Verde',
+  'CV' => 'Cabo Verde',
   'KY' => 'Cayman Adaları',
   'GI' => 'Cebelitarık',
   'DZ' => 'Cezayir',

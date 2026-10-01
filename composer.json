@@ -21,7 +21,7 @@
         "ergebnis/composer-normalize": "^2.54",
         "slevomat/coding-standard": "^8.22",
         "syde/phpcs": "^1.0",
-        "umpirsky/country-list": "*",
+        "symfony/intl": "^8.1",
         "wp-cli/i18n-command": "^2.7",
         "wp-cli/wp-cli": "^2.12",
         "wpengine/advanced-custom-fields-pro": "^6.0"
@@ -57,8 +57,6 @@
         "cs": "phpcs",
         "cs:fix": "phpcbf",
         "i18n:pot": "wp i18n make-pot . languages/acf-country.pot --domain=acf-country --slug=acf-country --exclude=vendor,node_modules,wp-content,data,assets",
-        "sync-country-data": [
-            "rsync -zavr --include '*/' --include '*.php' --exclude '*' --prune-empty-dirs vendor/umpirsky/country-list/data ."
-        ]
+        "sync-country-data": "php bin/sync-country-data.php"
     }
 }

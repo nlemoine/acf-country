@@ -227,7 +227,7 @@
   'TO' => 'Tonga',
   'TT' => 'Trinidad & Tobago',
   'TN' => 'Tunisia',
-  'TR' => 'Turkey',
+  'TR' => 'Türkiye',
   'TM' => 'Turkmenistan',
   'TC' => 'Turks & Caicos Islands',
   'TV' => 'Tuvalu',

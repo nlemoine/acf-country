@@ -10,7 +10,7 @@ Adds a 'Country' field type for the [Advanced Custom Fields](http://wordpress.or
 
 Display a select list of all countries in your language.
 
-Country names are available in every language ([see available list](https://github.com/umpirsky/country-list/tree/master/data)). By default, country names are localized in your current WordPress language.
+Country names are available in every language ([see available list](https://github.com/nlemoine/acf-country/tree/3.x/data), generated from [Unicode CLDR](https://cldr.unicode.org/) via [symfony/intl](https://github.com/symfony/intl)). By default, country names are localized in your current WordPress language.
 
 Select a single value:
 
