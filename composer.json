@@ -21,6 +21,7 @@
         "composer/installers": "^2.0",
         "ergebnis/composer-normalize": "^2.54",
         "mantle-framework/testkit": "^1.17",
+        "rector/rector": "^2.6",
         "slevomat/coding-standard": "^8.22",
         "syde/phpcs": "^1.0",
         "symfony/intl": "^8.1",
@@ -68,6 +69,8 @@
         "cs": "phpcs",
         "cs:fix": "phpcbf",
         "i18n:pot": "wp i18n make-pot . languages/acf-country.pot --domain=acf-country --slug=acf-country --exclude=vendor,node_modules,wp-content,data,assets",
+        "rector": "rector process --dry-run",
+        "rector:fix": "rector process",
         "sync-country-data": "php bin/sync-country-data.php",
         "test": "phpunit"
     }
