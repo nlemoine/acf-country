@@ -51,6 +51,14 @@ final class Countries
     }
 
     /**
+     * The emoji flag of a country code, an empty string for a code that is not in the country list.
+     */
+    public function flag(string $code, string $locale): string
+    {
+        return $this->name($code, $locale) === null ? '' : Flag::fromCode($code);
+    }
+
+    /**
      * @return array<string, string>
      */
     private function load(string $locale): array

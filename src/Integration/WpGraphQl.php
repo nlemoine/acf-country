@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace n5s\AcfCountry\Integration;
 
 use n5s\AcfCountry\Countries;
-use n5s\AcfCountry\Flag;
 use WPGraphQL\Acf\FieldConfig;
 
 /**
@@ -80,7 +79,7 @@ final readonly class WpGraphQl implements IntegrationInterface
             if (\is_string($code) && $code !== '') {
                 $code = \strtoupper($code);
                 $name = $this->countries->name($code, \get_locale());
-                $countries[] = ['code' => $code, 'name' => $name, 'emoji' => $name === null ? '' : Flag::fromCode($code)];
+                $countries[] = ['code' => $code, 'name' => $name, 'emoji' => $this->countries->flag($code, \get_locale())];
             }
         }
 

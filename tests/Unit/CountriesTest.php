@@ -63,6 +63,14 @@ final class CountriesTest extends TestCase
         $this->assertNull($countries->name('ZZ', 'fr'));
     }
 
+    public function testFlagIsEmptyForAnUnknownCode(): void
+    {
+        $countries = new Countries(self::DATA);
+
+        $this->assertSame("\u{1F1E9}\u{1F1EA}", $countries->flag('de', 'fr'));
+        $this->assertSame('', $countries->flag('ZZ', 'fr'));
+    }
+
     public function testAppliesTheFilterWithTheRequestedLocale(): void
     {
         \add_filter('acf/country/countries', static function (array $countries, string $locale): array {

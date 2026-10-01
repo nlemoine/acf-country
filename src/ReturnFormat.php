@@ -40,7 +40,7 @@ enum ReturnFormat: string
             self::Array => ['value' => $code, 'label' => $name ?? $code],
             self::Value => $code,
             self::Name => $name ?? $code,
-            self::Emoji => $name === null ? '' : Flag::fromCode($code),
+            self::Emoji => $countries->flag($code, $locale),
         };
     }
 
