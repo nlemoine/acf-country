@@ -1,67 +1,61 @@
 {
-  "name": "hellonico/acf-country",
-  "description": "A country field for ACF.",
-  "type": "wordpress-plugin",
-  "keywords": [
-    "advanced custom fields",
-    "acf",
-    "acf-field",
-    "country",
-    "wordpress",
-    "wordpress-plugin"
-  ],
-  "support": {
-    "issues": "https://github.com/nlemoine/acf-country/issues",
-    "source": "https://github.com/nlemoine/acf-country.git"
-  },
-  "require": {
-    "php": "^7.4 || ^8.0"
-  },
-  "require-dev": {
-    "ergebnis/composer-normalize": "^2.42",
-    "symplify/easy-coding-standard": "^12.1",
-    "umpirsky/country-list": "*",
-    "wpengine/advanced-custom-fields-pro": "^6.0"
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://wpackagist.org",
-      "only": [
-        "wpackagist-plugin/*",
-        "wpackagist-theme/*"
-      ]
+    "name": "hellonico/acf-country",
+    "description": "A country field for ACF.",
+    "type": "wordpress-plugin",
+    "keywords": [
+        "advanced custom fields",
+        "acf",
+        "acf-field",
+        "country",
+        "wordpress",
+        "wordpress-plugin"
+    ],
+    "support": {
+        "issues": "https://github.com/nlemoine/acf-country/issues",
+        "source": "https://github.com/nlemoine/acf-country.git"
     },
-    {
-      "type": "composer",
-      "url": "https://connect.advancedcustomfields.com",
-      "only": [
-        "wpengine/*"
-      ]
+    "require": {
+        "php": "^7.4 || ^8.0"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.54",
+        "slevomat/coding-standard": "^8.22",
+        "syde/phpcs": "^1.0",
+        "umpirsky/country-list": "*",
+        "wpengine/advanced-custom-fields-pro": "^6.0"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://connect.advancedcustomfields.com",
+            "only": [
+                "wpengine/*"
+            ]
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true
+        },
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@sync-country-data"
+        ],
+        "post-update-cmd": [
+            "@sync-country-data"
+        ],
+        "cs": "phpcs",
+        "cs:fix": "phpcbf",
+        "sync-country-data": [
+            "rsync -zavr --include '*/' --include '*.php' --exclude '*' --prune-empty-dirs vendor/umpirsky/country-list/data ."
+        ]
     }
-  ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "config": {
-    "allow-plugins": {
-      "composer/installers": true,
-      "ergebnis/composer-normalize": true
-    },
-    "optimize-autoloader": true,
-    "preferred-install": "dist",
-    "sort-packages": true
-  },
-  "scripts": {
-    "post-install-cmd": [
-      "@sync-country-data"
-    ],
-    "post-update-cmd": [
-      "@sync-country-data"
-    ],
-    "cs": "ecs check",
-    "cs:fix": "ecs check --fix",
-    "sync-country-data": [
-      "rsync -zavr --include '*/' --include '*.php' --exclude '*' --prune-empty-dirs vendor/umpirsky/country-list/data ."
-    ]
-  }
 }

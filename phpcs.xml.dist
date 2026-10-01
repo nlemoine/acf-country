@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<ruleset>
+    <rule ref="Syde-Extra" />
+
+    <config name="testVersion" value="7.4-" />
+
+    <file>./acf-country.php</file>
+    <file>./src</file>
+
+    <arg name="colors" />
+    <arg value="sp" />
+
+    <config name="ignore_warnings_on_exit" value="1" />
+
+    <!-- PSR-4 namespace configuration. -->
+    <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
+        <properties>
+            <property name="rootNamespaces" type="array">
+                <element key="src" value="HelloNico\AcfCountry" />
+            </property>
+        </properties>
+    </rule>
+
+    <rule ref="Syde-Extra">
+        <exclude name="Syde.Functions.FunctionLength.TooLong" />
+        <exclude name="Syde.Files.LineLength.TooLong" />
+        <exclude name="Syde.Classes.DisallowGetterSetter.GetterFound" />
+        <exclude name="Syde.NamingConventions.ElementNameMinimalLength.TooShort" />
+        <exclude name="SlevomatCodingStandard.Classes.ForbiddenPublicProperty.ForbiddenPublicProperty" />
+        <!-- acf_field API is snake_case (render_field, format_value, $show_in_rest, ...). -->
+        <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps" />
+        <exclude name="Syde.NamingConventions.VariableName.SnakeCaseVar" />
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalConstants"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions">
+        <properties>
+            <property name="includeSpecialFunctions" value="true"/>
+        </properties>
+    </rule>
+
+</ruleset>

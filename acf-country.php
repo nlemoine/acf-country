@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Plugin Name:       Advanced Custom Fields: ACF Country
  * Plugin URI:        https://github.com/nlemoine/acf-country
@@ -18,11 +16,13 @@ declare(strict_types=1);
  * GitHub Plugin URI: https://github.com/nlemoine/acf-country.
  */
 
-add_filter('after_setup_theme', new class() {
+declare(strict_types=1);
+
+add_action('after_setup_theme', new class () {
     /**
      * Invoke the plugin.
      */
-    public function __invoke()
+    public function __invoke(): void
     {
         if (!class_exists('acf_field')) {
             return;
@@ -30,16 +30,16 @@ add_filter('after_setup_theme', new class() {
 
         require_once __DIR__ . '/src/CountryField.php';
 
-        add_filter('acf/include_field_types', [$this, 'register_field']);
+        add_action('acf/include_field_types', [$this, 'register_field']);
 
         if (defined('ACP_FILE')) {
             add_filter('ac/column/value', [$this, 'admin_column'], 10, 3);
         }
-        load_plugin_textdomain('acf-country', false, plugin_basename(dirname(__FILE__)) . '/lang');
+        load_plugin_textdomain('acf-country', false, plugin_basename(__DIR__) . '/lang');
         add_filter('wpgraphql_acf_register_graphql_field', [$this, 'register_graphql_field'], 10, 4);
     }
 
-    public function register_field($acfMajorVersion)
+    public function register_field(): void
     {
         $field = new HelloNico\AcfCountry\CountryField(
             untrailingslashit(plugin_dir_url(__FILE__)),
@@ -60,6 +60,7 @@ add_filter('after_setup_theme', new class() {
      *
      * @return mixed
      */
+    // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
     public function register_graphql_field($field_config, $type_name, $field_name, $config)
     {
         $acf_field = $config['acf_field'] ?? null;
@@ -74,14 +75,14 @@ add_filter('after_setup_theme', new class() {
         switch ($acf_field['return_format']) {
             case 'array':
                 $field_config = [
-                    'type'    => empty($acf_field['multiple']) ? [
+                    'type' => empty($acf_field['multiple']) ? [
                         'list_of' => 'String',
                     ] : [
                         'list_of' => [
                             'list_of' => 'String',
                         ],
                     ],
-                    'resolve' => function ($root, $args, $context, $info) use ($resolve, $acf_field) {
+                    'resolve' => static function ($root, $args, $context, $info) use ($resolve, $acf_field) {
                         $value = $resolve($root, $args, $context, $info);
 
                         if (!empty($value)) {
@@ -109,10 +110,10 @@ add_filter('after_setup_theme', new class() {
                 break;
             case 'value':
                 $field_config = [
-                    'type'    => empty($acf_field['multiple']) ? 'String' : [
+                    'type' => empty($acf_field['multiple']) ? 'String' : [
                         'list_of' => 'String',
                     ],
-                    'resolve' => function ($root, $args, $context, $info) use ($resolve) {
+                    'resolve' => static function ($root, $args, $context, $info) use ($resolve) {
                         $value = $resolve($root, $args, $context, $info);
 
                         return !empty($value) ? $value : null;
@@ -121,10 +122,10 @@ add_filter('after_setup_theme', new class() {
                 break;
             case 'label':
                 $field_config = [
-                    'type'    => empty($acf_field['multiple']) ? 'String' : [
+                    'type' => empty($acf_field['multiple']) ? 'String' : [
                         'list_of' => 'String',
                     ],
-                    'resolve' => function ($root, $args, $context, $info) use ($resolve, $acf_field) {
+                    'resolve' => static function ($root, $args, $context, $info) use ($resolve, $acf_field) {
                         $value = $resolve($root, $args, $context, $info);
 
                         if (!empty($value)) {

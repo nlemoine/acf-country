@@ -32,8 +32,9 @@ class CountryField extends acf_field
     /**
      * Isn't needed because we're extending acf_field, but it's here for clarity.
      *
-     * @var boolean
+     * @var bool
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint -- acf_field declares it untyped.
     public $show_in_rest = true;
 
     /**
@@ -52,14 +53,14 @@ class CountryField extends acf_field
         $this->label = \__('Country', 'acf-country');
         $this->category = 'choice';
         $this->defaults = [
-            'multiple'      => 0,
-            'allow_null'    => 0,
-            'choices'       => [],
+            'multiple' => 0,
+            'allow_null' => 0,
+            'choices' => [],
             'default_value' => '',
-            'layout'        => 'vertical',
-            'ui'            => 0,
-            'ajax'          => 0,
-            'placeholder'   => '',
+            'layout' => 'vertical',
+            'ui' => 0,
+            'ajax' => 0,
+            'placeholder' => '',
             'return_format' => self::FORMAT_ARRAY,
         ];
         $this->select = \acf_get_field_type('select');
@@ -100,9 +101,9 @@ class CountryField extends acf_field
 
         // choices
         \acf_render_field_setting($field, [
-            'label'   => \__('Choices', 'acf'),
-            'name'    => 'choices',
-            'type'    => 'textarea',
+            'label' => \__('Choices', 'acf'),
+            'name' => 'choices',
+            'type' => 'textarea',
             'wrapper' => [
                 'class' => 'hidden',
             ],
@@ -112,10 +113,10 @@ class CountryField extends acf_field
         \acf_render_field_setting(
             $field,
             [
-                'label'        => \__('Default Value', 'acf'),
+                'label' => \__('Default Value', 'acf'),
                 'instructions' => \__('Enter each default value on a new line', 'acf'),
-                'name'         => 'default_value',
-                'type'         => 'textarea',
+                'name' => 'default_value',
+                'type' => 'textarea',
             ]
         );
 
@@ -123,15 +124,15 @@ class CountryField extends acf_field
         \acf_render_field_setting(
             $field,
             [
-                'label'        => \__('Return Format', 'acf'),
+                'label' => \__('Return Format', 'acf'),
                 'instructions' => \__('Specify the value returned', 'acf'),
-                'type'         => 'radio',
-                'name'         => 'return_format',
-                'layout'       => 'horizontal',
-                'choices'      => [
+                'type' => 'radio',
+                'name' => 'return_format',
+                'layout' => 'horizontal',
+                'choices' => [
                     self::FORMAT_ARRAY => \__('Country code and name', 'acf-country'),
                     self::FORMAT_VALUE => \__('Country code', 'acf-country'),
-                    self::FORMAT_NAME  => \__('Country name', 'acf-country'),
+                    self::FORMAT_NAME => \__('Country name', 'acf-country'),
                     self::FORMAT_EMOJI => \__('Country emoji flag', 'acf-country'),
                 ],
             ]
@@ -140,11 +141,11 @@ class CountryField extends acf_field
         \acf_render_field_setting(
             $field,
             [
-                'label'        => \__('Select multiple values?', 'acf'),
+                'label' => \__('Select multiple values?', 'acf'),
                 'instructions' => '',
-                'name'         => 'multiple',
-                'type'         => 'true_false',
-                'ui'           => 1,
+                'name' => 'multiple',
+                'type' => 'true_false',
+                'ui' => 1,
             ]
         );
     }
@@ -170,11 +171,11 @@ class CountryField extends acf_field
         \acf_render_field_setting(
             $field,
             [
-                'label'        => \__('Stylized UI', 'acf'),
+                'label' => \__('Stylized UI', 'acf'),
                 'instructions' => \__('Use a stylized checkbox using select2', 'acf'),
-                'name'         => 'ui',
-                'type'         => 'true_false',
-                'ui'           => 1,
+                'name' => 'ui',
+                'type' => 'true_false',
+                'ui' => 1,
             ]
         );
     }

@@ -8,5 +8,5 @@
 /tests                             export-ignore
 /webpack.config.js                 export-ignore
 /package.json                      export-ignore
-/ecs.php                           export-ignore
+/*.dist                           export-ignore
 /CONTRIBUTING.md                   export-ignore
