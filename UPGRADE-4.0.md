@@ -33,7 +33,9 @@ The old methods still work in 4.x and trigger a deprecation notice.
 
 ## Classes extending CountryField
 
-The `HelloNico\AcfCountry\CountryField` alias covers `instanceof` checks and `new`, but not subclasses written for 3.x. Overriding methods must add the new return types, and the protected `normalize_codes()`, `get_asset_url()`, `$uri` and `$path` members of 3.x were removed. Match the signatures of `n5s\AcfCountry\Field\CountryField`.
+The `HelloNico\AcfCountry\CountryField` alias covers `instanceof` checks and `new`, but not subclasses written for 3.x. Overriding methods must add the new return types, and the 3.x protected `normalize_codes()`, `get_asset_url()`, `$uri` and `$path` members are no longer accessible to subclasses: they are now private, and the two helper methods were renamed. Match the signatures of `n5s\AcfCountry\Field\CountryField`.
+
+The constructor stays compatible: `new CountryField($uri, $path)` with the 3.x arguments still works, and 4.0 adds an optional third `?Countries $countries` parameter.
 
 ## Admin Columns Pro 6
 
