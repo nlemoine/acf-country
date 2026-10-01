@@ -38,6 +38,23 @@ final class CountriesTest extends TestCase
         $this->assertSame($armenia, (new Countries(self::DATA))->all($locale)['AM']);
     }
 
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function malformedLocales(): iterable
+    {
+        yield 'parent directory' => ['../data/fr'];
+        yield 'nested traversal' => ['fr/../../data/fr'];
+        yield 'slash' => ['fr/x'];
+        yield 'empty' => [''];
+    }
+
+    #[DataProvider('malformedLocales')]
+    public function testMalformedLocalesFallBackToEnglish(string $locale): void
+    {
+        $this->assertSame('Armenia', (new Countries(self::DATA))->all($locale)['AM']);
+    }
+
     public function testNameIsCaseInsensitive(): void
     {
         $countries = new Countries(self::DATA);
