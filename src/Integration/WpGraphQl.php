@@ -11,11 +11,11 @@ use WPGraphQL\Acf\FieldConfig;
 /**
  * WPGraphQL for ACF 2+: country fields resolve to AcfCountry objects.
  */
-final class WpGraphQl implements IntegrationInterface
+final readonly class WpGraphQl implements IntegrationInterface
 {
     public const TYPE = 'AcfCountry';
 
-    public function __construct(private readonly Countries $countries)
+    public function __construct(private Countries $countries)
     {
     }
 
