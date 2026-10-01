@@ -67,6 +67,30 @@ final class CountriesTest extends TestCase
         $this->assertNull($countries->name('FR', 'fr'));
     }
 
+    public function testProbesLocaleFilesOnce(): void
+    {
+        // phpcs:disable WordPress.WP.AlternativeFunctions -- A throwaway data directory, outside WordPress.
+        $dataDir = \sys_get_temp_dir() . '/acf-country-' . \uniqid();
+        \mkdir("{$dataDir}/en", 0777, true);
+        \file_put_contents("{$dataDir}/en/country.php", "<?php return ['AM' => 'Armenia'];");
+
+        try {
+            $countries = new Countries($dataDir);
+            $this->assertSame('Armenia', $countries->name('AM', 'fr_FR'));
+
+            // A file added after the first lookup is not probed again: the resolved data locale is cached.
+            \mkdir("{$dataDir}/fr");
+            \file_put_contents("{$dataDir}/fr/country.php", "<?php return ['AM' => 'Arménie'];");
+            $this->assertSame('Armenia', $countries->name('AM', 'fr_FR'));
+            $this->assertSame('Arménie', (new Countries($dataDir))->name('AM', 'fr_FR'));
+        } finally {
+            \array_map(\unlink(...), \glob("{$dataDir}/*/country.php") ?: []);
+            \array_map(\rmdir(...), \glob("{$dataDir}/*") ?: []);
+            \rmdir($dataDir);
+        }
+        // phpcs:enable
+    }
+
     public function testMissingDataThrowsInDebug(): void
     {
         $this->expectException(LogicException::class);

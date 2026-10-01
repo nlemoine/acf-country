@@ -199,13 +199,14 @@ class CountryField extends acf_field
             return $valid;
         }
 
+        $countries = $this->countries->all(\get_locale());
         $invalid = [];
         foreach ((array) $value as $code) {
             if (!\is_string($code)) {
                 $invalid[] = \gettype($code);
                 continue;
             }
-            if ($this->countries->name($code, \get_locale()) === null) {
+            if (!isset($countries[\strtoupper($code)])) {
                 $invalid[] = $code;
             }
         }

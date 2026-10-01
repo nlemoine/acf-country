@@ -18,6 +18,13 @@ final class Countries
      */
     private array $lists = [];
 
+    /**
+     * The data locale of each requested locale, null when no data file exists, so missing files are probed once.
+     *
+     * @var array<string, string|null>
+     */
+    private array $dataLocales = [];
+
     private readonly bool $debug;
 
     private bool $missingDataReported = false;
@@ -48,21 +55,36 @@ final class Countries
      */
     private function load(string $locale): array
     {
+        if (!\array_key_exists($locale, $this->dataLocales)) {
+            $this->dataLocales[$locale] = $this->resolve($locale);
+        }
+
+        $dataLocale = $this->dataLocales[$locale];
+        if ($dataLocale === null) {
+            return $this->missingData();
+        }
+
+        if (!isset($this->lists[$dataLocale])) {
+            /** @var array<string, string> $list */
+            $list = require "{$this->dataDir}/{$dataLocale}/country.php";
+            $this->lists[$dataLocale] = $list;
+        }
+
+        return $this->lists[$dataLocale];
+    }
+
+    /**
+     * The first candidate locale with a data file.
+     */
+    private function resolve(string $locale): ?string
+    {
         foreach ($this->candidates($locale) as $candidate) {
-            if (isset($this->lists[$candidate])) {
-                return $this->lists[$candidate];
-            }
-
-            $file = "{$this->dataDir}/{$candidate}/country.php";
-            if (\is_file($file)) {
-                /** @var array<string, string> $list */
-                $list = require $file;
-
-                return $this->lists[$candidate] = $list;
+            if (isset($this->lists[$candidate]) || \is_file("{$this->dataDir}/{$candidate}/country.php")) {
+                return $candidate;
             }
         }
 
-        return $this->missingData();
+        return null;
     }
 
     /**
