@@ -49,6 +49,17 @@ final class FieldValueTest extends TestCase
         yield 'emoji' => [ReturnFormat::Emoji->value, ["\u{1F1EB}\u{1F1F7}", "\u{1F1E9}\u{1F1EA}"]];
     }
 
+    public function testFormatsACountryAddedByTheFilter(): void
+    {
+        \add_filter('acf/country/countries', static fn (array $countries): array => $countries + ['ZZ' => 'Test land']);
+        $field = $this->registerField(['return_format' => ReturnFormat::Name->value]);
+        $postId = self::factory()->post->create();
+
+        \update_field($field['key'], 'ZZ', $postId);
+
+        $this->assertSame('Test land', \get_field($field['key'], $postId));
+    }
+
     #[DataProvider('multipleValueFormats')]
     public function testFormatsMultipleValues(string $format, mixed $expected): void
     {
