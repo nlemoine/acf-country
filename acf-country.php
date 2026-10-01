@@ -7,7 +7,7 @@
  * x-release-please-start-version
  * Version:           3.1.0
  * x-release-please-end
- * Requires at least: 5.0
+ * Requires at least: 6.0
  * Requires PHP:      8.2
  * Author:            Nicolas Lemoine
  * Author URI:        https://github.com/nlemoine

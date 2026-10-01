@@ -24,7 +24,7 @@ Or multiple ones:
 
 ### Requirements
 
-- WordPress 5.0+
+- WordPress 6.0+
 - PHP 8.2+
 - ACF 6.0+ (free or PRO)
 
