@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace HelloNico\AcfCountry\Tests\Integration;
+namespace n5s\AcfCountry\Tests\Integration;
 
 use ACA\ACF\Column;
 use ACA\ACF\Field;
 use HelloNico\AcfCountry\CountryField;
-use HelloNico\AcfCountry\Tests\TestCase;
+use n5s\AcfCountry\Tests\TestCase;
 
 /**
  * Admin Columns Pro before 7 used the ac/column/value filter with ACA\ACF\Column objects.

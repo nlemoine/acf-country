@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace HelloNico\AcfCountry\Tests\Integration;
+namespace n5s\AcfCountry\Tests\Integration;
 
 use AC\Column\CustomFieldContext;
 use AC\MetaType;
 use AC\Setting\Config;
 use AC\Type\TableScreenContext;
 use HelloNico\AcfCountry\CountryField;
-use HelloNico\AcfCountry\Tests\TestCase;
 use Mantle\Testing\Concerns\Admin_Screen;
+use n5s\AcfCountry\Tests\TestCase;
 
 use function Mantle\Support\Helpers\capture;
 use function Mantle\Testing\html_string;

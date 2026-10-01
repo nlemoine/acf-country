@@ -8,7 +8,7 @@
  * Version:           3.1.0
  * x-release-please-end
  * Requires at least: 5.0
- * Requires PHP:      7.4
+ * Requires PHP:      8.1
  * Author:            Nicolas Lemoine
  * Author URI:        https://github.com/nlemoine
  * License:           GPL v2 or later
@@ -36,12 +36,12 @@ add_action('after_setup_theme', new class () {
 
         require_once __DIR__ . '/src/CountryField.php';
 
-        add_action('acf/include_field_types', [$this, 'register_field']);
+        add_action('acf/include_field_types', $this->register_field(...));
 
-        add_filter('ac/column/render', [$this, 'admin_column'], 10, 3);
-        add_filter('ac/column/value', [$this, 'admin_column_pro_6'], 10, 3);
+        add_filter('ac/column/render', $this->admin_column(...), 10, 3);
+        add_filter('ac/column/value', $this->admin_column_pro_6(...), 10, 3);
         load_plugin_textdomain('acf-country', false, plugin_basename(__DIR__) . '/languages');
-        add_filter('wpgraphql_acf_register_graphql_field', [$this, 'register_graphql_field'], 10, 4);
+        add_filter('wpgraphql_acf_register_graphql_field', $this->register_graphql_field(...), 10, 4);
     }
 
     public function register_field(): void
@@ -77,83 +77,75 @@ add_action('after_setup_theme', new class () {
 
         $resolve = $field_config['resolve'];
 
-        switch ($acf_field['return_format']) {
-            case 'array':
-                $field_config = [
-                    'type' => empty($acf_field['multiple']) ? [
+        return match ($acf_field['return_format']) {
+            'array' => [
+                'type' => empty($acf_field['multiple']) ? [
+                    'list_of' => 'String',
+                ] : [
+                    'list_of' => [
                         'list_of' => 'String',
-                    ] : [
-                        'list_of' => [
-                            'list_of' => 'String',
-                        ],
                     ],
-                    'resolve' => static function ($root, $args, $context, $info) use ($resolve, $acf_field): array {
-                        $value = $resolve($root, $args, $context, $info);
+                ],
+                'resolve' => static function ($root, $args, $context, $info) use ($resolve, $acf_field): array {
+                    $value = $resolve($root, $args, $context, $info);
 
-                        if (!empty($value)) {
-                            if (is_array($value)) {
-                                $values = [];
+                    if (!empty($value)) {
+                        if (is_array($value)) {
+                            $values = [];
 
-                                foreach ($value as $single_value) {
-                                    $values[] = [
-                                        'value' => $single_value,
-                                        'label' => $acf_field['choices'][$single_value],
-                                    ];
-                                }
-
-                                return $values;
+                            foreach ($value as $single_value) {
+                                $values[] = [
+                                    'value' => $single_value,
+                                    'label' => $acf_field['choices'][$single_value],
+                                ];
                             }
-                            return [
-                                'value' => $value,
-                                'label' => $acf_field['choices'][$value],
-                            ];
+
+                            return $values;
                         }
+                        return [
+                            'value' => $value,
+                            'label' => $acf_field['choices'][$value],
+                        ];
+                    }
 
-                        return [];
-                    },
-                ];
-                break;
-            case 'value':
-                $field_config = [
-                    'type' => empty($acf_field['multiple']) ? 'String' : [
-                        'list_of' => 'String',
-                    ],
-                    'resolve' => static function ($root, $args, $context, $info) use ($resolve) {
-                        $value = $resolve($root, $args, $context, $info);
+                    return [];
+                },
+            ],
+            'value' => [
+                'type' => empty($acf_field['multiple']) ? 'String' : [
+                    'list_of' => 'String',
+                ],
+                'resolve' => static function ($root, $args, $context, $info) use ($resolve) {
+                    $value = $resolve($root, $args, $context, $info);
 
-                        return !empty($value) ? $value : null;
-                    },
-                ];
-                break;
-            case 'name':
-            case 'label':
-                $field_config = [
-                    'type' => empty($acf_field['multiple']) ? 'String' : [
-                        'list_of' => 'String',
-                    ],
-                    'resolve' => static function ($root, $args, $context, $info) use ($resolve, $acf_field) {
-                        $value = $resolve($root, $args, $context, $info);
+                    return !empty($value) ? $value : null;
+                },
+            ],
+            'name', 'label' => [
+                'type' => empty($acf_field['multiple']) ? 'String' : [
+                    'list_of' => 'String',
+                ],
+                'resolve' => static function ($root, $args, $context, $info) use ($resolve, $acf_field) {
+                    $value = $resolve($root, $args, $context, $info);
 
-                        if (!empty($value)) {
-                            if (is_array($value)) {
-                                $values = [];
+                    if (!empty($value)) {
+                        if (is_array($value)) {
+                            $values = [];
 
-                                foreach ($value as $single_value) {
-                                    $values[] = $acf_field['choices'][$single_value];
-                                }
-
-                                return $values;
+                            foreach ($value as $single_value) {
+                                $values[] = $acf_field['choices'][$single_value];
                             }
-                            return $acf_field['choices'][$value];
+
+                            return $values;
                         }
+                        return $acf_field['choices'][$value];
+                    }
 
-                        return null;
-                    },
-                ];
-                break;
-        }
-
-        return $field_config;
+                    return null;
+                },
+            ],
+            default => $field_config,
+        };
     }
 
     /**

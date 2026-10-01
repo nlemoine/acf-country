@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelloNico\AcfCountry\Tests\Integration;
+namespace n5s\AcfCountry\Tests\Integration;
 
 use AC\Column\Context;
 use AC\Column\CustomFieldContext;
@@ -10,7 +10,7 @@ use AC\MetaType;
 use AC\Setting\Config;
 use AC\Type\TableScreenContext;
 use HelloNico\AcfCountry\CountryField;
-use HelloNico\AcfCountry\Tests\TestCase;
+use n5s\AcfCountry\Tests\TestCase;
 
 final class AdminColumnsTest extends TestCase
 {

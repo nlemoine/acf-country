@@ -15,7 +15,7 @@
         "source": "https://github.com/nlemoine/acf-country.git"
     },
     "require": {
-        "php": "^7.4 || ^8.0"
+        "php": "^8.1"
     },
     "require-dev": {
         "composer/installers": "^2.0",
@@ -48,7 +48,7 @@
     "prefer-stable": true,
     "autoload-dev": {
         "psr-4": {
-            "HelloNico\\AcfCountry\\Tests\\": "tests/"
+            "n5s\\AcfCountry\\Tests\\": "tests/"
         }
     },
     "config": {

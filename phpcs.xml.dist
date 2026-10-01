@@ -2,7 +2,7 @@
 <ruleset>
     <rule ref="Syde-Extra" />
 
-    <config name="testVersion" value="7.4-" />
+    <config name="testVersion" value="8.1-" />
 
     <file>./acf-country.php</file>
     <file>./src</file>
@@ -19,7 +19,7 @@
         <properties>
             <property name="rootNamespaces" type="array">
                 <element key="src" value="HelloNico\AcfCountry" />
-                <element key="tests" value="HelloNico\AcfCountry\Tests" />
+                <element key="tests" value="n5s\AcfCountry\Tests" />
             </property>
         </properties>
     </rule>

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelloNico\AcfCountry\Tests;
+namespace n5s\AcfCountry\Tests;
 
 use HelloNico\AcfCountry\CountryField;
 use Mantle\Testing\Concerns\Refresh_Database;

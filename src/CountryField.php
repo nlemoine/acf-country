@@ -27,10 +27,6 @@ class CountryField extends acf_field
         self::FORMAT_EMOJI,
     ];
 
-    protected string $path;
-
-    protected string $uri;
-
     /**
      * @var acf_field_select
      */
@@ -47,10 +43,8 @@ class CountryField extends acf_field
     /**
      * Create a new field instance.
      */
-    public function __construct(string $uri, string $path)
+    public function __construct(protected string $uri, protected string $path)
     {
-        $this->uri = $uri;
-        $this->path = $path;
         parent::__construct();
     }
 
@@ -222,7 +216,7 @@ class CountryField extends acf_field
         // Then convert to emoji
         if ($field['return_format'] === self::FORMAT_EMOJI && !empty($value)) {
             if (\is_array($value)) {
-                $value = \array_map([$this, 'country_flag_emoji'], $value);
+                $value = \array_map($this->country_flag_emoji(...), $value);
             } else {
                 $value = $this->country_flag_emoji($value);
             }
@@ -444,7 +438,7 @@ class CountryField extends acf_field
         }
 
         return \array_map(
-            static fn ($code) => \is_string($code) ? \strtoupper($code) : $code,
+            static fn ($code): mixed => \is_string($code) ? \strtoupper($code) : $code,
             $value
         );
     }

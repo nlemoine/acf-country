@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelloNico\AcfCountry\Tests\Integration;
+namespace n5s\AcfCountry\Tests\Integration;
 
-use HelloNico\AcfCountry\Tests\TestCase;
+use n5s\AcfCountry\Tests\TestCase;
 
 final class ValidationTest extends TestCase
 {

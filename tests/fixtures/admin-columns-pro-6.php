@@ -9,7 +9,7 @@ namespace ACA\ACF;
 class Field
 {
     /** @param array<string, mixed> $settings */
-    public function __construct(private array $settings)
+    public function __construct(private readonly array $settings)
     {
     }
 
@@ -22,7 +22,7 @@ class Field
 
 class Column
 {
-    public function __construct(private Field $field, private string $metaKey)
+    public function __construct(private readonly Field $field, private readonly string $metaKey)
     {
     }
 
