@@ -10,6 +10,8 @@ use n5s\AcfCountry\Integration\WpGraphQl;
 use n5s\AcfCountry\Plugin;
 use n5s\AcfCountry\Tests\TestCase;
 
+use function Mantle\Support\Helpers\capture;
+
 final class PluginTest extends TestCase
 {
     public function testRegistersTheCountryFieldType(): void
@@ -67,9 +69,7 @@ final class PluginTest extends TestCase
         $this->fieldType()->input_admin_enqueue_scripts();
 
         $this->assertScriptEnqueued('acf-country-field');
-
-        $manifest = \json_decode((string) \file_get_contents(\dirname(__DIR__, 3) . '/assets/dist/manifest.json'), true);
-        $this->assertStringEndsWith('/assets/dist/' . $manifest['field.js'], \wp_scripts()->registered['acf-country-field']->src);
+        $this->assertBuiltAsset('field.js', \wp_scripts()->registered['acf-country-field']->src);
     }
 
     public function testEnqueuesTheFieldStyleOnFieldGroupScreens(): void
@@ -78,5 +78,40 @@ final class PluginTest extends TestCase
 
         $this->assertScriptEnqueued('acf-country-field');
         $this->assertStyleEnqueued('acf-country-field');
+        $this->assertBuiltAsset('field.css', \wp_styles()->registered['acf-country-field']->src);
+    }
+
+    public function testLoadsTheRtlStyleOnRtlSites(): void
+    {
+        // WP_Styles reads the text direction once, when it is created.
+        $styles = \wp_styles();
+        $direction = $styles->text_direction;
+        $styles->text_direction = 'rtl';
+
+        try {
+            $this->fieldType()->field_group_admin_enqueue_scripts();
+            $html = capture(static fn () => $styles->do_item('acf-country-field'));
+        } finally {
+            $styles->text_direction = $direction;
+        }
+
+        $this->assertMatchesRegularExpression('#/assets/dist/(field-[0-9a-f]{20}-rtl\.css)#', $html);
+        \preg_match('#/assets/dist/(field-[0-9a-f]{20}-rtl\.css)#', $html, $matches);
+        $this->assertFileExists(\dirname(__DIR__, 3) . '/assets/dist/' . $matches[1]);
+    }
+
+    /**
+     * The asset URL points to the hashed file listed in the manifest, and the file exists.
+     */
+    private function assertBuiltAsset(string $asset, mixed $src): void
+    {
+        $dist = \dirname(__DIR__, 3) . '/assets/dist';
+        $manifest = \json_decode((string) \file_get_contents("{$dist}/manifest.json"), true);
+        $this->assertIsArray($manifest);
+        $this->assertIsString($manifest[$asset] ?? null);
+        $this->assertMatchesRegularExpression('/-[0-9a-f]{20}\.(js|css)\z/', $manifest[$asset]);
+        $this->assertFileExists("{$dist}/{$manifest[$asset]}");
+        $this->assertIsString($src);
+        $this->assertStringEndsWith("/assets/dist/{$manifest[$asset]}", $src);
     }
 }

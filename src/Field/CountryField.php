@@ -311,6 +311,8 @@ class CountryField extends acf_field
         $this->input_admin_enqueue_scripts();
         // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- the file name is hashed by the build.
         \wp_enqueue_style(self::ASSET_HANDLE, $this->assetUrl('field.css'), [], null);
+        // The build writes field-<hash>-rtl.css next to field-<hash>.css: WordPress loads it on RTL sites.
+        \wp_style_add_data(self::ASSET_HANDLE, 'rtl', 'replace');
     }
 
     /**
