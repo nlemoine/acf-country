@@ -13,8 +13,8 @@
     "url": "https://github.com/nlemoine/acf-country/issues"
   },
   "scripts": {
-    "start": "wp-scripts start",
-    "build": "wp-scripts build",
+    "start": "wp-scripts start --config webpack.config.mjs",
+    "build": "wp-scripts build --config webpack.config.mjs",
     "format": "wp-scripts format ./assets/src/js"
   },
   "devDependencies": {

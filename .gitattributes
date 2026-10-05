@@ -6,7 +6,7 @@
 /release-please-config.json        export-ignore
 /.release-please-manifest.json     export-ignore
 /tests                             export-ignore
-/webpack.config.js                 export-ignore
+/webpack.config.mjs                export-ignore
 /package.json                      export-ignore
 /*.dist                           export-ignore
 /CONTRIBUTING.md                   export-ignore

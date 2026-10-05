@@ -1,7 +1,7 @@
-const path = require('node:path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const defaultConfig = require('@wordpress/scripts/config/webpack.config.js');
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+import path from 'node:path';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import defaultConfig from '@wordpress/scripts/config/webpack.config.js';
+import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
 
 const config = {
   ...defaultConfig,
@@ -41,4 +41,4 @@ const config = {
   ],
 };
 
-module.exports = config;
+export default config;
