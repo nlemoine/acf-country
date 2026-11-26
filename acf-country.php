@@ -5,7 +5,7 @@
  * Plugin URI:        https://github.com/nlemoine/acf-country
  * Description:       A country field for ACF. Display a select field of all countries, in any language.
  * x-release-please-start-version
- * Version:           3.1.0
+ * Version:           4.0.0
  * x-release-please-end
  * Requires at least: 6.0
  * Requires PHP:      8.2
