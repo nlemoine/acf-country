@@ -25,6 +25,12 @@
         "security": "https://github.com/nlemoine/acf-country/security/policy",
         "changelog": "https://github.com/nlemoine/acf-country/releases"
     },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/nlemoine"
+        }
+    ],
     "require": {
         "php": "^8.2"
     },
